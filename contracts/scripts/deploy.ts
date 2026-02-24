@@ -19,6 +19,42 @@ async function main() {
   console.log('Max supply:', ethers.formatEther(await chulo.MAX_SUPPLY()));
   console.log('Deployer balance:', ethers.formatEther(await chulo.balanceOf(deployer.address)));
 
+  // Deploy ChainlinkPriceOracle
+  console.log('\n--- Deploying ChainlinkPriceOracle ---');
+  const OracleFactory = await ethers.getContractFactory('ChainlinkPriceOracle');
+  const oracle = await OracleFactory.deploy();
+  await oracle.waitForDeployment();
+  const oracleAddress = await oracle.getAddress();
+
+  console.log('ChainlinkPriceOracle deployed to:', oracleAddress);
+
+  // Chainlink price feed addresses on Arbitrum Goerli
+  // Note: Update these with actual Arbitrum Goerli addresses
+  const priceFeeds = {
+    BTC: '0x6550bc2301936011c1334555e62A87705A81C12C', // BTC/USD on Arbitrum Goerli
+    ETH: '0x62CAe0FA2da220f43a51F86Db2EDb36DcA9A5A08', // ETH/USD on Arbitrum Goerli
+    // SOL: '0x...', // Add SOL/USD if available on Arbitrum Goerli
+  };
+
+  // Add price feeds
+  console.log('\n--- Adding Price Feeds ---');
+  for (const [asset, feedAddress] of Object.entries(priceFeeds)) {
+    console.log(`Adding ${asset} price feed:`, feedAddress);
+    const tx = await oracle.addPriceFeed(asset, feedAddress);
+    await tx.wait();
+    console.log(`✓ ${asset} price feed added`);
+  }
+
+  // Test price feed
+  console.log('\n--- Testing Price Feed ---');
+  try {
+    const [btcPrice, timestamp] = await oracle.getLatestPrice('BTC');
+    console.log('BTC Price:', ethers.formatUnits(btcPrice, 8), 'USD');
+    console.log('Timestamp:', new Date(Number(timestamp) * 1000).toISOString());
+  } catch (error) {
+    console.log('⚠️  Could not fetch BTC price (may need mainnet/testnet connection)');
+  }
+
   // Save deployment info
   const deploymentInfo = {
     network: (await ethers.provider.getNetwork()).name,
@@ -29,6 +65,10 @@ async function main() {
         address: chuloAddress,
         initialSupply: ethers.formatEther(initialSupply),
         maxSupply: ethers.formatEther(await chulo.MAX_SUPPLY()),
+      },
+      ChainlinkPriceOracle: {
+        address: oracleAddress,
+        priceFeeds: priceFeeds,
       },
     },
     timestamp: new Date().toISOString(),
@@ -42,8 +82,9 @@ async function main() {
   await chulo.deploymentTransaction()?.wait(5);
 
   console.log('\n✅ Deployment complete!');
-  console.log('\nTo verify the contract on Arbiscan, run:');
+  console.log('\nTo verify contracts on Arbiscan, run:');
   console.log(`npx hardhat verify --network ${(await ethers.provider.getNetwork()).name} ${chuloAddress} "${initialSupply}"`);
+  console.log(`npx hardhat verify --network ${(await ethers.provider.getNetwork()).name} ${oracleAddress}`);
 }
 
 main()

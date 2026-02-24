@@ -9,6 +9,7 @@ import healthRouter from './routes/health';
 import statusRouter from './routes/status';
 import usersRouter from './routes/users';
 import signalsRouter from './routes/signals';
+import oracleRouter from './routes/oracle';
 
 // Load environment variables
 dotenv.config({ path: '../.env' });
@@ -31,6 +32,7 @@ app.use('/api/health', healthRouter);
 app.use('/api/status', statusRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/signals', signalsRouter);
+app.use('/api/oracle', oracleRouter);
 
 // Error handling
 app.use(notFound);
