@@ -11,6 +11,7 @@ import healthRouter from './routes/health';
 import statusRouter from './routes/status';
 import usersRouter from './routes/users';
 import signalsRouter from './routes/signals';
+import positionsRouter from './routes/positions';
 import oracleRouter from './routes/oracle';
 
 // Load environment variables
@@ -34,6 +35,7 @@ app.use('/api/health', healthRouter);
 app.use('/api/status', statusRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/signals', signalsRouter);
+app.use('/api/positions', positionsRouter);
 app.use('/api/oracle', oracleRouter);
 
 // Error handling
