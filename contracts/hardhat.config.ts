@@ -21,6 +21,11 @@ const config: HardhatUserConfig = {
     hardhat: {
       chainId: 31337,
     },
+    arbitrumSepolia: {
+      url: process.env.ARBITRUM_SEPOLIA_RPC_URL || 'https://sepolia-rollup.arbitrum.io/rpc',
+      chainId: 421614,
+      accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
+    },
     arbitrumGoerli: {
       url: process.env.ARBITRUM_RPC || 'https://goerli-rollup.arbitrum.io/rpc',
       chainId: 421613,
@@ -34,6 +39,7 @@ const config: HardhatUserConfig = {
   },
   etherscan: {
     apiKey: {
+      arbitrumSepolia: process.env.ARBISCAN_API_KEY || '',
       arbitrumGoerli: process.env.ARBISCAN_API_KEY || '',
       arbitrumOne: process.env.ARBISCAN_API_KEY || '',
     },

@@ -2,9 +2,19 @@
   "name": "@chulobots/cli",
   "version": "0.1.0",
   "private": true,
+  "description": "ChuloBots CLI mining tool for signal validation",
   "scripts": {
     "build": "cargo build --release",
+    "build:quick": "cargo build",
     "test": "cargo test",
-    "clean": "cargo clean"
+    "test:verbose": "cargo test -- --nocapture",
+    "run": "cargo run",
+    "run:release": "cargo run --release",
+    "clean": "cargo clean",
+    "check": "cargo check",
+    "fmt": "cargo fmt --check",
+    "fmt:fix": "cargo fmt",
+    "clippy": "cargo clippy -- -D warnings",
+    "dev": "cargo watch -x run"
   }
 }

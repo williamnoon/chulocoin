@@ -38,6 +38,11 @@ app.use('/api/signals', signalsRouter);
 app.use('/api/positions', positionsRouter);
 app.use('/api/oracle', oracleRouter);
 
+// Root health check for Railway/monitoring
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
 // Error handling
 app.use(notFound);
 app.use(errorHandler);

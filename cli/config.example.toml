@@ -1,0 +1,65 @@
+# ChuloBots CLI Configuration Example
+# Copy this file to:
+#   - Linux/macOS: ~/.config/chulobots/config.toml
+#   - Windows: %APPDATA%\chulobots\config.toml
+
+[wallet]
+# Your Ethereum private key (keep this secret!)
+# Can also be set via environment variable: CHULOBOTS_PRIVATE_KEY
+private_key = ""
+
+[network]
+# Arbitrum One RPC endpoint
+rpc_url = "https://arb1.arbitrum.io/rpc"
+
+# CHULO token contract address (will be updated after deployment)
+chulo_contract = "0x..."
+
+# Backend WebSocket endpoint
+backend_ws = "wss://api.chulobots.com/ws"
+
+# Backend HTTP API endpoint
+backend_api = "https://api.chulobots.com/v1"
+
+[mining]
+# Auto-start mining on launch
+auto_start = false
+
+# Minimum validation confidence threshold (0.0 - 1.0)
+validation_threshold = 0.8
+
+# Maximum signals to process per session (0 = unlimited)
+max_signals = 0
+
+# Polling interval in seconds
+poll_interval = 5
+
+[ui]
+# Enable colors in terminal
+colors = true
+
+# Refresh rate in milliseconds
+refresh_rate = 100
+
+# Show debug information
+debug = false
+
+[logging]
+# Log level: trace, debug, info, warn, error
+level = "info"
+
+# Log to file (optional)
+# file = "~/.local/share/chulobots/chulobots.log"
+
+[advanced]
+# Gas price multiplier (1.0 = normal, 1.5 = 50% higher)
+gas_multiplier = 1.0
+
+# Transaction timeout in seconds
+tx_timeout = 60
+
+# Retry failed transactions
+retry_transactions = true
+
+# Maximum retry attempts
+max_retries = 3

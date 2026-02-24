@@ -1,0 +1,37 @@
+{
+  "network": "arbitrumSepolia",
+  "chainId": "421614",
+  "deployer": "0x...",
+  "deployedAt": "timestamp",
+  "contracts": {
+    "CHULO": {
+      "address": "0x...",
+      "initialSupply": "10000000.0",
+      "maxSupply": "1000000000.0"
+    },
+    "ChainlinkPriceOracle": {
+      "address": "0x...",
+      "priceFeeds": {
+        "BTC": "0x56a43EB56Da12C0dc1D972ACb089c06a5dEF8e69",
+        "ETH": "0xd30e2101a97dcbAeBCBC04F14C3f624E67A35165"
+      }
+    },
+    "TierNFT": {
+      "address": "0x...",
+      "chuloToken": "0x..."
+    },
+    "ValidatorStaking": {
+      "address": "0x...",
+      "chuloToken": "0x...",
+      "minStake": "1000.0",
+      "maxStake": "100000.0"
+    },
+    "SignalRegistry": {
+      "address": "0x...",
+      "chuloToken": "0x...",
+      "validatorStaking": "0x...",
+      "consensusThreshold": "3",
+      "maxValidators": "5"
+    }
+  }
+}

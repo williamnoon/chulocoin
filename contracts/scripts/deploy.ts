@@ -1,9 +1,15 @@
 import { ethers } from 'hardhat';
+import * as fs from 'fs';
+import * as path from 'path';
 
 async function main() {
   const [deployer] = await ethers.getSigners();
+  const network = await ethers.provider.getNetwork();
+  const networkName = network.name === 'unknown' ? 'arbitrumSepolia' : network.name;
 
   console.log('Deploying contracts with account:', deployer.address);
+  console.log('Network:', networkName);
+  console.log('Chain ID:', network.chainId.toString());
   console.log('Account balance:', ethers.formatEther(await ethers.provider.getBalance(deployer.address)));
 
   // Deploy CHULO Token
@@ -28,12 +34,11 @@ async function main() {
 
   console.log('ChainlinkPriceOracle deployed to:', oracleAddress);
 
-  // Chainlink price feed addresses on Arbitrum Goerli
-  // Note: Update these with actual Arbitrum Goerli addresses
+  // Chainlink price feed addresses on Arbitrum Sepolia
+  // These are the official Chainlink Data Feeds for Arbitrum Sepolia testnet
   const priceFeeds = {
-    BTC: '0x6550bc2301936011c1334555e62A87705A81C12C', // BTC/USD on Arbitrum Goerli
-    ETH: '0x62CAe0FA2da220f43a51F86Db2EDb36DcA9A5A08', // ETH/USD on Arbitrum Goerli
-    // SOL: '0x...', // Add SOL/USD if available on Arbitrum Goerli
+    BTC: '0x56a43EB56Da12C0dc1D972ACb089c06a5dEF8e69', // BTC/USD on Arbitrum Sepolia
+    ETH: '0xd30e2101a97dcbAeBCBC04F14C3f624E67A35165', // ETH/USD on Arbitrum Sepolia
   };
 
   // Add price feeds
@@ -77,6 +82,19 @@ async function main() {
   console.log('Min stake:', ethers.formatEther(await validatorStaking.MIN_STAKE()), 'CHULO');
   console.log('Max stake:', ethers.formatEther(await validatorStaking.MAX_STAKE()), 'CHULO');
 
+  // Deploy SignalRegistry
+  console.log('\n--- Deploying SignalRegistry ---');
+  const SignalRegistryFactory = await ethers.getContractFactory('SignalRegistry');
+  const signalRegistry = await SignalRegistryFactory.deploy(chuloAddress, validatorStakingAddress);
+  await signalRegistry.waitForDeployment();
+  const signalRegistryAddress = await signalRegistry.getAddress();
+
+  console.log('SignalRegistry deployed to:', signalRegistryAddress);
+  console.log('Connected to CHULO token:', chuloAddress);
+  console.log('Connected to ValidatorStaking:', validatorStakingAddress);
+  console.log('Consensus threshold:', await signalRegistry.CONSENSUS_THRESHOLD());
+  console.log('Max validators per signal:', await signalRegistry.MAX_VALIDATORS());
+
   // Grant MINTER_ROLE to ValidatorStaking
   console.log('\n--- Granting Permissions ---');
   const MINTER_ROLE = await chulo.MINTER_ROLE();
@@ -87,9 +105,10 @@ async function main() {
 
   // Save deployment info
   const deploymentInfo = {
-    network: (await ethers.provider.getNetwork()).name,
-    chainId: (await ethers.provider.getNetwork()).chainId.toString(),
+    network: networkName,
+    chainId: network.chainId.toString(),
     deployer: deployer.address,
+    deployedAt: new Date().toISOString(),
     contracts: {
       CHULO: {
         address: chuloAddress,
@@ -110,12 +129,28 @@ async function main() {
         minStake: ethers.formatEther(await validatorStaking.MIN_STAKE()),
         maxStake: ethers.formatEther(await validatorStaking.MAX_STAKE()),
       },
+      SignalRegistry: {
+        address: signalRegistryAddress,
+        chuloToken: chuloAddress,
+        validatorStaking: validatorStakingAddress,
+        consensusThreshold: (await signalRegistry.CONSENSUS_THRESHOLD()).toString(),
+        maxValidators: (await signalRegistry.MAX_VALIDATORS()).toString(),
+      },
     },
-    timestamp: new Date().toISOString(),
   };
 
   console.log('\n--- Deployment Summary ---');
   console.log(JSON.stringify(deploymentInfo, null, 2));
+
+  // Save deployment info to file
+  const deploymentsDir = path.join(__dirname, '..', 'deployments');
+  if (!fs.existsSync(deploymentsDir)) {
+    fs.mkdirSync(deploymentsDir, { recursive: true });
+  }
+
+  const deploymentFile = path.join(deploymentsDir, 'sepolia.json');
+  fs.writeFileSync(deploymentFile, JSON.stringify(deploymentInfo, null, 2));
+  console.log(`\n✓ Deployment info saved to: ${deploymentFile}`);
 
   // Wait for block confirmations before verifying
   console.log('\nWaiting for block confirmations...');
@@ -123,10 +158,11 @@ async function main() {
 
   console.log('\n✅ Deployment complete!');
   console.log('\nTo verify contracts on Arbiscan, run:');
-  console.log(`npx hardhat verify --network ${(await ethers.provider.getNetwork()).name} ${chuloAddress} "${initialSupply}"`);
-  console.log(`npx hardhat verify --network ${(await ethers.provider.getNetwork()).name} ${oracleAddress}`);
-  console.log(`npx hardhat verify --network ${(await ethers.provider.getNetwork()).name} ${tierNFTAddress} "${chuloAddress}"`);
-  console.log(`npx hardhat verify --network ${(await ethers.provider.getNetwork()).name} ${validatorStakingAddress} "${chuloAddress}"`);
+  console.log(`npx hardhat verify --network ${networkName} ${chuloAddress} "${initialSupply}"`);
+  console.log(`npx hardhat verify --network ${networkName} ${oracleAddress}`);
+  console.log(`npx hardhat verify --network ${networkName} ${tierNFTAddress} "${chuloAddress}"`);
+  console.log(`npx hardhat verify --network ${networkName} ${validatorStakingAddress} "${chuloAddress}"`);
+  console.log(`npx hardhat verify --network ${networkName} ${signalRegistryAddress} "${chuloAddress}" "${validatorStakingAddress}"`);
 }
 
 main()
