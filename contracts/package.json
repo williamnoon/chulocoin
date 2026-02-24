@@ -3,13 +3,22 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "hardhat compile",
+    "build": "hardhat compile && forge build",
+    "build:hardhat": "hardhat compile",
+    "build:forge": "forge build",
     "test": "hardhat test",
+    "test:forge": "forge test",
+    "test:forge:verbose": "forge test -vvv",
+    "test:forge:gas": "forge test --gas-report",
+    "test:all": "npm run test && npm run test:forge",
     "test:coverage": "hardhat coverage",
+    "test:forge:coverage": "forge coverage",
     "lint": "solhint 'contracts/**/*.sol'",
     "deploy:testnet": "hardhat run scripts/deploy.ts --network arbitrumGoerli",
     "deploy:mainnet": "hardhat run scripts/deploy.ts --network arbitrumOne",
-    "clean": "hardhat clean"
+    "deploy:forge:sepolia": "forge script script/Deploy.s.sol --rpc-url arbitrum_sepolia --broadcast --verify",
+    "deploy:forge:mainnet": "forge script script/Deploy.s.sol --rpc-url arbitrum --broadcast --verify",
+    "clean": "hardhat clean && forge clean"
   },
   "devDependencies": {
     "@chainlink/contracts": "^0.8.0",
