@@ -66,7 +66,7 @@ contract CHULOTest is Test {
         uint256 mintAmount = 1000 * 10**18;
         uint256 expectedSupply = INITIAL_SUPPLY + mintAmount;
 
-        chulo.mint(user1, mintAmount);
+        chulo.mint(user1, mintAmount, "Test mint");
 
         assertEq(chulo.totalSupply(), expectedSupply);
         assertEq(chulo.balanceOf(user1), mintAmount);
@@ -77,7 +77,43 @@ contract CHULOTest is Test {
 
         vm.prank(user1);
         vm.expectRevert();
-        chulo.mint(user1, mintAmount);
+        chulo.mint(user1, mintAmount, "Unauthorized mint");
+    }
+
+    function testCannotMintAboveMaxSupply() public {
+        uint256 maxSupply = chulo.MAX_SUPPLY();
+        uint256 currentSupply = chulo.totalSupply();
+        uint256 remainingSupply = maxSupply - currentSupply;
+
+        // Try to mint more than remaining supply
+        vm.expectRevert("Exceeds max supply");
+        chulo.mint(user1, remainingSupply + 1, "Over max supply");
+    }
+
+    function testBurnForGas() public {
+        uint256 burnAmount = 100 * 10**18;
+        uint256 initialBalance = chulo.balanceOf(owner);
+
+        chulo.burnForGas(burnAmount, "Test gas payment");
+
+        assertEq(chulo.balanceOf(owner), initialBalance - burnAmount);
+        assertEq(chulo.totalBurned(), burnAmount);
+    }
+
+    function testCirculatingSupply() public {
+        assertEq(chulo.circulatingSupply(), INITIAL_SUPPLY);
+
+        uint256 burnAmount = 1000 * 10**18;
+        chulo.burn(burnAmount);
+
+        assertEq(chulo.circulatingSupply(), INITIAL_SUPPLY - burnAmount);
+    }
+
+    function testRemainingSupply() public {
+        uint256 maxSupply = chulo.MAX_SUPPLY();
+        uint256 remaining = chulo.remainingSupply();
+
+        assertEq(remaining, maxSupply - INITIAL_SUPPLY);
     }
 
     function testCannotTransferToZeroAddress() public {
@@ -105,12 +141,13 @@ contract CHULOTest is Test {
 
     function testFuzzMint(address to, uint256 amount) public {
         vm.assume(to != address(0));
-        vm.assume(amount <= type(uint256).max - INITIAL_SUPPLY);
+        vm.assume(amount > 0);
+        vm.assume(amount <= chulo.remainingSupply());
 
         uint256 balanceBefore = chulo.balanceOf(to);
         uint256 supplyBefore = chulo.totalSupply();
 
-        chulo.mint(to, amount);
+        chulo.mint(to, amount, "Fuzz test mint");
 
         assertEq(chulo.balanceOf(to), balanceBefore + amount);
         assertEq(chulo.totalSupply(), supplyBefore + amount);
