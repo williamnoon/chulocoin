@@ -1,0 +1,76 @@
+name: Deploy to Testnet
+
+on:
+  push:
+    branches: [develop]
+  workflow_dispatch:
+
+jobs:
+  deploy-contracts:
+    name: Deploy Smart Contracts to Arbitrum Goerli
+    runs-on: ubuntu-latest
+    environment: testnet
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Deploy contracts
+        working-directory: ./contracts
+        env:
+          ARBITRUM_RPC: ${{ secrets.ARBITRUM_GOERLI_RPC }}
+          PRIVATE_KEY: ${{ secrets.DEPLOYER_PRIVATE_KEY_TESTNET }}
+        run: npm run deploy:testnet
+
+      - name: Verify contracts
+        working-directory: ./contracts
+        env:
+          ARBISCAN_API_KEY: ${{ secrets.ARBISCAN_API_KEY }}
+        run: npx hardhat verify --network arbitrumGoerli
+
+  deploy-backend:
+    name: Deploy Backend to Staging
+    runs-on: ubuntu-latest
+    environment: testnet
+    needs: [deploy-contracts]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build backend
+        working-directory: ./backend
+        run: npm run build
+
+      - name: Deploy to staging server
+        run: echo "Deploy to staging server (configure your deployment method)"
+        # Add your deployment commands here (e.g., AWS, Heroku, Railway, etc.)
+
+  deploy-frontend:
+    name: Deploy Frontend to Vercel (Preview)
+    runs-on: ubuntu-latest
+    environment: testnet
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy landing page to Vercel
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_LANDING }}
+          working-directory: ./frontend/landing

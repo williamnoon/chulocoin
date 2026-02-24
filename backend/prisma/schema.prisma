@@ -1,0 +1,170 @@
+// Prisma schema for ChuloBots
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User Tiers Enum
+enum UserTier {
+  OBSERVER
+  BRONZE
+  SILVER
+  GOLD
+  DIAMOND
+}
+
+// Signal Direction Enum
+enum SignalDirection {
+  LONG
+  SHORT
+}
+
+// Position Status Enum
+enum PositionStatus {
+  OPEN
+  CLOSED
+}
+
+// Users
+model User {
+  id             String         @id @default(cuid())
+  walletAddress  String         @unique
+  tier           UserTier       @default(OBSERVER)
+  chuloBalance   Float          @default(0)
+  settings       Json?          // Bot preferences (JSON)
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  // Relations
+  positions      Position[]
+  trades         Trade[]
+  exchangeKeys   ExchangeKey[]
+
+  @@index([walletAddress])
+  @@index([tier])
+}
+
+// Trading Signals
+model Signal {
+  id             String           @id @default(cuid())
+  asset          String           // BTC, ETH, SOL, etc.
+  direction      SignalDirection
+  entry          Float
+  stop           Float
+  target         Float
+  confidence     Float            // 0-100
+  strategyId     String?
+  minerId        String?          // CLI miner who submitted
+  validatedAt    DateTime?
+  validatorVotes Int              @default(0)
+  status         String           @default("pending") // pending, validated, rejected
+  createdAt      DateTime         @default(now())
+
+  // Relations
+  positions      Position[]
+  trades         Trade[]
+
+  @@index([asset])
+  @@index([status])
+  @@index([validatedAt])
+  @@index([confidence])
+}
+
+// Active Positions
+model Position {
+  id             String         @id @default(cuid())
+  userId         String
+  signalId       String
+  exchange       String         // hyperliquid, binance, etc.
+  entryPrice     Float
+  size           Float          // Position size
+  leverage       Float?         @default(1)
+  status         PositionStatus @default(OPEN)
+  pnl            Float?
+  closedAt       DateTime?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  // Relations
+  user           User           @relation(fields: [userId], references: [id])
+  signal         Signal         @relation(fields: [signalId], references: [id])
+
+  @@index([userId])
+  @@index([signalId])
+  @@index([status])
+  @@index([exchange])
+}
+
+// Validators
+model Validator {
+  id             String    @id @default(cuid())
+  walletAddress  String    @unique
+  stake          Float     // CHULO staked (10k-200k)
+  reputation     Float     @default(100)
+  validations    Int       @default(0)
+  rewardsEarned  Float     @default(0)
+  isActive       Boolean   @default(true)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  @@index([walletAddress])
+  @@index([isActive])
+}
+
+// Completed Trades
+model Trade {
+  id             String    @id @default(cuid())
+  userId         String
+  signalId       String
+  entryPrice     Float
+  exitPrice      Float
+  size           Float
+  pnl            Float
+  pnlPercent     Float
+  fees           Float     @default(0)
+  duration       Int?      // Duration in seconds
+  closedAt       DateTime  @default(now())
+  createdAt      DateTime  @default(now())
+
+  // Relations
+  user           User      @relation(fields: [userId], references: [id])
+  signal         Signal    @relation(fields: [signalId], references: [id])
+
+  @@index([userId])
+  @@index([signalId])
+  @@index([closedAt])
+}
+
+// Exchange API Keys (encrypted)
+model ExchangeKey {
+  id             String    @id @default(cuid())
+  userId         String
+  exchange       String    // hyperliquid, binance, coinbase, etc.
+  encryptedKey   String    // Encrypted API key
+  encryptedSecret String?  // Encrypted API secret (if needed)
+  isActive       Boolean   @default(true)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  // Relations
+  user           User      @relation(fields: [userId], references: [id])
+
+  @@unique([userId, exchange])
+  @@index([userId])
+}
+
+// System Configuration
+model Config {
+  id             String    @id @default(cuid())
+  key            String    @unique
+  value          String
+  description    String?
+  updatedAt      DateTime  @updatedAt
+
+  @@index([key])
+}

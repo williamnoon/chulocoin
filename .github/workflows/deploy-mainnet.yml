@@ -1,0 +1,77 @@
+name: Deploy to Mainnet
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  deploy-contracts:
+    name: Deploy Smart Contracts to Arbitrum One
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Deploy contracts
+        working-directory: ./contracts
+        env:
+          ARBITRUM_RPC: ${{ secrets.ARBITRUM_MAINNET_RPC }}
+          PRIVATE_KEY: ${{ secrets.DEPLOYER_PRIVATE_KEY_MAINNET }}
+        run: npm run deploy:mainnet
+
+      - name: Verify contracts
+        working-directory: ./contracts
+        env:
+          ARBISCAN_API_KEY: ${{ secrets.ARBISCAN_API_KEY }}
+        run: npx hardhat verify --network arbitrumOne
+
+  deploy-backend:
+    name: Deploy Backend to Production
+    runs-on: ubuntu-latest
+    environment: production
+    needs: [deploy-contracts]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build backend
+        working-directory: ./backend
+        run: npm run build
+
+      - name: Deploy to production server
+        run: echo "Deploy to production server (configure your deployment method)"
+        # Add your deployment commands here
+
+  deploy-frontend:
+    name: Deploy Frontend to Vercel (Production)
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy landing page to Vercel
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_LANDING }}
+          vercel-args: '--prod'
+          working-directory: ./frontend/landing
