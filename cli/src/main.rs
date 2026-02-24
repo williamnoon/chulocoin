@@ -1,39 +1,32 @@
-use anyhow::Result;
+use anyhow::{Context, Result};
 use crossterm::{
     event::{self, DisableMouseCapture, EnableMouseCapture, Event, KeyCode},
     execute,
     terminal::{disable_raw_mode, enable_raw_mode, EnterAlternateScreen, LeaveAlternateScreen},
 };
-use ratatui::{
-    backend::CrosstermBackend,
-    layout::{Constraint, Direction, Layout},
-    style::{Color, Modifier, Style},
-    text::{Line, Span},
-    widgets::{Block, Borders, Paragraph},
-    Terminal,
-};
+use ratatui::{backend::CrosstermBackend, Terminal};
 use std::io;
+use std::sync::Arc;
+use tokio::sync::Mutex;
 use tracing_subscriber;
 
-use chulobots_cli::{
-    blockchain::BlockchainClient,
-    mining::MiningEngine,
-    ui::render_app,
-};
+use chulobots_cli::{blockchain::BlockchainClient, mining::MiningEngine, ui::render_app, Config};
 
 #[derive(Debug)]
 pub struct App {
     pub mining_engine: MiningEngine,
-    pub blockchain_client: BlockchainClient,
+    pub blockchain_client: Arc<Mutex<BlockchainClient>>,
     pub should_quit: bool,
+    pub status_message: Option<String>,
 }
 
 impl App {
-    pub fn new() -> Self {
+    pub fn new(blockchain_client: Arc<Mutex<BlockchainClient>>) -> Self {
         Self {
             mining_engine: MiningEngine::new(),
-            blockchain_client: BlockchainClient::new(),
+            blockchain_client,
             should_quit: false,
+            status_message: None,
         }
     }
 
@@ -48,6 +41,64 @@ async fn main() -> Result<()> {
     // Initialize logging
     tracing_subscriber::fmt::init();
 
+    // Load configuration
+    let config = match Config::load() {
+        Ok(cfg) => cfg,
+        Err(e) => {
+            eprintln!("Failed to load config: {}", e);
+            eprintln!("\nPlease create a config file at:");
+            if let Ok(path) = Config::default_path() {
+                eprintln!("  {}", path.display());
+            }
+            eprintln!("\nYou can copy config.example.toml as a starting point.");
+            std::process::exit(1);
+        }
+    };
+
+    // Initialize blockchain client
+    let blockchain_client = Arc::new(Mutex::new(BlockchainClient::new()));
+
+    // Connect to blockchain
+    {
+        let mut client = blockchain_client.lock().await;
+        let private_key = config
+            .get_private_key()
+            .context("Failed to get private key")?;
+
+        match client
+            .connect(
+                &private_key,
+                &config.network.rpc_url,
+                config.network.chain_id,
+                &config.contracts.chulo_address,
+                &config.contracts.signal_registry_address,
+            )
+            .await
+        {
+            Ok(_) => {
+                tracing::info!("Connected to blockchain successfully");
+            }
+            Err(e) => {
+                eprintln!("Failed to connect to blockchain: {}", e);
+                eprintln!("\nPlease check your configuration and try again.");
+                std::process::exit(1);
+            }
+        }
+    }
+
+    // Start balance polling task
+    let balance_client = blockchain_client.clone();
+    tokio::spawn(async move {
+        let mut interval = tokio::time::interval(tokio::time::Duration::from_secs(30));
+        loop {
+            interval.tick().await;
+            let mut client = balance_client.lock().await;
+            if let Err(e) = client.fetch_balance().await {
+                tracing::warn!("Failed to fetch balance: {}", e);
+            }
+        }
+    });
+
     // Setup terminal
     enable_raw_mode()?;
     let mut stdout = io::stdout();
@@ -56,7 +107,7 @@ async fn main() -> Result<()> {
     let mut terminal = Terminal::new(backend)?;
 
     // Create app state
-    let mut app = App::new();
+    let mut app = App::new(blockchain_client.clone());
 
     // Run app
     let res = run_app(&mut terminal, &mut app).await;
@@ -82,7 +133,10 @@ async fn run_app<B: ratatui::backend::Backend>(
     app: &mut App,
 ) -> Result<()> {
     loop {
-        terminal.draw(|f| render_app(f, app))?;
+        // Render UI
+        let client = app.blockchain_client.lock().await;
+        terminal.draw(|f| render_app(f, app, &client))?;
+        drop(client); // Release lock
 
         // Handle input
         if event::poll(std::time::Duration::from_millis(100))? {
@@ -96,8 +150,13 @@ async fn run_app<B: ratatui::backend::Backend>(
                         app.mining_engine.toggle();
                     }
                     KeyCode::Char('r') | KeyCode::Char('R') => {
-                        // Refresh balance
-                        app.blockchain_client.refresh_balance();
+                        // Refresh balance manually
+                        let mut client = app.blockchain_client.lock().await;
+                        if let Err(e) = client.fetch_balance().await {
+                            app.status_message = Some(format!("Error: {}", e));
+                        } else {
+                            app.status_message = Some("Balance refreshed".to_string());
+                        }
                     }
                     _ => {}
                 }

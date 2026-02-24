@@ -6,10 +6,11 @@ use ratatui::{
     Frame,
 };
 
+use crate::blockchain::BlockchainClient;
 use crate::App;
 use crate::mining::MiningStatus;
 
-pub fn render_app(f: &mut Frame, app: &App) {
+pub fn render_app(f: &mut Frame, app: &App, blockchain_client: &BlockchainClient) {
     let chunks = Layout::default()
         .direction(Direction::Vertical)
         .margin(2)
@@ -28,7 +29,7 @@ pub fn render_app(f: &mut Frame, app: &App) {
 
     render_header(f, chunks[0]);
     render_status(f, chunks[1], app);
-    render_wallet_info(f, chunks[2], app);
+    render_wallet_info(f, chunks[2], blockchain_client);
     render_mining_stats(f, chunks[3], app);
     render_controls(f, chunks[5]);
 }

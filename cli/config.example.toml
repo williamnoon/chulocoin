@@ -5,15 +5,30 @@
 
 [wallet]
 # Your Ethereum private key (keep this secret!)
-# Can also be set via environment variable: CHULOBOTS_PRIVATE_KEY
+# Can also be set via environment variable: CHULO_PRIVATE_KEY
 private_key = ""
+# Alternative: use environment variable name
+private_key_env = "CHULO_PRIVATE_KEY"
 
 [network]
-# Arbitrum One RPC endpoint
-rpc_url = "https://arb1.arbitrum.io/rpc"
+# Arbitrum Sepolia RPC endpoint (testnet)
+rpc_url = "https://sepolia-rollup.arbitrum.io/rpc"
+# Chain ID for Arbitrum Sepolia
+chain_id = 421614
 
-# CHULO token contract address (will be updated after deployment)
-chulo_contract = "0x..."
+# Alternative: Arbitrum One (mainnet)
+# rpc_url = "https://arb1.arbitrum.io/rpc"
+# chain_id = 42161
+
+[contracts]
+# CHULO token contract address (ERC-20)
+chulo_address = "0x..."
+
+# SignalRegistry contract address
+signal_registry_address = "0x..."
+
+# ValidatorStaking contract address (optional, for validators)
+validator_staking_address = "0x..."
 
 # Backend WebSocket endpoint
 backend_ws = "wss://api.chulobots.com/ws"
@@ -33,6 +48,24 @@ max_signals = 0
 
 # Polling interval in seconds
 poll_interval = 5
+
+# Strategy configuration
+enabled_strategies = ["bull_flag", "rsi_oversold"]
+
+# Check interval in seconds (how often to run strategies)
+check_interval_seconds = 300
+
+# Python executable path
+python_path = "python3"
+
+# Strategies directory (relative to CLI or absolute)
+strategies_dir = "../strategies"
+
+# Market data source
+market_data_source = "coingecko"  # Options: coingecko, binance, chainlink
+
+# Assets to monitor
+monitored_assets = ["bitcoin", "ethereum"]
 
 [ui]
 # Enable colors in terminal
