@@ -1,0 +1,370 @@
+name: Deploy to Staging
+
+on:
+  push:
+    branches: [staging]
+  workflow_dispatch:
+    inputs:
+      deploy_contracts:
+        description: 'Deploy smart contracts'
+        required: false
+        type: boolean
+        default: false
+
+env:
+  NODE_VERSION: '20'
+
+jobs:
+  # Run tests before deployment
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: chulobots_test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+      redis:
+        image: redis:7
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 6379:6379
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run linter
+        run: npm run lint
+
+      - name: Run contract tests
+        working-directory: ./contracts
+        run: npm test
+
+      - name: Run backend tests
+        working-directory: ./backend
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/chulobots_test
+          REDIS_URL: redis://localhost:6379
+          JWT_SECRET: test-secret
+        run: npm test
+
+      - name: Build frontend
+        working-directory: ./frontend/webapp
+        env:
+          VITE_API_URL: https://test.example.com
+          VITE_CHAIN_ID: 421614
+        run: npm run build
+
+  # Deploy smart contracts (manual trigger or first time)
+  deploy-contracts:
+    name: Deploy Smart Contracts
+    runs-on: ubuntu-latest
+    needs: [test]
+    if: github.event.inputs.deploy_contracts == 'true'
+    environment: staging
+    outputs:
+      chulo_address: ${{ steps.deploy.outputs.chulo_address }}
+      signal_registry_address: ${{ steps.deploy.outputs.signal_registry_address }}
+      validator_staking_address: ${{ steps.deploy.outputs.validator_staking_address }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Deploy contracts to Arbitrum Sepolia
+        id: deploy
+        working-directory: ./contracts
+        env:
+          PRIVATE_KEY: ${{ secrets.DEPLOYER_PRIVATE_KEY_TESTNET }}
+          ARBITRUM_SEPOLIA_RPC_URL: https://sepolia-rollup.arbitrum.io/rpc
+        run: |
+          npm run deploy:sepolia > deploy-output.txt
+          cat deploy-output.txt
+
+          # Extract contract addresses from deployment output
+          CHULO_ADDRESS=$(cat deployments/sepolia.json | jq -r '.contracts.CHULO.address')
+          SIGNAL_REGISTRY_ADDRESS=$(cat deployments/sepolia.json | jq -r '.contracts.SignalRegistry.address')
+          VALIDATOR_STAKING_ADDRESS=$(cat deployments/sepolia.json | jq -r '.contracts.ValidatorStaking.address')
+
+          echo "chulo_address=$CHULO_ADDRESS" >> $GITHUB_OUTPUT
+          echo "signal_registry_address=$SIGNAL_REGISTRY_ADDRESS" >> $GITHUB_OUTPUT
+          echo "validator_staking_address=$VALIDATOR_STAKING_ADDRESS" >> $GITHUB_OUTPUT
+
+      - name: Verify contracts on Arbiscan
+        working-directory: ./contracts
+        env:
+          ARBISCAN_API_KEY: ${{ secrets.ARBISCAN_API_KEY }}
+        run: |
+          # Give Arbiscan time to index the contracts
+          sleep 30
+
+          # Verify contracts (continue on error as they might already be verified)
+          npx hardhat verify --network arbitrumSepolia ${{ steps.deploy.outputs.chulo_address }} || true
+          npx hardhat verify --network arbitrumSepolia ${{ steps.deploy.outputs.signal_registry_address }} || true
+          npx hardhat verify --network arbitrumSepolia ${{ steps.deploy.outputs.validator_staking_address }} || true
+
+      - name: Upload deployment artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: contract-deployments
+          path: contracts/deployments/sepolia.json
+
+      - name: Create deployment summary
+        run: |
+          echo "## Smart Contracts Deployed to Arbitrum Sepolia" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Contract | Address |" >> $GITHUB_STEP_SUMMARY
+          echo "|----------|---------|" >> $GITHUB_STEP_SUMMARY
+          echo "| CHULO Token | [\`${{ steps.deploy.outputs.chulo_address }}\`](https://sepolia.arbiscan.io/address/${{ steps.deploy.outputs.chulo_address }}) |" >> $GITHUB_STEP_SUMMARY
+          echo "| SignalRegistry | [\`${{ steps.deploy.outputs.signal_registry_address }}\`](https://sepolia.arbiscan.io/address/${{ steps.deploy.outputs.signal_registry_address }}) |" >> $GITHUB_STEP_SUMMARY
+          echo "| ValidatorStaking | [\`${{ steps.deploy.outputs.validator_staking_address }}\`](https://sepolia.arbiscan.io/address/${{ steps.deploy.outputs.validator_staking_address }}) |" >> $GITHUB_STEP_SUMMARY
+
+  # Deploy backend to Railway
+  deploy-backend:
+    name: Deploy Backend to Railway
+    runs-on: ubuntu-latest
+    needs: [test]
+    environment: staging
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build backend
+        working-directory: ./backend
+        run: npm run build
+
+      - name: Install Railway CLI
+        run: npm install -g @railway/cli
+
+      - name: Deploy to Railway
+        working-directory: ./backend
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+        run: |
+          railway up --service backend --environment staging
+
+      - name: Run database migrations
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+        run: |
+          railway run --service backend --environment staging npm run db:migrate
+
+      - name: Seed staging database
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+        run: |
+          railway run --service backend --environment staging npm run db:seed:staging
+
+      - name: Get deployment URL
+        id: railway-url
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+        run: |
+          BACKEND_URL=$(railway domain --service backend --environment staging)
+          echo "backend_url=https://$BACKEND_URL" >> $GITHUB_OUTPUT
+          echo "Backend deployed to: https://$BACKEND_URL"
+
+      - name: Health check
+        run: |
+          sleep 10
+          curl -f ${{ steps.railway-url.outputs.backend_url }}/health || exit 1
+
+      - name: Create deployment summary
+        run: |
+          echo "## Backend Deployed to Railway" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Backend URL: [${{ steps.railway-url.outputs.backend_url }}](${{ steps.railway-url.outputs.backend_url }})" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Health Check: [${{ steps.railway-url.outputs.backend_url }}/health](${{ steps.railway-url.outputs.backend_url }}/health)" >> $GITHUB_STEP_SUMMARY
+
+  # Deploy landing page to Vercel
+  deploy-landing:
+    name: Deploy Landing Page to Vercel
+    runs-on: ubuntu-latest
+    needs: [test, deploy-backend]
+    environment: staging
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy to Vercel
+        uses: amondnet/vercel-action@v25
+        id: vercel-deploy
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_LANDING }}
+          working-directory: ./frontend/landing
+          vercel-args: '--prod'
+          github-comment: false
+
+      - name: Create deployment summary
+        run: |
+          echo "## Landing Page Deployed to Vercel" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Landing URL: [${{ steps.vercel-deploy.outputs.preview-url }}](${{ steps.vercel-deploy.outputs.preview-url }})" >> $GITHUB_STEP_SUMMARY
+
+  # Deploy webapp to Vercel
+  deploy-webapp:
+    name: Deploy WebApp to Vercel
+    runs-on: ubuntu-latest
+    needs: [test, deploy-backend]
+    environment: staging
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy to Vercel
+        uses: amondnet/vercel-action@v25
+        id: vercel-deploy
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_WEBAPP }}
+          working-directory: ./frontend/webapp
+          vercel-args: '--prod'
+          github-comment: false
+
+      - name: Create deployment summary
+        run: |
+          echo "## WebApp Deployed to Vercel" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "WebApp URL: [${{ steps.vercel-deploy.outputs.preview-url }}](${{ steps.vercel-deploy.outputs.preview-url }})" >> $GITHUB_STEP_SUMMARY
+
+  # Verify entire deployment
+  verify-deployment:
+    name: Verify Deployment
+    runs-on: ubuntu-latest
+    needs: [deploy-backend, deploy-landing, deploy-webapp]
+    environment: staging
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Verify backend health
+        run: |
+          echo "Checking backend health..."
+          curl -f https://${{ secrets.RAILWAY_DOMAIN }}/health || exit 1
+          echo "✓ Backend is healthy"
+
+      - name: Verify API endpoints
+        run: |
+          echo "Checking API endpoints..."
+          curl -f https://${{ secrets.RAILWAY_DOMAIN }}/api/signals/pending || exit 1
+          echo "✓ API endpoints responding"
+
+      - name: Verify frontend accessibility
+        run: |
+          echo "Checking frontend..."
+          curl -f https://${{ secrets.VERCEL_LANDING_DOMAIN }} -I || exit 1
+          curl -f https://${{ secrets.VERCEL_WEBAPP_DOMAIN }} -I || exit 1
+          echo "✓ Frontend apps accessible"
+
+      - name: Final deployment summary
+        run: |
+          echo "## Deployment Verification Complete" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "All services are running and healthy!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Access URLs" >> $GITHUB_STEP_SUMMARY
+          echo "- Backend API: https://${{ secrets.RAILWAY_DOMAIN }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Landing Page: https://${{ secrets.VERCEL_LANDING_DOMAIN }}" >> $GITHUB_STEP_SUMMARY
+          echo "- WebApp: https://${{ secrets.VERCEL_WEBAPP_DOMAIN }}" >> $GITHUB_STEP_SUMMARY
+
+  # Send deployment notification
+  notify:
+    name: Send Notification
+    runs-on: ubuntu-latest
+    needs: [verify-deployment]
+    if: always()
+
+    steps:
+      - name: Notify Slack (Success)
+        if: success()
+        uses: slackapi/slack-github-action@v1
+        with:
+          webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
+          payload: |
+            {
+              "text": "Staging Deployment Successful!",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": ":white_check_mark: *Staging Deployment Successful*\n\nBranch: `staging`\nCommit: `${{ github.sha }}`\n\n<https://${{ secrets.VERCEL_WEBAPP_DOMAIN }}|View Staging Site>"
+                  }
+                }
+              ]
+            }
+
+      - name: Notify Slack (Failure)
+        if: failure()
+        uses: slackapi/slack-github-action@v1
+        with:
+          webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
+          payload: |
+            {
+              "text": "Staging Deployment Failed!",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": ":x: *Staging Deployment Failed*\n\nBranch: `staging`\nCommit: `${{ github.sha }}`\n\n<https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}|View Logs>"
+                  }
+                }
+              ]
+            }
+
+      - name: Create GitHub deployment
+        uses: chrnorm/deployment-action@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          environment: staging
+          environment-url: https://${{ secrets.VERCEL_WEBAPP_DOMAIN }}

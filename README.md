@@ -57,6 +57,41 @@ This is a monorepo managed by Turborepo. Each package has its own:
 - `tsconfig.json` - TypeScript configuration
 - `.eslintrc.js` - ESLint rules
 
+## Deployment
+
+### Staging Environment
+
+Deploy the entire stack to a staging environment for testing:
+
+```bash
+# See comprehensive deployment guide
+cat STAGING_DEPLOYMENT.md
+```
+
+The staging environment includes:
+- Smart contracts on Arbitrum Sepolia
+- Backend API on Railway (PostgreSQL + Redis)
+- Frontend on Vercel (Landing + WebApp)
+- Automated CI/CD via GitHub Actions
+
+**Quick Deploy:**
+```bash
+# Push to staging branch to trigger automated deployment
+git checkout -b staging
+git push origin staging
+
+# Or manually trigger deployment
+gh workflow run deploy-staging.yml
+```
+
+**Verify Deployment:**
+```bash
+# Run verification script
+./scripts/verify-staging.sh
+```
+
+See [STAGING_DEPLOYMENT.md](./STAGING_DEPLOYMENT.md) for complete setup instructions.
+
 ## Architecture
 
 See [claude.md](./claude.md) for detailed development guide and architecture documentation.
