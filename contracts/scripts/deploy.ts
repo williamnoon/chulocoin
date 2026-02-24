@@ -55,6 +55,36 @@ async function main() {
     console.log('⚠️  Could not fetch BTC price (may need mainnet/testnet connection)');
   }
 
+  // Deploy TierNFT
+  console.log('\n--- Deploying TierNFT ---');
+  const TierNFTFactory = await ethers.getContractFactory('TierNFT');
+  const tierNFT = await TierNFTFactory.deploy(chuloAddress);
+  await tierNFT.waitForDeployment();
+  const tierNFTAddress = await tierNFT.getAddress();
+
+  console.log('TierNFT deployed to:', tierNFTAddress);
+  console.log('Connected to CHULO token:', chuloAddress);
+
+  // Deploy ValidatorStaking
+  console.log('\n--- Deploying ValidatorStaking ---');
+  const ValidatorStakingFactory = await ethers.getContractFactory('ValidatorStaking');
+  const validatorStaking = await ValidatorStakingFactory.deploy(chuloAddress);
+  await validatorStaking.waitForDeployment();
+  const validatorStakingAddress = await validatorStaking.getAddress();
+
+  console.log('ValidatorStaking deployed to:', validatorStakingAddress);
+  console.log('Connected to CHULO token:', chuloAddress);
+  console.log('Min stake:', ethers.formatEther(await validatorStaking.MIN_STAKE()), 'CHULO');
+  console.log('Max stake:', ethers.formatEther(await validatorStaking.MAX_STAKE()), 'CHULO');
+
+  // Grant MINTER_ROLE to ValidatorStaking
+  console.log('\n--- Granting Permissions ---');
+  const MINTER_ROLE = await chulo.MINTER_ROLE();
+  console.log('Granting MINTER_ROLE to ValidatorStaking...');
+  const grantTx = await chulo.grantRole(MINTER_ROLE, validatorStakingAddress);
+  await grantTx.wait();
+  console.log('✓ ValidatorStaking can now mint CHULO rewards');
+
   // Save deployment info
   const deploymentInfo = {
     network: (await ethers.provider.getNetwork()).name,
@@ -69,6 +99,16 @@ async function main() {
       ChainlinkPriceOracle: {
         address: oracleAddress,
         priceFeeds: priceFeeds,
+      },
+      TierNFT: {
+        address: tierNFTAddress,
+        chuloToken: chuloAddress,
+      },
+      ValidatorStaking: {
+        address: validatorStakingAddress,
+        chuloToken: chuloAddress,
+        minStake: ethers.formatEther(await validatorStaking.MIN_STAKE()),
+        maxStake: ethers.formatEther(await validatorStaking.MAX_STAKE()),
       },
     },
     timestamp: new Date().toISOString(),
@@ -85,6 +125,8 @@ async function main() {
   console.log('\nTo verify contracts on Arbiscan, run:');
   console.log(`npx hardhat verify --network ${(await ethers.provider.getNetwork()).name} ${chuloAddress} "${initialSupply}"`);
   console.log(`npx hardhat verify --network ${(await ethers.provider.getNetwork()).name} ${oracleAddress}`);
+  console.log(`npx hardhat verify --network ${(await ethers.provider.getNetwork()).name} ${tierNFTAddress} "${chuloAddress}"`);
+  console.log(`npx hardhat verify --network ${(await ethers.provider.getNetwork()).name} ${validatorStakingAddress} "${chuloAddress}"`);
 }
 
 main()
