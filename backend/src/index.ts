@@ -3,8 +3,10 @@ import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
+import { createServer } from 'http';
 import { errorHandler } from './middleware/errorHandler';
 import { notFound } from './middleware/notFound';
+import { initializeWebSocket } from './services/websocket';
 import healthRouter from './routes/health';
 import statusRouter from './routes/status';
 import usersRouter from './routes/users';
@@ -38,17 +40,22 @@ app.use('/api/oracle', oracleRouter);
 app.use(notFound);
 app.use(errorHandler);
 
+// Create HTTP server and initialize WebSocket
+const httpServer = createServer(app);
+const wsService = initializeWebSocket(httpServer);
+
 // Start server
-const server = app.listen(PORT, () => {
+httpServer.listen(PORT, () => {
   console.log(`🚀 ChuloBots API server running on port ${PORT}`);
   console.log(`📡 Environment: ${process.env.NODE_ENV || 'development'}`);
   console.log(`🌐 CORS enabled for: ${process.env.ALLOWED_ORIGINS || 'http://localhost:3000'}`);
+  console.log(`🔌 WebSocket server ready`);
 });
 
 // Graceful shutdown
 process.on('SIGTERM', () => {
   console.log('SIGTERM received, shutting down gracefully...');
-  server.close(() => {
+  httpServer.close(() => {
     console.log('Server closed');
     process.exit(0);
   });
