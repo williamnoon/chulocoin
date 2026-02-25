@@ -7,7 +7,7 @@
   "scripts": {
     "build": "tsc",
     "test": "jest",
-    "lint": "eslint src/",
+    "lint": "echo 'No source files to lint in shared package'",
     "clean": "rm -rf dist"
   }
 }

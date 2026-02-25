@@ -8,7 +8,8 @@ coverage.json
 # Foundry
 cache_forge/
 out/
-lib/
+lib/*
+!lib/forge-std
 
 # Environment
 .env
