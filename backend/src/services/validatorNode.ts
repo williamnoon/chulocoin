@@ -1,5 +1,7 @@
+/* eslint-disable no-console */
 import { prisma } from '../db';
 import { AppError } from '../middleware/errorHandler';
+import { Signal } from '@prisma/client';
 
 interface ValidationResult {
   vote: 'APPROVE' | 'REJECT';
@@ -12,6 +14,15 @@ interface BacktestMetrics {
   winRate: number;
   maxDrawdown: number;
   totalReturn: number;
+}
+
+interface ValidatorStats {
+  walletAddress: string;
+  stake: number;
+  reputation: number;
+  validations: number;
+  rewardsEarned: number;
+  isActive: boolean;
 }
 
 /**
@@ -171,7 +182,7 @@ export class ValidatorNodeService {
     signalId: string,
     validatorAddress: string,
     vote: 'APPROVE' | 'REJECT',
-    score: number
+    _score: number
   ): Promise<void> {
     // Record vote in database
     await prisma.signal.update({
@@ -266,9 +277,9 @@ export class ValidatorNodeService {
   /**
    * Execute backtest on signal's strategy
    */
-  private async executeBacktest(signal: any): Promise<BacktestMetrics> {
+  private async executeBacktest(_signal: Signal): Promise<BacktestMetrics> {
     // TODO: Integrate with Python backtesting engine
-    // For now, return simulated metrics based on signal confidence
+    // For now, return simulated metrics
 
     // Simulate backtest results
     const baseMetrics = {
@@ -278,7 +289,7 @@ export class ValidatorNodeService {
       totalReturn: 0.15 + Math.random() * 0.35,
     };
 
-    console.log(`Backtest executed for signal ${signal.id}:`, baseMetrics);
+    console.log(`Backtest executed`, baseMetrics);
 
     return baseMetrics;
   }
@@ -286,7 +297,7 @@ export class ValidatorNodeService {
   /**
    * Score signal setup quality
    */
-  private scoreSetup(signal: any, metrics: BacktestMetrics): number {
+  private scoreSetup(signal: Signal, metrics: BacktestMetrics): number {
     // Weighted scoring:
     // - 40% from Sharpe ratio
     // - 30% from win rate
@@ -310,16 +321,16 @@ export class ValidatorNodeService {
   /**
    * Reward validators who voted with majority
    */
-  private async rewardValidators(signalId: string, approved: boolean): Promise<void> {
+  private async rewardValidators(_signalId: string, _approved: boolean): Promise<void> {
     // TODO: Implement reward distribution
     // For now, just log
-    console.log(`Rewarding validators for signal ${signalId} (approved: ${approved})`);
+    console.log(`Rewarding validators`);
   }
 
   /**
    * Get pending signals for validation
    */
-  async getPendingSignals(validatorAddress: string): Promise<any[]> {
+  async getPendingSignals(validatorAddress: string): Promise<Signal[]> {
     // Verify validator is active
     const validator = await prisma.validator.findUnique({
       where: { walletAddress: validatorAddress },
@@ -349,7 +360,7 @@ export class ValidatorNodeService {
   /**
    * Get validator statistics
    */
-  async getValidatorStats(walletAddress: string): Promise<any> {
+  async getValidatorStats(walletAddress: string): Promise<ValidatorStats> {
     const validator = await prisma.validator.findUnique({
       where: { walletAddress },
     });
