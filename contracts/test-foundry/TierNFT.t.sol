@@ -223,14 +223,20 @@ contract TierNFTTest is Test {
         tierNFT.updateUserTier(user1);
 
         uint256 tokenId = tierNFT.userTierToken(user1);
+        assertTrue(tokenId > 0, "Token ID should be greater than 0");
+
         string memory uri = tierNFT.tokenURI(tokenId);
 
         // Check that URI contains tier info
-        assertTrue(bytes(uri).length > 0);
+        assertTrue(bytes(uri).length > 0, "URI should not be empty");
+        assertTrue(bytes(uri).length >= 28, "URI should be at least 28 characters");
+
         // URI should start with data:application/json;utf8,
-        assertTrue(
-            keccak256(bytes(substring(uri, 0, 28))) ==
-            keccak256(bytes("data:application/json;utf8,"))
+        string memory prefix = substring(uri, 0, 28);
+        assertEq(
+            keccak256(bytes(prefix)),
+            keccak256(bytes("data:application/json;utf8,")),
+            "URI should start with correct data URI prefix"
         );
     }
 
@@ -376,8 +382,9 @@ contract TierNFTTest is Test {
         vm.assume(initialBalance >= BRONZE_THRESHOLD);
         vm.assume(initialBalance < DIAMOND_THRESHOLD);
         vm.assume(additionalBalance > 0);
+        // Check for overflow before adding
+        vm.assume(additionalBalance <= type(uint256).max - initialBalance);
         vm.assume(initialBalance + additionalBalance <= INITIAL_SUPPLY);
-        vm.assume(initialBalance + additionalBalance > initialBalance); // No overflow
 
         chulo.transfer(user1, initialBalance);
         tierNFT.updateUserTier(user1);
