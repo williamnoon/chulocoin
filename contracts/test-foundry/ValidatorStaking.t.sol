@@ -17,8 +17,8 @@ contract ValidatorStakingTest is Test {
     address public validator3;
 
     uint256 constant INITIAL_SUPPLY = 10_000_000 * 10**18;
-    uint256 constant MIN_STAKE = 10_000 * 10**18;
-    uint256 constant MAX_STAKE = 200_000 * 10**18;
+    uint256 constant MIN_STAKE = 1_000 * 10**18;
+    uint256 constant MAX_STAKE = 100_000 * 10**18;
 
     event ValidatorStaked(address indexed validator, uint256 amount);
     event ValidatorUnstaked(address indexed validator, uint256 amount);

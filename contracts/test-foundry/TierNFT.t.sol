@@ -96,16 +96,15 @@ contract TierNFTTest is Test {
         chulo.transfer(user1, SILVER_THRESHOLD - BRONZE_THRESHOLD);
 
         vm.expectEmit(true, false, false, false);
-        emit TierUpgraded(user1, TierNFT.Tier.BRONZE, TierNFT.Tier.SILVER, 1);
+        emit TierUpgraded(user1, TierNFT.Tier.BRONZE, TierNFT.Tier.SILVER, 2);
 
         tierNFT.updateUserTier(user1);
 
         assertEq(uint8(tierNFT.getUserTier(user1)), uint8(TierNFT.Tier.SILVER));
-        assertEq(tierNFT.balanceOf(user1), 1); // Still only 1 NFT
+        assertEq(tierNFT.balanceOf(user1), 2); // Now has 2 NFTs (collectibles)
 
-        // Old NFT should be burned
-        vm.expectRevert();
-        tierNFT.ownerOf(bronzeTokenId);
+        // Bronze NFT should still exist as collectible badge
+        assertEq(tierNFT.ownerOf(bronzeTokenId), user1);
     }
 
     function testUpgradeFromSilverToGold() public {
@@ -116,7 +115,7 @@ contract TierNFTTest is Test {
         tierNFT.updateUserTier(user1);
 
         assertEq(uint8(tierNFT.getUserTier(user1)), uint8(TierNFT.Tier.GOLD));
-        assertEq(tierNFT.balanceOf(user1), 1);
+        assertEq(tierNFT.balanceOf(user1), 2); // Silver + Gold badges
     }
 
     function testUpgradeFromGoldToDiamond() public {
@@ -127,7 +126,7 @@ contract TierNFTTest is Test {
         tierNFT.updateUserTier(user1);
 
         assertEq(uint8(tierNFT.getUserTier(user1)), uint8(TierNFT.Tier.DIAMOND));
-        assertEq(tierNFT.balanceOf(user1), 1);
+        assertEq(tierNFT.balanceOf(user1), 2); // Gold + Diamond badges
     }
 
     function testSkipTierUpgrade() public {
@@ -157,14 +156,16 @@ contract TierNFTTest is Test {
 
         assertEq(uint8(tierNFT.getUserTier(user1)), uint8(TierNFT.Tier.BRONZE));
 
-        // Old NFT should be burned
-        vm.expectRevert();
-        tierNFT.ownerOf(silverTokenId);
+        // Silver NFT badge should still exist as collectible
+        assertEq(tierNFT.ownerOf(silverTokenId), user1);
+        assertEq(tierNFT.balanceOf(user1), 1); // Keeps Silver badge
     }
 
     function testDowngradeToNone() public {
         chulo.transfer(user1, BRONZE_THRESHOLD);
         tierNFT.updateUserTier(user1);
+
+        uint256 bronzeTokenId = tierNFT.userTierToken(user1);
 
         // Transfer all tokens away
         vm.prank(user1);
@@ -173,7 +174,9 @@ contract TierNFTTest is Test {
         tierNFT.updateUserTier(user1);
 
         assertEq(uint8(tierNFT.getUserTier(user1)), uint8(TierNFT.Tier.NONE));
-        assertEq(tierNFT.balanceOf(user1), 0);
+        // Keeps Bronze badge as collectible even when tier is NONE
+        assertEq(tierNFT.balanceOf(user1), 1);
+        assertEq(tierNFT.ownerOf(bronzeTokenId), user1);
     }
 
     // Test soulbound (non-transferable) functionality

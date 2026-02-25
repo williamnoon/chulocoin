@@ -18,8 +18,8 @@ import "./CHULO.sol";
 contract ValidatorStaking is Ownable, ReentrancyGuard {
     CHULO public chuloToken;
 
-    uint256 public constant MIN_STAKE = 10_000 * 10**18; // 10k CHULO
-    uint256 public constant MAX_STAKE = 200_000 * 10**18; // 200k CHULO
+    uint256 public constant MIN_STAKE = 1_000 * 10**18; // 1k CHULO (lowered for accessibility)
+    uint256 public constant MAX_STAKE = 100_000 * 10**18; // 100k CHULO
     uint256 public constant REWARD_PER_VALIDATION = 0.25 * 10**18; // 0.25 CHULO
     uint256 public constant SLASH_PERCENTAGE = 10; // 10% slash on misbehavior
 

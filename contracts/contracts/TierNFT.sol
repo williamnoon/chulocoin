@@ -100,6 +100,7 @@ contract TierNFT is ERC721, ERC721URIStorage, Ownable {
 
     /**
      * @dev Upgrade user to higher tier
+     * Note: Old tier NFTs are kept as collectible badges
      */
     function _upgradeTier(
         address user,
@@ -107,13 +108,7 @@ contract TierNFT is ERC721, ERC721URIStorage, Ownable {
         Tier newTier,
         uint256 balance
     ) internal {
-        // Burn old tier NFT if exists
-        uint256 oldTokenId = userTierToken[user];
-        if (oldTokenId > 0 && _ownerOf(oldTokenId) == user) {
-            _burn(oldTokenId);
-        }
-
-        // Mint new tier NFT
+        // Mint new tier NFT (keep old ones as collectibles)
         uint256 newTokenId = _nextTokenId++;
         _safeMint(user, newTokenId);
 
@@ -124,7 +119,7 @@ contract TierNFT is ERC721, ERC721URIStorage, Ownable {
             chuloBalanceAtUnlock: balance
         });
 
-        // Update mappings
+        // Update current tier tracking
         userTierToken[user] = newTokenId;
         userCurrentTier[user] = newTier;
 
@@ -137,36 +132,23 @@ contract TierNFT is ERC721, ERC721URIStorage, Ownable {
 
     /**
      * @dev Downgrade user to lower tier
+     * Note: Just updates current tier, keeps all NFT badges as collectibles
      */
     function _downgradeTier(
         address user,
         Tier oldTier,
         Tier newTier
     ) internal {
-        // Burn current tier NFT
-        uint256 oldTokenId = userTierToken[user];
-        if (oldTokenId > 0 && _ownerOf(oldTokenId) == user) {
-            _burn(oldTokenId);
-        }
+        // Just update current tier (keep all NFTs as collectibles)
+        userCurrentTier[user] = newTier;
 
-        // If downgrading to a tier (not NONE), mint new tier NFT
-        if (newTier != Tier.NONE) {
-            uint256 newTokenId = _nextTokenId++;
-            _safeMint(user, newTokenId);
-
-            uint256 balance = chuloToken.balanceOf(user);
-            tokenMetadata[newTokenId] = TierMetadata({
-                tier: newTier,
-                unlockedAt: block.timestamp,
-                chuloBalanceAtUnlock: balance
-            });
-
-            userTierToken[user] = newTokenId;
-        } else {
+        // Update current tier token reference to 0 if downgrading to NONE
+        // Otherwise keep the reference to highest tier NFT they own
+        if (newTier == Tier.NONE) {
             userTierToken[user] = 0;
         }
-
-        userCurrentTier[user] = newTier;
+        // Note: If downgrading to a tier they previously had,
+        // they still keep that tier's NFT badge
 
         emit TierDowngraded(user, oldTier, newTier);
     }
