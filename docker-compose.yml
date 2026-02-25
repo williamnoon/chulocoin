@@ -1,0 +1,106 @@
+# Docker Compose for ChuloBots Local Development
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:16-alpine
+    container_name: chulobots-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: chulobots
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - chulobots-network
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: chulobots-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - chulobots-network
+
+  # Backend API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: chulobots-backend
+    ports:
+      - "3001:3001"
+    environment:
+      NODE_ENV: development
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/chulobots
+      REDIS_URL: redis://redis:6379
+      JWT_SECRET: dev-secret-change-in-production
+      PORT: 3001
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+      - /app/dist
+    command: npm run dev
+    networks:
+      - chulobots-network
+    restart: unless-stopped
+
+  # Frontend WebApp
+  webapp:
+    build:
+      context: ./frontend/webapp
+      dockerfile: Dockerfile
+    container_name: chulobots-webapp
+    ports:
+      - "80:80"
+    environment:
+      VITE_API_URL: http://localhost:3001
+    depends_on:
+      - backend
+    networks:
+      - chulobots-network
+    restart: unless-stopped
+
+  # Landing Page
+  landing:
+    build:
+      context: ./frontend/landing
+      dockerfile: Dockerfile
+    container_name: chulobots-landing
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:3001
+      NEXT_PUBLIC_APP_URL: http://localhost:80
+    networks:
+      - chulobots-network
+    restart: unless-stopped
+
+networks:
+  chulobots-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  redis_data:
