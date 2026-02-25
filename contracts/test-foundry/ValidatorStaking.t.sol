@@ -167,7 +167,8 @@ contract ValidatorStakingTest is Test {
     }
 
     function testSlashValidator() public {
-        uint256 stakeAmount = MIN_STAKE;
+        // Use higher stake so it remains above MIN_STAKE after 10% slash
+        uint256 stakeAmount = MIN_STAKE * 2; // 20,000 CHULO
 
         vm.startPrank(validator1);
         chulo.approve(address(staking), stakeAmount);
@@ -184,7 +185,7 @@ contract ValidatorStakingTest is Test {
 
         (uint256 stake, , , bool isActive, uint256 reputation) = staking.getValidator(validator1);
         assertEq(stake, stakeAmount - expectedSlash);
-        assertTrue(isActive);
+        assertTrue(isActive); // Should remain active since 18k > MIN_STAKE
         assertEq(reputation, 80); // 100 - 20
     }
 

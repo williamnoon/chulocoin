@@ -60,6 +60,7 @@ contract TierNFT is ERC721, ERC721URIStorage, Ownable {
     constructor(address _chuloToken) ERC721("ChuloBots Tier Badge", "CHULO-TIER") Ownable(msg.sender) {
         require(_chuloToken != address(0), "Invalid CHULO token address");
         chuloToken = CHULO(_chuloToken);
+        _nextTokenId = 1; // Start token IDs from 1 (0 is used as null check)
     }
 
     /**
@@ -148,8 +149,23 @@ contract TierNFT is ERC721, ERC721URIStorage, Ownable {
             _burn(oldTokenId);
         }
 
-        // Update mappings
-        userTierToken[user] = 0;
+        // If downgrading to a tier (not NONE), mint new tier NFT
+        if (newTier != Tier.NONE) {
+            uint256 newTokenId = _nextTokenId++;
+            _safeMint(user, newTokenId);
+
+            uint256 balance = chuloToken.balanceOf(user);
+            tokenMetadata[newTokenId] = TierMetadata({
+                tier: newTier,
+                unlockedAt: block.timestamp,
+                chuloBalanceAtUnlock: balance
+            });
+
+            userTierToken[user] = newTokenId;
+        } else {
+            userTierToken[user] = 0;
+        }
+
         userCurrentTier[user] = newTier;
 
         emit TierDowngraded(user, oldTier, newTier);
