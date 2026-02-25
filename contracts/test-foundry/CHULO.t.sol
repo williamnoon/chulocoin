@@ -26,7 +26,7 @@ contract CHULOTest is Test {
     }
 
     function testMetadata() public {
-        assertEq(chulo.name(), "CHULO");
+        assertEq(chulo.name(), "ChuloBots");
         assertEq(chulo.symbol(), "CHULO");
         assertEq(chulo.decimals(), 18);
     }

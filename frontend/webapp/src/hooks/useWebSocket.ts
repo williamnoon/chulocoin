@@ -1,22 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
 import { useWalletStore } from '@/store/walletStore';
+import type { Signal } from '@/types';
 
 interface UseWebSocketOptions {
   autoConnect?: boolean;
-}
-
-interface Signal {
-  id: number;
-  asset: string;
-  direction: 'LONG' | 'SHORT';
-  entry: number;
-  stop: number;
-  target: number;
-  confidence: number;
-  tier: string;
-  status: string;
-  createdAt: string;
 }
 
 interface Position {

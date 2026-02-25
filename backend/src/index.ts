@@ -49,6 +49,7 @@ app.use(errorHandler);
 
 // Create HTTP server and initialize WebSocket
 const httpServer = createServer(app);
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const _wsService = initializeWebSocket(httpServer); // Will be used for future WebSocket management
 
 // Start server

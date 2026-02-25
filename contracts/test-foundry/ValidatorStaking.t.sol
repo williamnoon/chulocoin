@@ -20,8 +20,8 @@ contract ValidatorStakingTest is Test {
     uint256 constant MIN_STAKE = 10_000 * 10**18;
     uint256 constant MAX_STAKE = 200_000 * 10**18;
 
-    event Staked(address indexed validator, uint256 amount);
-    event Unstaked(address indexed validator, uint256 amount);
+    event ValidatorStaked(address indexed validator, uint256 amount);
+    event ValidatorUnstaked(address indexed validator, uint256 amount);
     event TierUpgraded(address indexed validator, uint8 newTier);
     event ValidatorSlashed(address indexed validator, uint256 amount, string reason);
 
@@ -49,7 +49,7 @@ contract ValidatorStakingTest is Test {
         chulo.approve(address(staking), stakeAmount);
 
         vm.expectEmit(true, false, false, true);
-        emit Staked(validator1, stakeAmount);
+        emit ValidatorStaked(validator1, stakeAmount);
 
         staking.stake(stakeAmount);
         vm.stopPrank();
@@ -265,6 +265,7 @@ contract ValidatorStakingTest is Test {
     // Fuzz testing
     function testFuzzStake(uint256 amount) public {
         vm.assume(amount >= MIN_STAKE);
+        vm.assume(amount <= MAX_STAKE);
         vm.assume(amount <= chulo.balanceOf(validator1));
 
         vm.startPrank(validator1);
