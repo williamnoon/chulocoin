@@ -49,7 +49,7 @@ app.use(errorHandler);
 
 // Create HTTP server and initialize WebSocket
 const httpServer = createServer(app);
-const wsService = initializeWebSocket(httpServer);
+const _wsService = initializeWebSocket(httpServer); // Will be used for future WebSocket management
 
 // Start server
 httpServer.listen(PORT, () => {

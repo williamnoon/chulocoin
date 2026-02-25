@@ -58,8 +58,8 @@ export class PriceOracleService {
     deviationPercent: number;
   }> {
     try {
-      // Convert price to 8 decimals
-      const signalPriceWei = ethers.parseUnits(signalPrice.toString(), 8);
+      // Note: Price is converted to 8 decimals for on-chain verification if needed
+      // const signalPriceWei = ethers.parseUnits(signalPrice.toString(), 8);
 
       // Call contract (note: this is a state-changing call, so we need a signer for actual use)
       // For read-only verification, we can use getLatestPrice and calculate locally

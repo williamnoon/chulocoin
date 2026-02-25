@@ -54,7 +54,7 @@ contract ValidatorStakingTest is Test {
         staking.stake(stakeAmount);
         vm.stopPrank();
 
-        (uint256 amount, , , ) = staking.validators(validator1);
+        (uint256 amount, , , , , ) = staking.validators(validator1);
         assertEq(amount, stakeAmount);
     }
 
@@ -330,9 +330,9 @@ contract ValidatorStakingTest is Test {
         vm.stopPrank();
     }
 
-    function _unstakeFor(address validator, uint256 amount) internal {
+    function _unstakeFor(address validator, uint256 /*amount*/) internal {
         vm.startPrank(validator);
-        staking.unstake(amount);
+        staking.unstake();
         vm.stopPrank();
     }
 }
