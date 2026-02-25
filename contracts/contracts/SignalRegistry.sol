@@ -192,7 +192,7 @@ contract SignalRegistry is Ownable, ReentrancyGuard {
         require(!signal.validatorVotes[msg.sender], "Already voted");
 
         // Check if caller is a valid staked validator
-        (uint256 stakedAmount, , , ) = validatorStaking.validators(msg.sender);
+        (uint256 stakedAmount, , , , , ) = validatorStaking.validators(msg.sender);
         require(
             stakedAmount >= validatorStaking.MIN_STAKE(),
             "Not a valid validator"

@@ -243,7 +243,7 @@ contract ValidatorStaking is Ownable, ReentrancyGuard {
         external
         view
         returns (
-            uint256 stake,
+            uint256 stakedAmount,
             uint256 rewards,
             uint256 validations,
             bool isActive,
