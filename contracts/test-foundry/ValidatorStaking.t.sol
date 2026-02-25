@@ -23,6 +23,7 @@ contract ValidatorStakingTest is Test {
     event Staked(address indexed validator, uint256 amount);
     event Unstaked(address indexed validator, uint256 amount);
     event TierUpgraded(address indexed validator, uint8 newTier);
+    event ValidatorSlashed(address indexed validator, uint256 amount, string reason);
 
     function setUp() public {
         owner = address(this);
