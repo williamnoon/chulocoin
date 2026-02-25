@@ -51,11 +51,13 @@ ARBISCAN_API_KEY=your_arbiscan_api_key
 To deploy contracts, you need ETH on Arbitrum Sepolia testnet:
 
 #### Option 1: Arbitrum Faucet (Recommended)
+
 1. Visit [Arbitrum Sepolia Bridge](https://bridge.arbitrum.io/)
 2. First get Sepolia ETH from [Sepolia Faucet](https://sepoliafaucet.com/)
 3. Bridge Sepolia ETH to Arbitrum Sepolia using the official bridge
 
 #### Option 2: Third-Party Faucets
+
 - [Chainlink Faucet](https://faucets.chain.link/arbitrum-sepolia)
 - [Alchemy Faucet](https://www.alchemy.com/faucets/arbitrum-sepolia)
 - [QuickNode Faucet](https://faucet.quicknode.com/arbitrum/sepolia)
@@ -87,6 +89,7 @@ npx hardhat run scripts/deploy.ts --network arbitrumSepolia
 ```
 
 The deployment script will:
+
 1. Deploy CHULO token with 10M initial supply
 2. Deploy ChainlinkPriceOracle and configure price feeds
 3. Deploy TierNFT linked to CHULO token
@@ -168,6 +171,7 @@ contracts/deployments/sepolia.json
 ```
 
 Example structure:
+
 ```json
 {
   "network": "arbitrumSepolia",
@@ -238,11 +242,11 @@ Update your frontend app with the new contract addresses from `deployments/sepol
 ```typescript
 // frontend/webapp/src/config/contracts.ts
 export const CONTRACTS = {
-  CHULO: "0x...",
-  ChainlinkPriceOracle: "0x...",
-  TierNFT: "0x...",
-  ValidatorStaking: "0x...",
-  SignalRegistry: "0x...",
+  CHULO: '0x...',
+  ChainlinkPriceOracle: '0x...',
+  TierNFT: '0x...',
+  ValidatorStaking: '0x...',
+  SignalRegistry: '0x...',
 };
 ```
 
@@ -261,27 +265,35 @@ npx hardhat test --network arbitrumSepolia
 ## Troubleshooting
 
 ### Insufficient Funds Error
+
 ```
 Error: insufficient funds for intrinsic transaction cost
 ```
+
 **Solution:** Get more testnet ETH from faucets listed above.
 
 ### Nonce Too High/Low Error
+
 ```
 Error: nonce has already been used
 ```
+
 **Solution:** Reset your account nonce or wait for pending transactions to complete.
 
 ### Verification Failed
+
 ```
 Error: Already Verified
 ```
+
 **Solution:** Contract is already verified. Check Arbiscan.
 
 ### RPC Connection Error
+
 ```
 Error: could not detect network
 ```
+
 **Solution:** Check your `ARBITRUM_SEPOLIA_RPC_URL` in `.env` file.
 
 ## Additional Resources
@@ -302,6 +314,7 @@ Error: could not detect network
 ## Support
 
 For issues or questions:
+
 - Open an issue on GitHub
 - Check existing documentation
 - Review Hardhat/Arbitrum docs

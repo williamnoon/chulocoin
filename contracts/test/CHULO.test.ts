@@ -97,9 +97,9 @@ describe('CHULO Token', function () {
       const remaining = MAX_SUPPLY - INITIAL_SUPPLY;
       const tooMuch = remaining + ethers.parseEther('1');
 
-      await expect(
-        chulo.connect(minter).mint(user1.address, tooMuch, 'reward')
-      ).to.be.revertedWith('Exceeds max supply');
+      await expect(chulo.connect(minter).mint(user1.address, tooMuch, 'reward')).to.be.revertedWith(
+        'Exceeds max supply'
+      );
     });
 
     it('Should mint up to max supply', async function () {

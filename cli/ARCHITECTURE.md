@@ -40,6 +40,7 @@ cli/
 The main application orchestrates the TUI event loop and state management.
 
 **Responsibilities:**
+
 - Initialize the terminal and async runtime
 - Create and manage the `App` state
 - Handle keyboard events (Q=quit, S=start/stop, R=refresh)
@@ -47,6 +48,7 @@ The main application orchestrates the TUI event loop and state management.
 - Render UI on each frame
 
 **Key Structs:**
+
 - `App`: Main application state container
   - `mining_engine`: Mining operations
   - `blockchain_client`: Wallet and contract interactions
@@ -57,6 +59,7 @@ The main application orchestrates the TUI event loop and state management.
 Handles all mining-related logic and state.
 
 **Responsibilities:**
+
 - Start/stop/toggle mining operations
 - Track mining statistics (signals processed, validated, rejected)
 - Calculate uptime
@@ -64,11 +67,13 @@ Handles all mining-related logic and state.
 - Update state on each tick
 
 **Key Structs:**
+
 - `MiningEngine`: Main mining coordinator
 - `MiningStatus`: Active or Paused
 - `MiningStats`: Statistics tracking
 
 **Future Enhancements:**
+
 - WebSocket connection to backend for real signals
 - Signal validation algorithm
 - Proof-of-validation submission
@@ -79,16 +84,19 @@ Handles all mining-related logic and state.
 Manages wallet connection and smart contract interactions.
 
 **Responsibilities:**
+
 - Connect to Arbitrum One via RPC
 - Fetch CHULO balance from ERC-20 contract
 - Calculate tier based on balance
 - Track wallet information
 
 **Key Structs:**
+
 - `BlockchainClient`: Main blockchain interface
 - `WalletInfo`: Wallet address, balance, tier
 
 **Future Enhancements:**
+
 - ethers-rs integration for real contract calls
 - Transaction signing and submission
 - Gas price estimation
@@ -99,6 +107,7 @@ Manages wallet connection and smart contract interactions.
 Renders the terminal user interface using ratatui.
 
 **Layout:**
+
 ```
 ┌─────────────────────────────────────┐
 │       ChuloBots CLI v0.1.0         │
@@ -120,6 +129,7 @@ Renders the terminal user interface using ratatui.
 ```
 
 **Components:**
+
 - `render_header()`: App title and version
 - `render_status()`: Mining status indicator
 - `render_wallet_info()`: Wallet details
@@ -127,6 +137,7 @@ Renders the terminal user interface using ratatui.
 - `render_controls()`: Keyboard shortcuts
 
 **Color Scheme:**
+
 - Cyan: Primary accent (headers, keys)
 - Green: Positive values (active, earnings, validated)
 - Yellow: Warning/neutral (paused, balance)
@@ -191,10 +202,12 @@ codegen-units = 1    # Single codegen unit for max optimization
 ### Private Key Management
 
 **Current (Stub):**
+
 - Environment variable: `CHULOBOTS_PRIVATE_KEY`
 - Config file: `~/.chulobots/config.toml`
 
 **Future (Production):**
+
 - System keyring integration (keyring-rs)
 - Hardware wallet support (Ledger, Trezor)
 - Encrypted local storage
@@ -236,6 +249,7 @@ mod tests {
 ```
 
 **Coverage Targets:**
+
 - Core logic: 90%+
 - UI rendering: 70%+
 - Error handling: 100%
@@ -311,6 +325,7 @@ Optional telemetry:
 - Performance metrics
 
 **Privacy:**
+
 - Opt-in only
 - Anonymous by default
 - No PII collected
@@ -318,24 +333,28 @@ Optional telemetry:
 ## Future Enhancements
 
 ### Phase 1 (Current)
+
 - [x] Basic TUI structure
 - [x] Mining state management
 - [x] Stub blockchain client
 - [x] UI rendering
 
 ### Phase 2 (Next)
+
 - [ ] Real blockchain integration (ethers-rs)
 - [ ] WebSocket connection to backend
 - [ ] Signal validation logic
 - [ ] Reward claiming
 
 ### Phase 3
+
 - [ ] Background daemon mode
 - [ ] System tray integration
 - [ ] Notifications
 - [ ] Configuration UI
 
 ### Phase 4
+
 - [ ] Advanced statistics
 - [ ] Strategy selection
 - [ ] Performance analytics

@@ -40,15 +40,11 @@ export default function SignalCard({ signal }: SignalCardProps) {
       <div className="grid grid-cols-3 gap-4 mb-4">
         <div>
           <div className="text-xs text-gray-400 mb-1">Entry</div>
-          <div className="text-lg font-semibold text-white">
-            ${signal.entry.toLocaleString()}
-          </div>
+          <div className="text-lg font-semibold text-white">${signal.entry.toLocaleString()}</div>
         </div>
         <div>
           <div className="text-xs text-gray-400 mb-1">Stop</div>
-          <div className="text-lg font-semibold text-red-400">
-            ${signal.stop.toLocaleString()}
-          </div>
+          <div className="text-lg font-semibold text-red-400">${signal.stop.toLocaleString()}</div>
         </div>
         <div>
           <div className="text-xs text-gray-400 mb-1">Target</div>

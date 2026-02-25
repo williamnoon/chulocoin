@@ -13,23 +13,24 @@ We use a **hybrid approach** to leverage the strengths of both frameworks:
 
 ## Tool Comparison
 
-| Feature | Hardhat | Foundry | Winner |
-|---------|---------|---------|--------|
-| Test Speed | Slow (~30s) | Fast (~3s) | Foundry |
-| Language | TypeScript | Solidity | Depends |
-| Fuzzing | No | Yes | Foundry |
-| Gas Reports | Good | Better | Foundry |
-| Debugging | Good | Excellent | Foundry |
-| Deployment | TypeScript | Solidity | Depends |
-| CI/CD | Mature | Growing | Hardhat |
-| Learning Curve | Easy | Moderate | Hardhat |
-| Ecosystem | Large | Growing | Hardhat |
+| Feature        | Hardhat     | Foundry    | Winner  |
+| -------------- | ----------- | ---------- | ------- |
+| Test Speed     | Slow (~30s) | Fast (~3s) | Foundry |
+| Language       | TypeScript  | Solidity   | Depends |
+| Fuzzing        | No          | Yes        | Foundry |
+| Gas Reports    | Good        | Better     | Foundry |
+| Debugging      | Good        | Excellent  | Foundry |
+| Deployment     | TypeScript  | Solidity   | Depends |
+| CI/CD          | Mature      | Growing    | Hardhat |
+| Learning Curve | Easy        | Moderate   | Hardhat |
+| Ecosystem      | Large       | Growing    | Hardhat |
 
 ## When to Use Each Tool
 
 ### Use Foundry For:
 
 1. **Unit Tests** - Write fast, focused tests
+
    ```solidity
    function testTransfer() public {
        token.transfer(user, 100);
@@ -38,6 +39,7 @@ We use a **hybrid approach** to leverage the strengths of both frameworks:
    ```
 
 2. **Fuzz Testing** - Test with random inputs
+
    ```solidity
    function testFuzzTransfer(address to, uint256 amount) public {
        vm.assume(amount <= MAX);
@@ -46,12 +48,14 @@ We use a **hybrid approach** to leverage the strengths of both frameworks:
    ```
 
 3. **Gas Optimization** - Track gas usage
+
    ```bash
    forge snapshot
    forge snapshot --diff  # See changes
    ```
 
 4. **Quick Development Iterations** - Instant feedback
+
    ```bash
    forge test  # ~3 seconds
    ```
@@ -65,27 +69,31 @@ We use a **hybrid approach** to leverage the strengths of both frameworks:
 ### Use Hardhat For:
 
 1. **Integration Tests** - Complex multi-contract interactions
+
    ```typescript
-   it("should complete full workflow", async () => {
-       await token.approve(staking.address, amount);
-       await staking.stake(amount);
-       // ... complex logic
+   it('should complete full workflow', async () => {
+     await token.approve(staking.address, amount);
+     await staking.stake(amount);
+     // ... complex logic
    });
    ```
 
 2. **Deployment Scripts** - TypeScript flexibility
+
    ```typescript
-   const chulo = await ethers.deployContract("CHULO");
+   const chulo = await ethers.deployContract('CHULO');
    await chulo.waitForDeployment();
    // Save addresses, verify contracts, etc.
    ```
 
 3. **Frontend Integration** - Generate TypeChain types
+
    ```bash
    npm run build  # Generates typechain-types/
    ```
 
 4. **CI/CD Pipelines** - Mature tooling
+
    ```yaml
    - run: npm test
    - run: npm run test:coverage
@@ -160,11 +168,13 @@ npm run test:coverage
 Choose based on complexity:
 
 **Simple deployment** → Use Foundry:
+
 ```bash
 npm run deploy:forge:sepolia
 ```
 
 **Complex deployment** → Use Hardhat:
+
 ```bash
 npm run deploy:testnet
 ```
@@ -201,6 +211,7 @@ contracts/
 ### Foundry Tests (Unit)
 
 Focus on:
+
 - ✓ Individual function behavior
 - ✓ Edge cases and boundaries
 - ✓ Access control
@@ -208,6 +219,7 @@ Focus on:
 - ✓ Fuzz testing
 
 Example:
+
 ```solidity
 contract CHULOTest is Test {
     function testTransfer() public { /* ... */ }
@@ -219,6 +231,7 @@ contract CHULOTest is Test {
 ### Hardhat Tests (Integration)
 
 Focus on:
+
 - ✓ Multi-contract workflows
 - ✓ State transitions
 - ✓ Event emissions
@@ -226,11 +239,12 @@ Focus on:
 - ✓ Real-world scenarios
 
 Example:
+
 ```typescript
-describe("Full Staking Workflow", () => {
-    it("should stake, earn rewards, and unstake", async () => {
-        // Multi-step integration test
-    });
+describe('Full Staking Workflow', () => {
+  it('should stake, earn rewards, and unstake', async () => {
+    // Multi-step integration test
+  });
 });
 ```
 
@@ -251,10 +265,10 @@ function testFuzzTransfer(address to, uint256 amount) public {
 
 ```typescript
 // test/CHULO.test.ts
-it("should transfer tokens with proper events", async () => {
-    await expect(token.transfer(user1.address, 100))
-        .to.emit(token, "Transfer")
-        .withArgs(owner.address, user1.address, 100);
+it('should transfer tokens with proper events', async () => {
+  await expect(token.transfer(user1.address, 100))
+    .to.emit(token, 'Transfer')
+    .withArgs(owner.address, user1.address, 100);
 });
 ```
 
@@ -270,11 +284,11 @@ function testRewardCalculation() public {
 
 ```typescript
 // Use Hardhat to test the workflow
-it("should distribute rewards correctly", async () => {
-    await staking.stake(ethers.parseEther("100"));
-    await time.increase(365 * 24 * 60 * 60);
-    await staking.claimRewards();
-    // Check balances, events, etc.
+it('should distribute rewards correctly', async () => {
+  await staking.stake(ethers.parseEther('100'));
+  await time.increase(365 * 24 * 60 * 60);
+  await staking.claimRewards();
+  // Check balances, events, etc.
 });
 ```
 
@@ -353,6 +367,7 @@ fuzz = { runs = 100 }     # Fewer runs locally
 ```
 
 Run with profile:
+
 ```bash
 FOUNDRY_PROFILE=lite forge test
 ```
@@ -396,14 +411,15 @@ npm run clean
 ### Converting Hardhat Tests to Foundry
 
 **Before (Hardhat):**
+
 ```typescript
-it("should revert on zero address", async () => {
-    await expect(token.transfer(ethers.ZeroAddress, 100))
-        .to.be.reverted;
+it('should revert on zero address', async () => {
+  await expect(token.transfer(ethers.ZeroAddress, 100)).to.be.reverted;
 });
 ```
 
 **After (Foundry):**
+
 ```solidity
 function testRevertZeroAddress() public {
     vm.expectRevert();
@@ -414,6 +430,7 @@ function testRevertZeroAddress() public {
 ### Converting Foundry Tests to Hardhat
 
 **Before (Foundry):**
+
 ```solidity
 function testTransfer() public {
     token.transfer(user, 100);
@@ -422,10 +439,11 @@ function testTransfer() public {
 ```
 
 **After (Hardhat):**
+
 ```typescript
-it("should transfer tokens", async () => {
-    await token.transfer(user.address, 100);
-    expect(await token.balanceOf(user.address)).to.equal(100);
+it('should transfer tokens', async () => {
+  await token.transfer(user.address, 100);
+  expect(await token.balanceOf(user.address)).to.equal(100);
 });
 ```
 

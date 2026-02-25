@@ -68,7 +68,7 @@ We use Zustand for global state:
 // Create store
 export const useMyStore = create<MyState>()(
   persist(
-    (set) => ({
+    set => ({
       // state and actions
     }),
     { name: 'my-storage' }

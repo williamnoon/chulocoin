@@ -5,21 +5,27 @@ Welcome to the ChuloBots CLI! This guide will help you navigate the project.
 ## 📋 I Want To...
 
 ### ...Use the CLI
+
 👉 **Read**: [README.md](README.md)
+
 - Installation instructions
 - Usage guide
 - Feature overview
 - Tier system explanation
 
 ### ...Get It Running in 5 Minutes
+
 👉 **Read**: [QUICKSTART.md](QUICKSTART.md)
+
 - Fast setup
 - Build commands
 - First run guide
 - Common commands
 
 ### ...Understand the Architecture
+
 👉 **Read**: [ARCHITECTURE.md](ARCHITECTURE.md)
+
 - Technical deep-dive
 - Component breakdown
 - Data flow diagrams
@@ -27,35 +33,45 @@ Welcome to the ChuloBots CLI! This guide will help you navigate the project.
 - Security analysis
 
 ### ...Contribute to Development
+
 👉 **Read**: [DEVELOPMENT.md](DEVELOPMENT.md)
+
 - Development roadmap
 - Code style guide
 - Testing strategy
 - Workflow and best practices
 
 ### ...See What's Done and What's Next
+
 👉 **Read**: [STATUS.md](STATUS.md)
+
 - Phase 1 completion report
 - What's implemented
 - What's stubbed for Phase 2
 - Testing instructions
 
 ### ...See the Big Picture
+
 👉 **Read**: [SUMMARY.md](SUMMARY.md)
+
 - Executive summary
 - Key metrics
 - Files created
 - Success criteria
 
 ### ...Browse the File Structure
+
 👉 **Read**: [STRUCTURE.txt](STRUCTURE.txt)
+
 - Visual file tree
 - Dependency graph
 - UI layout diagram
 - Quick commands
 
 ### ...Configure the CLI
+
 👉 **Read**: [config.example.toml](config.example.toml)
+
 - Example configuration
 - All available options
 - Comments and explanations
@@ -121,29 +137,34 @@ cli/
 ## 🎯 What to Read Based on Your Role
 
 ### 👤 User
+
 1. README.md
 2. QUICKSTART.md
 3. config.example.toml
 
 ### 👨‍💻 Developer (New to Project)
+
 1. QUICKSTART.md
 2. ARCHITECTURE.md
 3. DEVELOPMENT.md
 4. Source code in src/
 
 ### 👨‍💻 Developer (Contributing)
+
 1. DEVELOPMENT.md
 2. STATUS.md
 3. ARCHITECTURE.md
 4. Source code in src/
 
 ### 🏗️ Architect / Tech Lead
+
 1. SUMMARY.md
 2. ARCHITECTURE.md
 3. STATUS.md
 4. STRUCTURE.txt
 
 ### 📊 Project Manager
+
 1. SUMMARY.md
 2. STATUS.md
 3. README.md
@@ -158,12 +179,12 @@ cli/
 
 ## 🔗 Quick Links
 
-| What | Where |
-|------|-------|
-| Source Code | `src/` directory |
-| Documentation | All `.md` files |
+| What          | Where                               |
+| ------------- | ----------------------------------- |
+| Source Code   | `src/` directory                    |
+| Documentation | All `.md` files                     |
 | Configuration | `Cargo.toml`, `config.example.toml` |
-| Tests | `src/*/mod.rs` (inline) |
+| Tests         | `src/*/mod.rs` (inline)             |
 | Build Scripts | `build.sh`, `build.bat`, `Makefile` |
 
 ## 🆘 Getting Help

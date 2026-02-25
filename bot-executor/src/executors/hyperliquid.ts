@@ -98,7 +98,7 @@ class RateLimiter {
   }
 
   async throttle(): Promise<void> {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       this.queue.push(resolve);
       this.processQueue();
     });
@@ -321,7 +321,7 @@ export class HyperliquidExecutor extends BaseExecutor {
 
       const orderId = oid.toString();
       const orderStatus: 'open' | 'filled' = status.filled ? 'filled' : 'open';
-      const fillPrice = status.filled ? parseFloat(status.filled.avgPx) : (price || 0);
+      const fillPrice = status.filled ? parseFloat(status.filled.avgPx) : price || 0;
 
       const order: Order = {
         id: orderId,
@@ -398,8 +398,11 @@ export class HyperliquidExecutor extends BaseExecutor {
 
         // Parse order status
         const status: 'open' | 'filled' | 'cancelled' =
-          orderData.status === 'filled' ? 'filled' :
-          orderData.status === 'canceled' ? 'cancelled' : 'open';
+          orderData.status === 'filled'
+            ? 'filled'
+            : orderData.status === 'canceled'
+              ? 'cancelled'
+              : 'open';
 
         const order: Order = {
           id: orderId,
@@ -644,7 +647,9 @@ export class HyperliquidExecutor extends BaseExecutor {
       const signature = await this.wallet.signTypedData(domain, types, value);
       return signature;
     } catch (error) {
-      throw new Error(`Failed to sign action: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(
+        `Failed to sign action: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
   }
 
@@ -660,7 +665,9 @@ export class HyperliquidExecutor extends BaseExecutor {
       return response.data;
     } catch (error) {
       if (retryCount < this.maxRetries && this.isRetryableError(error)) {
-        console.log(`[Hyperliquid] Request failed, retrying (${retryCount + 1}/${this.maxRetries})...`);
+        console.log(
+          `[Hyperliquid] Request failed, retrying (${retryCount + 1}/${this.maxRetries})...`
+        );
         await new Promise(resolve => setTimeout(resolve, this.retryDelay * (retryCount + 1)));
         return this.makeRequest<T>(endpoint, data, retryCount + 1);
       }

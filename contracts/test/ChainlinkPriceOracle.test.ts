@@ -57,22 +57,21 @@ describe('ChainlinkPriceOracle', function () {
     });
 
     it('Should revert if adding feed with zero address', async function () {
-      await expect(
-        oracle.addPriceFeed('BTC', ethers.ZeroAddress)
-      ).to.be.revertedWith('Invalid feed address');
+      await expect(oracle.addPriceFeed('BTC', ethers.ZeroAddress)).to.be.revertedWith(
+        'Invalid feed address'
+      );
     });
 
     it('Should revert if price feed already exists', async function () {
       await oracle.addPriceFeed('BTC', await mockPriceFeed.getAddress());
-      await expect(
-        oracle.addPriceFeed('BTC', await mockPriceFeed.getAddress())
-      ).to.be.revertedWith('Price feed already exists');
+      await expect(oracle.addPriceFeed('BTC', await mockPriceFeed.getAddress())).to.be.revertedWith(
+        'Price feed already exists'
+      );
     });
 
     it('Should prevent non-owner from adding price feed', async function () {
-      await expect(
-        oracle.connect(user).addPriceFeed('BTC', await mockPriceFeed.getAddress())
-      ).to.be.reverted;
+      await expect(oracle.connect(user).addPriceFeed('BTC', await mockPriceFeed.getAddress())).to.be
+        .reverted;
     });
 
     it('Should allow owner to update price feed', async function () {
@@ -150,9 +149,7 @@ describe('ChainlinkPriceOracle', function () {
     });
 
     it('Should revert if price feed not found', async function () {
-      await expect(oracle.getLatestPrice('ETH')).to.be.revertedWith(
-        'Price feed not found'
-      );
+      await expect(oracle.getLatestPrice('ETH')).to.be.revertedWith('Price feed not found');
     });
 
     it('Should return correct decimals', async function () {
@@ -233,9 +230,9 @@ describe('ChainlinkPriceOracle', function () {
     });
 
     it('Should revert if custom tolerance exceeds 10%', async function () {
-      await expect(
-        oracle.verifyPriceWithTolerance('BTC', 5050000000000, 1001)
-      ).to.be.revertedWith('Tolerance cannot exceed 10%');
+      await expect(oracle.verifyPriceWithTolerance('BTC', 5050000000000, 1001)).to.be.revertedWith(
+        'Tolerance cannot exceed 10%'
+      );
     });
   });
 

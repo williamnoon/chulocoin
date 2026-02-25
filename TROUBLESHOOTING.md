@@ -17,11 +17,13 @@ Common issues and their solutions when deploying to staging.
 ### Contract Deployment Failed: Insufficient Funds
 
 **Error:**
+
 ```
 Error: insufficient funds for gas * price + value
 ```
 
 **Solution:**
+
 ```bash
 # Check wallet balance
 cast balance 0xYourWalletAddress --rpc-url https://sepolia-rollup.arbitrum.io/rpc
@@ -36,11 +38,13 @@ open https://bridge.arbitrum.io/?destinationChain=arbitrum-sepolia
 ### Contract Verification Failed
 
 **Error:**
+
 ```
 Error: Contract already verified or verification failed
 ```
 
 **Solution:**
+
 ```bash
 # Wait 30 seconds after deployment
 sleep 30
@@ -54,11 +58,13 @@ npx hardhat verify --network arbitrumSepolia CONTRACT_ADDRESS "CONSTRUCTOR_ARGS"
 ### Cannot Read Contract State
 
 **Error:**
+
 ```
 Error: call revert exception
 ```
 
 **Solution:**
+
 ```bash
 # Verify contract address is correct
 echo $CHULO_ADDRESS
@@ -76,11 +82,13 @@ npm run compile
 ### Wrong Network Error
 
 **Error:**
+
 ```
 Error: network does not match signer
 ```
 
 **Solution:**
+
 ```bash
 # Check hardhat config network
 cat contracts/hardhat.config.ts | grep arbitrumSepolia
@@ -98,11 +106,13 @@ curl -X POST https://sepolia-rollup.arbitrum.io/rpc \
 ### Backend Health Check Failed
 
 **Error:**
+
 ```
 curl: (7) Failed to connect to backend.railway.app
 ```
 
 **Solution:**
+
 ```bash
 # Check Railway deployment status
 railway status
@@ -123,11 +133,13 @@ railway restart
 ### Database Connection Error
 
 **Error:**
+
 ```
 P1001: Can't reach database server at `host:port`
 ```
 
 **Solution:**
+
 ```bash
 # Check DATABASE_URL is set
 railway variables | grep DATABASE_URL
@@ -145,11 +157,13 @@ railway add --database postgresql
 ### Redis Connection Error
 
 **Error:**
+
 ```
 Error: Redis connection timeout
 ```
 
 **Solution:**
+
 ```bash
 # Check REDIS_URL is set
 railway variables | grep REDIS_URL
@@ -167,11 +181,13 @@ railway run node -e "const redis = require('redis'); const client = redis.create
 ### API Endpoints Return 500 Error
 
 **Error:**
+
 ```
 HTTP 500 Internal Server Error
 ```
 
 **Solution:**
+
 ```bash
 # Check backend logs for stack trace
 railway logs --service backend --follow
@@ -196,11 +212,13 @@ railway restart
 ### CORS Errors in Frontend
 
 **Error:**
+
 ```
 Access to fetch at 'https://backend.railway.app' from origin 'https://webapp.vercel.app' has been blocked by CORS
 ```
 
 **Solution:**
+
 ```bash
 # Update ALLOWED_ORIGINS in Railway
 railway variables set ALLOWED_ORIGINS="https://your-landing.vercel.app,https://your-webapp.vercel.app"
@@ -218,11 +236,13 @@ railway restart
 ### JWT Authentication Errors
 
 **Error:**
+
 ```
 401 Unauthorized: Invalid token
 ```
 
 **Solution:**
+
 ```bash
 # Check JWT_SECRET is set and same across deployments
 railway variables | grep JWT_SECRET
@@ -240,11 +260,13 @@ railway variables set JWT_SECRET=$JWT_SECRET
 ### Frontend Build Failed on Vercel
 
 **Error:**
+
 ```
 Error: Build failed with exit code 1
 ```
 
 **Solution:**
+
 ```bash
 # Test build locally first
 cd frontend/webapp
@@ -271,6 +293,7 @@ vercel --prod --force
 ### Environment Variables Not Available
 
 **Error:**
+
 ```
 Uncaught ReferenceError: process is not defined
 or
@@ -278,6 +301,7 @@ import.meta.env.VITE_API_URL is undefined
 ```
 
 **Solution:**
+
 ```bash
 # For Vite (webapp), use VITE_ prefix
 vercel env add VITE_API_URL production
@@ -296,12 +320,14 @@ vercel --prod
 ### Cannot Connect to Backend API
 
 **Error:**
+
 ```
 Failed to fetch
 Network request failed
 ```
 
 **Solution:**
+
 ```bash
 # 1. Verify backend URL is correct
 echo $VITE_API_URL
@@ -322,11 +348,13 @@ vercel env ls
 ### WebSocket Connection Failed
 
 **Error:**
+
 ```
 WebSocket connection to 'wss://backend.railway.app' failed
 ```
 
 **Solution:**
+
 ```bash
 # 1. Verify WebSocket URL uses wss://
 echo $VITE_WS_URL  # Should be wss://, not https://
@@ -348,11 +376,13 @@ vercel env add VITE_WS_URL production
 ### Wrong Network in MetaMask
 
 **Error:**
+
 ```
 Wrong network. Please switch to Arbitrum Sepolia
 ```
 
 **Solution:**
+
 ```javascript
 // Add Arbitrum Sepolia to MetaMask
 const chainId = '0x66eee'; // 421614 in hex
@@ -367,17 +397,19 @@ try {
   if (switchError.code === 4902) {
     await window.ethereum.request({
       method: 'wallet_addEthereumChain',
-      params: [{
-        chainId,
-        chainName: 'Arbitrum Sepolia',
-        nativeCurrency: {
-          name: 'ETH',
-          symbol: 'ETH',
-          decimals: 18
+      params: [
+        {
+          chainId,
+          chainName: 'Arbitrum Sepolia',
+          nativeCurrency: {
+            name: 'ETH',
+            symbol: 'ETH',
+            decimals: 18,
+          },
+          rpcUrls: ['https://sepolia-rollup.arbitrum.io/rpc'],
+          blockExplorerUrls: ['https://sepolia.arbiscan.io'],
         },
-        rpcUrls: ['https://sepolia-rollup.arbitrum.io/rpc'],
-        blockExplorerUrls: ['https://sepolia.arbiscan.io']
-      }],
+      ],
     });
   }
 }
@@ -388,11 +420,13 @@ try {
 ### Migration Failed
 
 **Error:**
+
 ```
 Error: Migration failed to apply
 ```
 
 **Solution:**
+
 ```bash
 # Check migration status
 railway run npx prisma migrate status
@@ -413,11 +447,13 @@ railway run npm run db:seed:staging
 ### Database Schema Out of Sync
 
 **Error:**
+
 ```
 Error: Table X doesn't exist
 ```
 
 **Solution:**
+
 ```bash
 # Generate Prisma client
 railway run npx prisma generate
@@ -435,11 +471,13 @@ railway run npx prisma db pull
 ### Too Many Database Connections
 
 **Error:**
+
 ```
 Error: Too many connections
 ```
 
 **Solution:**
+
 ```bash
 # Check connection pool settings in Prisma
 cat backend/prisma/schema.prisma | grep -A5 datasource
@@ -459,11 +497,13 @@ cat backend/prisma/schema.prisma | grep -A5 datasource
 ### Seed Data Already Exists
 
 **Error:**
+
 ```
 Unique constraint violation
 ```
 
 **Solution:**
+
 ```bash
 # Use upsert instead of create in seed file
 # Already done in seed-staging.ts
@@ -480,11 +520,13 @@ railway run npm run db:seed:staging
 ### GitHub Actions Workflow Failed
 
 **Error:**
+
 ```
 Process completed with exit code 1
 ```
 
 **Solution:**
+
 ```bash
 # View detailed logs
 gh run view --log-failed
@@ -511,11 +553,13 @@ gh run rerun
 ### Railway Deployment Stuck
 
 **Error:**
+
 ```
 Deployment in progress for 10+ minutes
 ```
 
 **Solution:**
+
 ```bash
 # Cancel current deployment
 railway service cancel-deployment
@@ -533,11 +577,13 @@ open https://railway.app/help
 ### Vercel Deployment Failed
 
 **Error:**
+
 ```
 Deployment failed: Build exceeded maximum duration
 ```
 
 **Solution:**
+
 ```bash
 # Optimize build
 # 1. Check for large dependencies
@@ -556,11 +602,13 @@ open https://vercel.com/support
 ### Secret Not Found in GitHub Actions
 
 **Error:**
+
 ```
 Error: Secret VERCEL_TOKEN not found
 ```
 
 **Solution:**
+
 ```bash
 # List secrets
 gh secret list
@@ -580,11 +628,13 @@ gh run rerun
 ### RPC Request Failed
 
 **Error:**
+
 ```
 Error: could not detect network
 ```
 
 **Solution:**
+
 ```bash
 # Test RPC connection
 curl -X POST https://sepolia-rollup.arbitrum.io/rpc \
@@ -602,11 +652,13 @@ railway variables set ARBITRUM_SEPOLIA_RPC=https://arbitrum-sepolia.publicnode.c
 ### Rate Limited by RPC
 
 **Error:**
+
 ```
 Error: Rate limit exceeded
 ```
 
 **Solution:**
+
 ```bash
 # Use Alchemy or Infura
 # 1. Sign up for free tier
@@ -629,6 +681,7 @@ railway variables set ARBITRUM_SEPOLIA_RPC=$RPC_URL
 API requests taking 5+ seconds
 
 **Solution:**
+
 ```bash
 # 1. Check Railway region
 # Deploy backend in same region as your users
@@ -655,6 +708,7 @@ API requests taking 5+ seconds
 Pushing to staging branch doesn't trigger workflow
 
 **Solution:**
+
 ```bash
 # 1. Check workflow file syntax
 cat .github/workflows/deploy-staging.yml
@@ -675,11 +729,13 @@ gh run list
 ### Permission Denied in Workflow
 
 **Error:**
+
 ```
 Error: Resource not accessible by integration
 ```
 
 **Solution:**
+
 ```bash
 # Add permissions to workflow file
 # In .github/workflows/deploy-staging.yml:
@@ -698,11 +754,13 @@ git push
 ### Deployment Timeout
 
 **Error:**
+
 ```
 Error: The operation was canceled
 ```
 
 **Solution:**
+
 ```bash
 # Increase timeout in workflow
 # In .github/workflows/deploy-staging.yml:
@@ -720,6 +778,7 @@ Error: The operation was canceled
 If you're still experiencing problems:
 
 1. **Check logs thoroughly:**
+
    ```bash
    railway logs --service backend --follow
    vercel logs --follow
@@ -732,16 +791,19 @@ If you're still experiencing problems:
    - [.github/SECRETS.md](./.github/SECRETS.md)
 
 3. **Run verification:**
+
    ```bash
    ./scripts/verify-staging.sh
    ```
 
 4. **Search existing issues:**
+
    ```bash
    gh issue list --search "your error message"
    ```
 
 5. **Create new issue:**
+
    ```bash
    gh issue create --title "Deployment issue: brief description" --body "Full error details"
    ```

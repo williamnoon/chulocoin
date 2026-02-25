@@ -326,14 +326,7 @@ router.post('/:id/update-stops', async (req: Request, res: Response, next) => {
  */
 router.get('/history', async (req: Request, res: Response, next) => {
   try {
-    const {
-      walletAddress,
-      exchange,
-      startDate,
-      endDate,
-      limit = '50',
-      offset = '0',
-    } = req.query;
+    const { walletAddress, exchange, startDate, endDate, limit = '50', offset = '0' } = req.query;
 
     if (!walletAddress) {
       throw new AppError('Wallet address is required', 400);

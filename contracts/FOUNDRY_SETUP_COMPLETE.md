@@ -123,18 +123,23 @@ make lint              # Run linter
 ## File Locations
 
 ### Contracts (Shared)
+
 `/Users/willnoon/Documents/GitHub/chulobots/contracts/contracts/`
 
 ### Hardhat Tests
+
 `/Users/willnoon/Documents/GitHub/chulobots/contracts/test/`
 
 ### Foundry Tests
+
 `/Users/willnoon/Documents/GitHub/chulobots/contracts/test-foundry/`
 
 ### Hardhat Scripts
+
 `/Users/willnoon/Documents/GitHub/chulobots/contracts/scripts/`
 
 ### Foundry Scripts
+
 `/Users/willnoon/Documents/GitHub/chulobots/contracts/script/`
 
 ## Key Features
@@ -234,6 +239,7 @@ forge test --gas-report
 ### forge: command not found
 
 Install Foundry:
+
 ```bash
 curl -L https://foundry.paradigm.xyz | bash
 foundryup
@@ -242,6 +248,7 @@ foundryup
 ### forge-std not found
 
 Install the library:
+
 ```bash
 forge install foundry-rs/forge-std --no-commit
 ```
@@ -253,6 +260,7 @@ Check `foundry.toml` and `hardhat.config.ts` both use 0.8.20.
 ### Build artifacts conflict
 
 Clean everything:
+
 ```bash
 make clean
 make build

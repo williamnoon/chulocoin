@@ -3,12 +3,14 @@
 ## Configuration Files Modified
 
 ### 1. hardhat.config.ts
+
 - ✓ Added `arbitrumSepolia` network configuration
 - ✓ Chain ID: 421614
 - ✓ RPC URL: https://sepolia-rollup.arbitrum.io/rpc
 - ✓ Added Arbiscan API key configuration
 
 ### 2. scripts/deploy.ts
+
 - ✓ Added SignalRegistry deployment
 - ✓ Updated Chainlink price feeds for Arbitrum Sepolia:
   - BTC/USD: 0x56a43EB56Da12C0dc1D972ACb089c06a5dEF8e69
@@ -20,14 +22,18 @@
 ## New Files Created
 
 ### 1. .env.example
+
 Template environment file with:
+
 - PRIVATE_KEY
 - ARBITRUM_SEPOLIA_RPC_URL
 - ARBISCAN_API_KEY
 - Optional gas reporter config
 
 ### 2. DEPLOYMENT.md
+
 Comprehensive deployment guide with:
+
 - Prerequisites and setup instructions
 - How to get testnet ETH
 - Deployment steps
@@ -36,9 +42,11 @@ Comprehensive deployment guide with:
 - Security best practices
 
 ### 3. DEPLOY_QUICK_START.md
+
 Quick reference for deployment command and checklist
 
 ### 4. deployments/
+
 - Created deployments directory
 - Added sepolia.json.template showing expected structure
 
@@ -82,6 +90,7 @@ Quick reference for deployment command and checklist
 ## Environment Setup
 
 Required environment variables in `.env`:
+
 ```
 PRIVATE_KEY=your_private_key_without_0x_prefix
 ARBITRUM_SEPOLIA_RPC_URL=https://sepolia-rollup.arbitrum.io/rpc
@@ -105,6 +114,7 @@ npx hardhat run scripts/deploy.ts --network arbitrumSepolia
 ## Contract Verification Commands
 
 Will be output by deployment script. Example:
+
 ```bash
 npx hardhat verify --network arbitrumSepolia <ADDRESS> <ARGS>
 ```
@@ -132,6 +142,7 @@ npx hardhat verify --network arbitrumSepolia <ADDRESS> <ARGS>
 ## Ready to Deploy?
 
 All configuration is complete. To deploy:
+
 1. Install dependencies: `npm install`
 2. Configure `.env` file
 3. Get testnet ETH

@@ -7,9 +7,11 @@ This document lists all files created for the ChuloBots staging environment depl
 ### Root Level Documentation
 
 #### 1. `STAGING_DEPLOYMENT.md`
+
 **Purpose:** Comprehensive guide for deploying the entire staging environment.
 
 **Contents:**
+
 - Architecture overview with diagram
 - Step-by-step deployment instructions
 - Prerequisites and account setup
@@ -27,9 +29,11 @@ This document lists all files created for the ChuloBots staging environment depl
 ---
 
 #### 2. `.env.staging.example`
+
 **Purpose:** Template for all environment variables across all services.
 
 **Contents:**
+
 - Backend service variables (Railway)
 - Smart contract addresses
 - Blockchain configuration
@@ -47,9 +51,11 @@ This document lists all files created for the ChuloBots staging environment depl
 ---
 
 #### 3. `DEPLOYMENT_CHECKLIST.md`
+
 **Purpose:** Step-by-step checklist for deployment process.
 
 **Contents:**
+
 - Pre-deployment setup checklist
 - Smart contract deployment steps
 - Backend deployment steps
@@ -66,9 +72,11 @@ This document lists all files created for the ChuloBots staging environment depl
 ---
 
 #### 4. `QUICK_REFERENCE.md`
+
 **Purpose:** Quick command reference for common operations.
 
 **Contents:**
+
 - Initial setup commands
 - Deployment commands (automated & manual)
 - Verification commands
@@ -85,9 +93,11 @@ This document lists all files created for the ChuloBots staging environment depl
 ---
 
 #### 5. `TROUBLESHOOTING.md`
+
 **Purpose:** Detailed troubleshooting guide with specific solutions.
 
 **Contents:**
+
 - Smart contract issues and fixes
 - Backend issues and solutions
 - Frontend issues and fixes
@@ -102,9 +112,11 @@ This document lists all files created for the ChuloBots staging environment depl
 ---
 
 #### 6. `README.md` (Updated)
+
 **Purpose:** Updated main README with staging deployment section.
 
 **Changes:**
+
 - Added "Deployment" section
 - Staging environment overview
 - Quick deploy instructions
@@ -116,9 +128,11 @@ This document lists all files created for the ChuloBots staging environment depl
 ### Backend Files
 
 #### 7. `backend/prisma/seed-staging.ts`
+
 **Purpose:** Database seed script specifically for staging environment.
 
 **Contents:**
+
 - 5 test users (all tiers: Observer, Bronze, Silver, Gold, Diamond)
 - 3 validator accounts with different stakes
 - 6 test signals (validated, pending, rejected)
@@ -133,9 +147,11 @@ This document lists all files created for the ChuloBots staging environment depl
 ---
 
 #### 8. `backend/package.json` (Updated)
+
 **Purpose:** Added seed script for staging.
 
 **Changes:**
+
 - Added `db:seed:staging` script
 - Points to new seed-staging.ts file
 
@@ -144,9 +160,11 @@ This document lists all files created for the ChuloBots staging environment depl
 ### GitHub Workflows
 
 #### 9. `.github/workflows/deploy-staging.yml`
+
 **Purpose:** Automated deployment workflow for staging environment.
 
 **Contains:**
+
 - Test job (runs all tests before deployment)
 - Deploy contracts job (manual trigger option)
 - Deploy backend to Railway
@@ -156,6 +174,7 @@ This document lists all files created for the ChuloBots staging environment depl
 - Deployment summary generation
 
 **Triggers:**
+
 - Push to `staging` branch
 - Manual workflow dispatch
 
@@ -164,9 +183,11 @@ This document lists all files created for the ChuloBots staging environment depl
 ---
 
 #### 10. `.github/SECRETS.md`
+
 **Purpose:** Complete guide for configuring GitHub secrets.
 
 **Contents:**
+
 - Required secrets table with descriptions
 - Step-by-step instructions for each secret
 - How to get API keys and tokens
@@ -183,9 +204,11 @@ This document lists all files created for the ChuloBots staging environment depl
 ### Scripts
 
 #### 11. `scripts/verify-staging.sh`
+
 **Purpose:** Automated verification of entire staging environment.
 
 **Checks:**
+
 - Smart contract deployment and verification
 - Backend API health and endpoints
 - Frontend landing page accessibility
@@ -197,6 +220,7 @@ This document lists all files created for the ChuloBots staging environment depl
 **When to use:** After deployment to verify everything is working correctly.
 
 **Usage:**
+
 ```bash
 ./scripts/verify-staging.sh
 ```
@@ -204,9 +228,11 @@ This document lists all files created for the ChuloBots staging environment depl
 ---
 
 #### 12. `scripts/setup-staging.sh`
+
 **Purpose:** Interactive setup wizard for staging environment.
 
 **Features:**
+
 - Prerequisites check
 - Project setup
 - Contract deployment walkthrough
@@ -218,6 +244,7 @@ This document lists all files created for the ChuloBots staging environment depl
 **When to use:** First time setup, or guided deployment process.
 
 **Usage:**
+
 ```bash
 ./scripts/setup-staging.sh
 ```
@@ -225,9 +252,11 @@ This document lists all files created for the ChuloBots staging environment depl
 ---
 
 #### 13. `scripts/README.md`
+
 **Purpose:** Documentation for all scripts.
 
 **Contents:**
+
 - Description of each script
 - Usage instructions
 - Environment variables
@@ -327,26 +356,31 @@ chulobots/
 ## Key Features
 
 ### Comprehensive Coverage
+
 - Every step documented
 - All configuration explained
 - Complete troubleshooting guide
 
 ### Production-Ready
+
 - Error handling in scripts
 - Verification procedures
 - Rollback instructions
 
 ### Developer-Friendly
+
 - Interactive setup wizard
 - Quick reference guide
 - Checklists for tracking
 
 ### Automated Where Possible
+
 - GitHub Actions workflow
 - Verification script
 - Database seeding
 
 ### Security-Focused
+
 - Secrets documentation
 - Environment variable templates
 - Best practices included
@@ -356,6 +390,7 @@ chulobots/
 ### When to Update
 
 Update these files when:
+
 - Adding new services or features
 - Changing deployment process
 - New environment variables required

@@ -53,7 +53,7 @@ export default function Positions() {
 
   useEffect(() => {
     if (!isConnected) return;
-    const unsub = subscribeToPositions((position) => {
+    const unsub = subscribeToPositions(position => {
       setPositions(prev => {
         const index = prev.findIndex(p => p.id === position.id);
         if (index >= 0) {
@@ -128,11 +128,13 @@ export default function Positions() {
                 : 'text-gray-400 hover:text-white'
             }`}
           >
-            {f.charAt(0).toUpperCase() + f.slice(1)} ({
-              f === 'all' ? positions.length :
-              f === 'profitable' ? positions.filter(p => p.pnl > 0).length :
-              positions.filter(p => p.pnl < 0).length
-            })
+            {f.charAt(0).toUpperCase() + f.slice(1)} (
+            {f === 'all'
+              ? positions.length
+              : f === 'profitable'
+                ? positions.filter(p => p.pnl > 0).length
+                : positions.filter(p => p.pnl < 0).length}
+            )
           </button>
         ))}
       </div>
@@ -150,18 +152,29 @@ export default function Positions() {
                 <div>
                   <div className="flex items-center gap-2 mb-1">
                     <h3 className="text-xl font-bold text-white">{position.asset}</h3>
-                    <span className={`px-2 py-1 rounded text-xs font-bold ${
-                      position.direction === 'LONG' ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'
-                    }`}>{position.direction}</span>
+                    <span
+                      className={`px-2 py-1 rounded text-xs font-bold ${
+                        position.direction === 'LONG'
+                          ? 'bg-green-500/20 text-green-400'
+                          : 'bg-red-500/20 text-red-400'
+                      }`}
+                    >
+                      {position.direction}
+                    </span>
                   </div>
                   <p className="text-sm text-gray-400">{position.exchange}</p>
                 </div>
                 <div className="text-right">
-                  <p className={`text-2xl font-bold ${position.pnl >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+                  <p
+                    className={`text-2xl font-bold ${position.pnl >= 0 ? 'text-green-400' : 'text-red-400'}`}
+                  >
                     {position.pnl >= 0 ? '+' : ''}${position.pnl.toFixed(2)}
                   </p>
-                  <p className={`text-sm ${position.pnlPercent >= 0 ? 'text-green-400' : 'text-red-400'}`}>
-                    {position.pnlPercent >= 0 ? '+' : ''}{position.pnlPercent.toFixed(2)}%
+                  <p
+                    className={`text-sm ${position.pnlPercent >= 0 ? 'text-green-400' : 'text-red-400'}`}
+                  >
+                    {position.pnlPercent >= 0 ? '+' : ''}
+                    {position.pnlPercent.toFixed(2)}%
                   </p>
                 </div>
               </div>
@@ -172,15 +185,21 @@ export default function Positions() {
                 </div>
                 <div>
                   <p className="text-xs text-gray-400">Current</p>
-                  <p className="text-sm font-mono text-blue-400">${position.currentPrice.toLocaleString()}</p>
+                  <p className="text-sm font-mono text-blue-400">
+                    ${position.currentPrice.toLocaleString()}
+                  </p>
                 </div>
                 <div>
                   <p className="text-xs text-gray-400">Stop</p>
-                  <p className="text-sm font-mono text-red-400">${position.stop.toLocaleString()}</p>
+                  <p className="text-sm font-mono text-red-400">
+                    ${position.stop.toLocaleString()}
+                  </p>
                 </div>
                 <div>
                   <p className="text-xs text-gray-400">Target</p>
-                  <p className="text-sm font-mono text-green-400">${position.target.toLocaleString()}</p>
+                  <p className="text-sm font-mono text-green-400">
+                    ${position.target.toLocaleString()}
+                  </p>
                 </div>
               </div>
             </div>

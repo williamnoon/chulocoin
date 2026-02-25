@@ -6,6 +6,7 @@ Get up and running with ChuloBots contracts in 5 minutes.
 
 1. Install Node.js (v18+)
 2. Install Foundry:
+
 ```bash
 curl -L https://foundry.paradigm.xyz | bash
 foundryup
@@ -117,6 +118,7 @@ npm test
 2. Write Foundry test: `test-foundry/MyContract.t.sol`
 3. Write Hardhat test: `test/MyContract.test.ts`
 4. Build and test:
+
 ```bash
 make build
 make test-all

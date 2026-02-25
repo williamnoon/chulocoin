@@ -122,8 +122,7 @@ describe('TierNFT', function () {
       await tierNFT.updateUserTier(user1.address);
 
       await chulo.transfer(user1.address, ethers.parseEther('4000'));
-      await expect(tierNFT.updateUserTier(user1.address))
-        .to.emit(tierNFT, 'TierUpgraded');
+      await expect(tierNFT.updateUserTier(user1.address)).to.emit(tierNFT, 'TierUpgraded');
     });
 
     it('Should allow multiple upgrades', async function () {
@@ -176,8 +175,7 @@ describe('TierNFT', function () {
 
       await chulo.connect(user1).burn(ethers.parseEther('4500'));
 
-      await expect(tierNFT.updateUserTier(user1.address))
-        .to.emit(tierNFT, 'TierDowngraded');
+      await expect(tierNFT.updateUserTier(user1.address)).to.emit(tierNFT, 'TierDowngraded');
     });
   });
 

@@ -2,20 +2,20 @@
 
 ## Arbitrum Goerli (Testnet)
 
-| Asset | Feed Address | Decimals |
-|-------|--------------|----------|
-| BTC/USD | `0x6550bc2301936011c1334555e62A87705A81C12C` | 8 |
-| ETH/USD | `0x62CAe0FA2da220f43a51F86Db2EDb36DcA9A5A08` | 8 |
+| Asset   | Feed Address                                 | Decimals |
+| ------- | -------------------------------------------- | -------- |
+| BTC/USD | `0x6550bc2301936011c1334555e62A87705A81C12C` | 8        |
+| ETH/USD | `0x62CAe0FA2da220f43a51F86Db2EDb36DcA9A5A08` | 8        |
 
 ## Arbitrum One (Mainnet)
 
-| Asset | Feed Address | Decimals |
-|-------|--------------|----------|
-| BTC/USD | `0x6ce185860a4963106506C203335A2910413708e9` | 8 |
-| ETH/USD | `0x639Fe6ab55C921f74e7fac1ee960C0B6293ba612` | 8 |
-| SOL/USD | `0x24ceA4b8ce57cdA5058b924B9B9987992450590c` | 8 |
-| LINK/USD | `0x86E53CF1B870786351Da77A57575e79CB55812CB` | 8 |
-| AVAX/USD | `0x8bf61728eeDCE2F32c456454d87B5d6eD6150208` | 8 |
+| Asset    | Feed Address                                 | Decimals |
+| -------- | -------------------------------------------- | -------- |
+| BTC/USD  | `0x6ce185860a4963106506C203335A2910413708e9` | 8        |
+| ETH/USD  | `0x639Fe6ab55C921f74e7fac1ee960C0B6293ba612` | 8        |
+| SOL/USD  | `0x24ceA4b8ce57cdA5058b924B9B9987992450590c` | 8        |
+| LINK/USD | `0x86E53CF1B870786351Da77A57575e79CB55812CB` | 8        |
+| AVAX/USD | `0x8bf61728eeDCE2F32c456454d87B5d6eD6150208` | 8        |
 
 ## Documentation
 

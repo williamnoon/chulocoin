@@ -82,32 +82,38 @@ Use this checklist when deploying to the staging environment. Check off each ite
 Configure all backend environment variables in Railway:
 
 **Basic Config:**
+
 - [ ] `NODE_ENV=staging`
 - [ ] `PORT=3000`
 - [ ] `DATABASE_URL` (from Railway PostgreSQL)
 - [ ] `REDIS_URL` (from Railway Redis)
 
 **Security:**
+
 - [ ] `JWT_SECRET` (generated with `openssl rand -hex 32`)
 - [ ] `JWT_EXPIRATION=7d`
 - [ ] `ENCRYPTION_KEY` (generated with `openssl rand -hex 32`)
 
 **CORS:**
+
 - [ ] `ALLOWED_ORIGINS` (will update after frontend deployment)
 
 **Contract Addresses:**
+
 - [ ] `CHULO_ADDRESS`
 - [ ] `SIGNAL_REGISTRY_ADDRESS`
 - [ ] `VALIDATOR_STAKING_ADDRESS`
 - [ ] `TIER_NFT_ADDRESS`
 
 **Blockchain:**
+
 - [ ] `ARBITRUM_SEPOLIA_RPC`
 - [ ] `ORACLE_CONTRACT_ADDRESS`
 - [ ] `CHAINLINK_PRICE_FEED_BTC`
 - [ ] `CHAINLINK_PRICE_FEED_ETH`
 
 **Exchange APIs:**
+
 - [ ] `HYPERLIQUID_API_KEY`
 - [ ] `BINANCE_API_KEY`
 - [ ] `BINANCE_API_SECRET`
@@ -147,6 +153,7 @@ Configure all backend environment variables in Railway:
 ### Landing Page Deployment
 
 **Vercel Project Setup:**
+
 - [ ] New Vercel project created
 - [ ] Repository imported
 - [ ] Framework preset: Next.js
@@ -155,11 +162,13 @@ Configure all backend environment variables in Railway:
 - [ ] Output directory: `.next`
 
 **Environment Variables:**
+
 - [ ] `NEXT_PUBLIC_API_URL` (Railway backend URL)
 - [ ] `NEXT_PUBLIC_WEBAPP_URL` (will update after webapp deployment)
 - [ ] `NEXT_PUBLIC_CHAIN_ID=421614`
 
 **Deployment:**
+
 - [ ] Deployed successfully
 - [ ] Build logs show no errors
 - [ ] Landing URL generated
@@ -169,6 +178,7 @@ Configure all backend environment variables in Railway:
 ### WebApp Deployment
 
 **Vercel Project Setup:**
+
 - [ ] New Vercel project created
 - [ ] Repository imported
 - [ ] Framework preset: Vite
@@ -177,6 +187,7 @@ Configure all backend environment variables in Railway:
 - [ ] Output directory: `dist`
 
 **Environment Variables:**
+
 - [ ] `VITE_API_URL` (Railway backend URL)
 - [ ] `VITE_WS_URL` (Railway backend URL with wss://)
 - [ ] `VITE_CHULO_ADDRESS`
@@ -189,6 +200,7 @@ Configure all backend environment variables in Railway:
 - [ ] `VITE_ENABLE_TESTNET_WARNING=true`
 
 **Deployment:**
+
 - [ ] Deployed successfully
 - [ ] Build logs show no errors
 - [ ] WebApp URL generated
@@ -215,14 +227,17 @@ Configure all backend environment variables in Railway:
 Configure in: **Settings → Secrets and variables → Actions**
 
 **Contracts:**
+
 - [ ] `DEPLOYER_PRIVATE_KEY_TESTNET`
 - [ ] `ARBISCAN_API_KEY`
 
 **Railway:**
+
 - [ ] `RAILWAY_TOKEN`
 - [ ] `RAILWAY_DOMAIN`
 
 **Vercel:**
+
 - [ ] `VERCEL_TOKEN`
 - [ ] `VERCEL_ORG_ID`
 - [ ] `VERCEL_PROJECT_ID_LANDING`
@@ -231,6 +246,7 @@ Configure in: **Settings → Secrets and variables → Actions**
 - [ ] `VERCEL_WEBAPP_DOMAIN`
 
 **Notifications (Optional):**
+
 - [ ] `SLACK_WEBHOOK_URL`
 - [ ] `DISCORD_WEBHOOK_URL`
 
@@ -253,11 +269,13 @@ Configure in: **Settings → Secrets and variables → Actions**
 ### Manual Verification
 
 **Smart Contracts:**
+
 - [ ] Visit Arbiscan Sepolia
 - [ ] All contracts visible and verified
 - [ ] Can read contract state
 
 **Backend API:**
+
 - [ ] Health check: `https://[backend]/health` returns OK
 - [ ] API endpoints responding
 - [ ] Check Railway logs - no errors
@@ -265,6 +283,7 @@ Configure in: **Settings → Secrets and variables → Actions**
 - [ ] Redis connected
 
 **Frontend Landing:**
+
 - [ ] Landing page loads
 - [ ] All sections visible
 - [ ] Links work
@@ -272,6 +291,7 @@ Configure in: **Settings → Secrets and variables → Actions**
 - [ ] Responsive on mobile
 
 **Frontend WebApp:**
+
 - [ ] WebApp loads
 - [ ] Can connect wallet
 - [ ] Switch to Arbitrum Sepolia works
@@ -282,6 +302,7 @@ Configure in: **Settings → Secrets and variables → Actions**
 ### End-to-End Testing
 
 **Test User Flow:**
+
 - [ ] Connect wallet to webapp
 - [ ] View available signals
 - [ ] Check signal details
@@ -289,12 +310,14 @@ Configure in: **Settings → Secrets and variables → Actions**
 - [ ] Check tier information
 
 **Test Signal Flow:**
+
 - [ ] View pending signals
 - [ ] View validated signals
 - [ ] Check signal validation status
 - [ ] Verify real-time updates
 
 **Test Position Tracking:**
+
 - [ ] View open positions
 - [ ] Check position details
 - [ ] Verify P&L calculations
@@ -351,13 +374,13 @@ If deployment fails, document rollback steps:
 
 ## Sign-Off
 
-Deployment completed by: _______________
+Deployment completed by: ******\_\_\_******
 
-Date: _______________
+Date: ******\_\_\_******
 
-Verified by: _______________
+Verified by: ******\_\_\_******
 
-Date: _______________
+Date: ******\_\_\_******
 
 ## Notes
 
@@ -372,17 +395,20 @@ Document any issues, deviations, or important information:
 ## Quick Reference
 
 **Staging URLs:**
+
 - Backend: `https://_______________`
 - Landing: `https://_______________`
 - WebApp: `https://_______________`
 - Arbiscan: `https://sepolia.arbiscan.io`
 
 **Contract Addresses:**
+
 - CHULO: `0x_______________`
 - SignalRegistry: `0x_______________`
 - ValidatorStaking: `0x_______________`
 
 **Test Wallets:**
+
 - Observer: `0x1111111111111111111111111111111111111111`
 - Bronze: `0x2222222222222222222222222222222222222222`
 - Silver: `0x3333333333333333333333333333333333333333`
@@ -390,6 +416,7 @@ Document any issues, deviations, or important information:
 - Diamond: `0x5555555555555555555555555555555555555555`
 
 **Support:**
+
 - See `STAGING_DEPLOYMENT.md` for detailed instructions
 - See `.github/SECRETS.md` for secrets configuration
 - Run `./scripts/verify-staging.sh` for automated checks

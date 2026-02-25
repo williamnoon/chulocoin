@@ -58,6 +58,7 @@ gh workflow run deploy-staging.yml
 ### Manual Deployment
 
 **1. Deploy Contracts:**
+
 ```bash
 cd contracts
 npm run deploy:sepolia
@@ -65,6 +66,7 @@ cd ..
 ```
 
 **2. Deploy Backend:**
+
 ```bash
 cd backend
 railway login
@@ -74,6 +76,7 @@ cd ..
 ```
 
 **3. Deploy Frontend:**
+
 ```bash
 # Landing page
 cd frontend/landing
@@ -201,6 +204,7 @@ railway run npm run db:seed:staging
 ### View Logs
 
 **Backend (Railway):**
+
 ```bash
 railway logs --service backend
 
@@ -209,6 +213,7 @@ railway logs --service backend --follow
 ```
 
 **Frontend (Vercel):**
+
 ```bash
 vercel logs https://your-webapp.vercel.app
 

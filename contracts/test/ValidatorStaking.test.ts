@@ -191,9 +191,8 @@ describe('ValidatorStaking', function () {
     });
 
     it('Should allow only owner to record validation', async function () {
-      await expect(
-        staking.connect(validator2).recordValidation(validator1.address, 1)
-      ).to.be.reverted;
+      await expect(staking.connect(validator2).recordValidation(validator1.address, 1)).to.be
+        .reverted;
     });
   });
 

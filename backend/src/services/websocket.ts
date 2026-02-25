@@ -7,7 +7,10 @@ export class WebSocketService {
   constructor(httpServer: HTTPServer) {
     this.io = new SocketIOServer(httpServer, {
       cors: {
-        origin: process.env.ALLOWED_ORIGINS?.split(',') || ['http://localhost:3000', 'http://localhost:3002'],
+        origin: process.env.ALLOWED_ORIGINS?.split(',') || [
+          'http://localhost:3000',
+          'http://localhost:3002',
+        ],
         credentials: true,
       },
     });

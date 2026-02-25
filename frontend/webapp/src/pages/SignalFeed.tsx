@@ -32,24 +32,17 @@ export default function SignalFeed() {
   }, [isConnected, subscribeToSignals]);
 
   // Combine API signals with real-time signals
-  const allSignals = [
-    ...realtimeSignals,
-    ...(data?.data?.signals || []),
-  ];
+  const allSignals = [...realtimeSignals, ...(data?.data?.signals || [])];
 
   // Remove duplicates by ID
-  const uniqueSignals = Array.from(
-    new Map(allSignals.map(s => [s.id, s])).values()
-  );
+  const uniqueSignals = Array.from(new Map(allSignals.map(s => [s.id, s])).values());
 
   if (!isConnected) {
     return (
       <div className="text-center py-12">
         <div className="text-6xl mb-4">🔒</div>
         <h2 className="text-2xl font-bold mb-2">Connect Your Wallet</h2>
-        <p className="text-gray-400">
-          Connect your wallet to view validated trading signals
-        </p>
+        <p className="text-gray-400">Connect your wallet to view validated trading signals</p>
       </div>
     );
   }

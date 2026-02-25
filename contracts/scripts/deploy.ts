@@ -10,7 +10,10 @@ async function main() {
   console.log('Deploying contracts with account:', deployer.address);
   console.log('Network:', networkName);
   console.log('Chain ID:', network.chainId.toString());
-  console.log('Account balance:', ethers.formatEther(await ethers.provider.getBalance(deployer.address)));
+  console.log(
+    'Account balance:',
+    ethers.formatEther(await ethers.provider.getBalance(deployer.address))
+  );
 
   // Deploy CHULO Token
   console.log('\n--- Deploying CHULO Token ---');
@@ -161,8 +164,12 @@ async function main() {
   console.log(`npx hardhat verify --network ${networkName} ${chuloAddress} "${initialSupply}"`);
   console.log(`npx hardhat verify --network ${networkName} ${oracleAddress}`);
   console.log(`npx hardhat verify --network ${networkName} ${tierNFTAddress} "${chuloAddress}"`);
-  console.log(`npx hardhat verify --network ${networkName} ${validatorStakingAddress} "${chuloAddress}"`);
-  console.log(`npx hardhat verify --network ${networkName} ${signalRegistryAddress} "${chuloAddress}" "${validatorStakingAddress}"`);
+  console.log(
+    `npx hardhat verify --network ${networkName} ${validatorStakingAddress} "${chuloAddress}"`
+  );
+  console.log(
+    `npx hardhat verify --network ${networkName} ${signalRegistryAddress} "${chuloAddress}" "${validatorStakingAddress}"`
+  );
 }
 
 main()

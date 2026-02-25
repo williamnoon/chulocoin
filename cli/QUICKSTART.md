@@ -44,6 +44,7 @@ This builds in release mode (slower compilation, faster runtime).
 ### Option 3: Use Build Scripts
 
 **macOS/Linux:**
+
 ```bash
 cd cli/
 chmod +x build.sh
@@ -52,6 +53,7 @@ chmod +x build.sh
 ```
 
 **Windows:**
+
 ```bash
 cd cli
 build.bat
@@ -149,6 +151,7 @@ cli/
 This is **Phase 1** - the foundation:
 
 ✅ **Working:**
+
 - Terminal UI with live updates
 - Mining state management (start/stop/toggle)
 - Statistics tracking (signals, earnings, uptime)
@@ -157,6 +160,7 @@ This is **Phase 1** - the foundation:
 - Keyboard controls
 
 🚧 **Stubbed (for later):**
+
 - Blockchain integration (ethers-rs)
 - WebSocket connection to backend
 - Real signal processing
@@ -189,21 +193,25 @@ Wait for Phase 2 release when blockchain integration is complete.
 ### Build Errors
 
 **"error: linker `cc` not found"**
+
 - Install build tools:
   - macOS: `xcode-select --install`
   - Ubuntu: `sudo apt install build-essential`
   - Fedora: `sudo dnf install gcc`
 
 **"error: failed to run custom build command"**
+
 - Update Rust: `rustup update`
 
 ### Runtime Issues
 
 **Terminal rendering issues**
+
 - Ensure terminal supports colors (most do)
 - Try a different terminal emulator
 
 **"permission denied" on build.sh**
+
 - Make it executable: `chmod +x build.sh`
 
 ## Resources

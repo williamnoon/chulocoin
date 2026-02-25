@@ -9,7 +9,13 @@ import { useWalletStore } from '@/store/walletStore';
  * - RainbowKit or ConnectKit for UI
  */
 export function useWallet() {
-  const { address, isConnected, setAddress, setIsConnected, disconnect: storeDisconnect } = useWalletStore();
+  const {
+    address,
+    isConnected,
+    setAddress,
+    setIsConnected,
+    disconnect: storeDisconnect,
+  } = useWalletStore();
 
   const connect = async () => {
     try {

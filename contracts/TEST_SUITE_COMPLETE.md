@@ -1,14 +1,17 @@
 # ChuloBots Foundry Test Suite - Complete
 
 ## Overview
+
 Comprehensive Foundry test suite has been created for all ChuloBots smart contracts with extensive coverage of functionality, edge cases, and fuzz testing.
 
 ## Test Files Created/Updated
 
 ### 1. ✅ CHULO.t.sol (Updated)
+
 **Location:** `/Users/willnoon/Documents/GitHub/chulobots/contracts/test-foundry/CHULO.t.sol`
 
 **Test Coverage:**
+
 - ✅ Initial supply and metadata
 - ✅ Token transfers and approvals
 - ✅ Minting with role-based access control
@@ -20,15 +23,18 @@ Comprehensive Foundry test suite has been created for all ChuloBots smart contra
 - ✅ Fuzz tests for transfers, minting, and burning
 
 **Key Enhancements:**
+
 - Updated mint function calls to include `reason` parameter
 - Added tests for max supply validation
 - Added tests for burnForGas functionality
 - Added tests for circulatingSupply and remainingSupply
 
 ### 2. ✅ ValidatorStaking.t.sol (Updated)
+
 **Location:** `/Users/willnoon/Documents/GitHub/chulobots/contracts/test-foundry/ValidatorStaking.t.sol`
 
 **Test Coverage:**
+
 - ✅ Staking with min/max constraints
 - ✅ Unstaking with lock period (7 days)
 - ✅ Multiple validators staking
@@ -41,6 +47,7 @@ Comprehensive Foundry test suite has been created for all ChuloBots smart contra
 - ✅ Gas benchmarking
 
 **Key Enhancements:**
+
 - Added comprehensive slashing tests
 - Added burn pool distribution tests
 - Added tests for validator deactivation when slashed below minimum
@@ -48,9 +55,11 @@ Comprehensive Foundry test suite has been created for all ChuloBots smart contra
 - Added active validator list tests
 
 ### 3. ✅ ChainlinkPriceOracle.t.sol (Created)
+
 **Location:** `/Users/willnoon/Documents/GitHub/chulobots/contracts/test-foundry/ChainlinkPriceOracle.t.sol`
 
 **Test Coverage:**
+
 - ✅ Adding price feeds (owner-only)
 - ✅ Updating price feeds
 - ✅ Price feed validation (zero address, duplicates)
@@ -67,15 +76,18 @@ Comprehensive Foundry test suite has been created for all ChuloBots smart contra
 - ✅ Edge cases (exact match, boundary conditions)
 
 **Mock Feeds:**
+
 - Uses MockV3Aggregator for testing
 - BTC: $65,000 (8 decimals)
 - ETH: $3,500 (8 decimals)
 - SOL: $140 (8 decimals)
 
 ### 4. ✅ TierNFT.t.sol (Created)
+
 **Location:** `/Users/willnoon/Documents/GitHub/chulobots/contracts/test-foundry/TierNFT.t.sol`
 
 **Test Coverage:**
+
 - ✅ Auto-minting at tier thresholds (Bronze: 1k, Silver: 5k, Gold: 25k, Diamond: 100k)
 - ✅ Tier upgrades (burns old NFT, mints new)
 - ✅ Tier downgrades (burns NFT)
@@ -92,15 +104,18 @@ Comprehensive Foundry test suite has been created for all ChuloBots smart contra
 - ✅ Fuzz tests for tier upgrades
 
 **Tier Thresholds:**
+
 - Bronze: 1,000 CHULO
 - Silver: 5,000 CHULO
 - Gold: 25,000 CHULO
 - Diamond: 100,000 CHULO
 
 ### 5. ✅ SignalRegistry.t.sol (Created)
+
 **Location:** `/Users/willnoon/Documents/GitHub/chulobots/contracts/test-foundry/SignalRegistry.t.sol`
 
 **Test Coverage:**
+
 - ✅ Signal submission with gas burn
 - ✅ LONG and SHORT signal validation
 - ✅ Stop/target price validation by direction
@@ -120,6 +135,7 @@ Comprehensive Foundry test suite has been created for all ChuloBots smart contra
 - ✅ Edge cases (zero/max confidence)
 
 **Signal Validation Rules:**
+
 - LONG: stop < entry < target
 - SHORT: stop > entry > target
 - Confidence: 0-100
@@ -128,6 +144,7 @@ Comprehensive Foundry test suite has been created for all ChuloBots smart contra
 ## Test Best Practices Implemented
 
 ### 1. Comprehensive Coverage
+
 - All public/external functions tested
 - Both success and failure cases
 - Edge cases and boundary conditions
@@ -135,6 +152,7 @@ Comprehensive Foundry test suite has been created for all ChuloBots smart contra
 - Event emission verification
 
 ### 2. Foundry-Specific Features
+
 - `vm.prank()` for user impersonation
 - `vm.expectRevert()` for error testing with specific messages
 - `vm.expectEmit()` for event verification
@@ -143,17 +161,20 @@ Comprehensive Foundry test suite has been created for all ChuloBots smart contra
 - `makeAddr()` for test address generation
 
 ### 3. Fuzz Testing
+
 - Random input testing with constraints
 - Edge case discovery
 - Input validation verification
 - Type overflow/underflow protection
 
 ### 4. Gas Optimization Testing
+
 - Gas usage benchmarking
 - Console logging for gas analysis
 - Efficient test execution
 
 ### 5. Helper Functions
+
 - Reusable setup functions
 - Common operation helpers
 - Clean, DRY code
@@ -195,6 +216,7 @@ forge test --fuzz-runs 10000
 ## Test Statistics
 
 ### Total Test Files: 5
+
 1. CHULO.t.sol
 2. ValidatorStaking.t.sol
 3. ChainlinkPriceOracle.t.sol
@@ -202,6 +224,7 @@ forge test --fuzz-runs 10000
 5. SignalRegistry.t.sol
 
 ### Estimated Test Count: 150+
+
 - CHULO: ~15 tests
 - ValidatorStaking: ~20 tests
 - ChainlinkPriceOracle: ~35 tests
@@ -209,6 +232,7 @@ forge test --fuzz-runs 10000
 - SignalRegistry: ~45 tests
 
 ### Coverage Areas:
+
 - ✅ Core functionality
 - ✅ Access control
 - ✅ Edge cases
@@ -221,11 +245,13 @@ forge test --fuzz-runs 10000
 ## Next Steps
 
 1. **Run Tests:**
+
    ```bash
    forge test
    ```
 
 2. **Check Coverage:**
+
    ```bash
    forge coverage
    ```
@@ -236,6 +262,7 @@ forge test --fuzz-runs 10000
    - Update tests based on actual contract behavior
 
 4. **Generate Coverage Report:**
+
    ```bash
    forge coverage --report lcov
    ```
@@ -257,6 +284,7 @@ forge test --fuzz-runs 10000
 ## Test Execution Tips
 
 ### For faster iteration during development:
+
 ```bash
 # Run only changed tests
 forge test --match-path test-foundry/SignalRegistry.t.sol
@@ -269,6 +297,7 @@ forge test -vvv
 ```
 
 ### For comprehensive validation:
+
 ```bash
 # Full test suite with gas reporting
 forge test --gas-report
@@ -283,30 +312,35 @@ forge test -vvvv
 ## Contract-Specific Testing Notes
 
 ### CHULO Token
+
 - Tests verify MAX_SUPPLY enforcement
 - Burn tracking validated
 - Role-based minting tested
 - Total supply calculations verified
 
 ### ValidatorStaking
+
 - Lock period (7 days) enforced
 - Slashing percentage (10%) validated
 - Burn pool distribution tested
 - Reward calculations (0.25 CHULO) verified
 
 ### ChainlinkPriceOracle
+
 - Mock aggregators used for testing
 - Stale price threshold (1 hour) tested
 - Price tolerance (2% default, max 10%) validated
 - Multiple price feeds supported
 
 ### TierNFT
+
 - Soulbound functionality enforced
 - Tier thresholds validated
 - Auto-burn on upgrade tested
 - On-chain metadata generation verified
 
 ### SignalRegistry
+
 - Consensus threshold (3/5) tested
 - Gas costs per tier validated
 - Signal validation rules enforced

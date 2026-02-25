@@ -19,17 +19,20 @@ foundryup
 ## Initial Setup
 
 1. Install forge-std library:
+
 ```bash
 cd contracts
 forge install foundry-rs/forge-std --no-commit
 ```
 
 2. Install dependencies:
+
 ```bash
 npm install
 ```
 
 3. Build contracts:
+
 ```bash
 npm run build
 # Or separately:
@@ -81,6 +84,7 @@ runs = 256  # Number of fuzz runs
 ```
 
 Run fuzz tests:
+
 ```bash
 forge test --fuzz-runs 1000
 ```
@@ -105,16 +109,19 @@ forge test --gas-report
 ### Using Foundry Scripts
 
 Deploy to Arbitrum Sepolia (testnet):
+
 ```bash
 npm run deploy:forge:sepolia
 ```
 
 Deploy to Arbitrum One (mainnet):
+
 ```bash
 npm run deploy:forge:mainnet
 ```
 
 Manual deployment with custom options:
+
 ```bash
 forge script script/Deploy.s.sol \
   --rpc-url arbitrum_sepolia \
@@ -126,6 +133,7 @@ forge script script/Deploy.s.sol \
 ### Dry Run (Simulation)
 
 Test deployment without broadcasting:
+
 ```bash
 forge script script/Deploy.s.sol --rpc-url arbitrum_sepolia
 ```
@@ -225,6 +233,7 @@ forge install foundry-rs/forge-std --no-commit
 ### Remapping issues
 
 Check `foundry.toml` remappings match your dependencies:
+
 ```toml
 remappings = [
     "@openzeppelin/contracts/=node_modules/@openzeppelin/contracts/",
@@ -242,6 +251,7 @@ Ensure `solc_version` in `foundry.toml` matches `solidity.version` in `hardhat.c
 ### Invariant Testing
 
 Create invariant tests in `test-foundry/`:
+
 ```solidity
 contract InvariantTest is Test {
     function invariant_totalSupplyEqualsSum() public {
@@ -253,6 +263,7 @@ contract InvariantTest is Test {
 ### Symbolic Execution
 
 Use `--ffi` flag for advanced testing (disabled by default for security):
+
 ```bash
 forge test --ffi
 ```
@@ -260,6 +271,7 @@ forge test --ffi
 ### Debugger
 
 Debug failing tests:
+
 ```bash
 forge test --debug testFailingTest
 ```

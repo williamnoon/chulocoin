@@ -70,7 +70,9 @@ describe('SignalRegistry', function () {
     await validatorStaking.connect(validator5).stake(MIN_STAKE);
 
     // Approve SignalRegistry to burn tokens
-    await chulo.connect(creator).approve(await signalRegistry.getAddress(), ethers.parseEther('1000'));
+    await chulo
+      .connect(creator)
+      .approve(await signalRegistry.getAddress(), ethers.parseEther('1000'));
   });
 
   describe('Deployment', function () {
@@ -79,9 +81,7 @@ describe('SignalRegistry', function () {
     });
 
     it('Should set the correct ValidatorStaking', async function () {
-      expect(await signalRegistry.validatorStaking()).to.equal(
-        await validatorStaking.getAddress()
-      );
+      expect(await signalRegistry.validatorStaking()).to.equal(await validatorStaking.getAddress());
     });
 
     it('Should initialize default gas costs', async function () {
@@ -106,7 +106,16 @@ describe('SignalRegistry', function () {
 
       await expect(tx)
         .to.emit(signalRegistry, 'SignalSubmitted')
-        .withArgs(1, creator.address, 'BTC', 'LONG', 50000_00000000, 48000_00000000, 55000_00000000, 85);
+        .withArgs(
+          1,
+          creator.address,
+          'BTC',
+          'LONG',
+          50000_00000000,
+          48000_00000000,
+          55000_00000000,
+          85
+        );
 
       expect(await signalRegistry.signalCount()).to.equal(1);
     });
@@ -132,15 +141,9 @@ describe('SignalRegistry', function () {
     it('Should burn gas cost on submission', async function () {
       const balanceBefore = await chulo.balanceOf(creator.address);
 
-      await signalRegistry.connect(creator).submitSignal(
-        'BTC',
-        'LONG',
-        50000_00000000,
-        48000_00000000,
-        55000_00000000,
-        85,
-        'BRONZE'
-      );
+      await signalRegistry
+        .connect(creator)
+        .submitSignal('BTC', 'LONG', 50000_00000000, 48000_00000000, 55000_00000000, 85, 'BRONZE');
 
       const balanceAfter = await chulo.balanceOf(creator.address);
       expect(balanceBefore - balanceAfter).to.equal(BRONZE_GAS);
@@ -148,15 +151,17 @@ describe('SignalRegistry', function () {
 
     it('Should reject signal with invalid direction', async function () {
       await expect(
-        signalRegistry.connect(creator).submitSignal(
-          'BTC',
-          'SIDEWAYS',
-          50000_00000000,
-          48000_00000000,
-          55000_00000000,
-          85,
-          'BRONZE'
-        )
+        signalRegistry
+          .connect(creator)
+          .submitSignal(
+            'BTC',
+            'SIDEWAYS',
+            50000_00000000,
+            48000_00000000,
+            55000_00000000,
+            85,
+            'BRONZE'
+          )
       ).to.be.revertedWith('Invalid direction');
     });
 
@@ -193,15 +198,9 @@ describe('SignalRegistry', function () {
       const [poorUser] = await ethers.getSigners();
 
       await expect(
-        signalRegistry.connect(poorUser).submitSignal(
-          'BTC',
-          'LONG',
-          50000_00000000,
-          48000_00000000,
-          55000_00000000,
-          85,
-          'BRONZE'
-        )
+        signalRegistry
+          .connect(poorUser)
+          .submitSignal('BTC', 'LONG', 50000_00000000, 48000_00000000, 55000_00000000, 85, 'BRONZE')
       ).to.be.reverted;
     });
   });
@@ -209,15 +208,9 @@ describe('SignalRegistry', function () {
   describe('Validator Voting', function () {
     beforeEach(async function () {
       // Submit a signal
-      await signalRegistry.connect(creator).submitSignal(
-        'BTC',
-        'LONG',
-        50000_00000000,
-        48000_00000000,
-        55000_00000000,
-        85,
-        'BRONZE'
-      );
+      await signalRegistry
+        .connect(creator)
+        .submitSignal('BTC', 'LONG', 50000_00000000, 48000_00000000, 55000_00000000, 85, 'BRONZE');
     });
 
     it('Should allow validator to vote', async function () {
@@ -254,15 +247,9 @@ describe('SignalRegistry', function () {
   describe('Consensus Achievement', function () {
     beforeEach(async function () {
       // Submit a signal
-      await signalRegistry.connect(creator).submitSignal(
-        'BTC',
-        'LONG',
-        50000_00000000,
-        48000_00000000,
-        55000_00000000,
-        85,
-        'BRONZE'
-      );
+      await signalRegistry
+        .connect(creator)
+        .submitSignal('BTC', 'LONG', 50000_00000000, 48000_00000000, 55000_00000000, 85, 'BRONZE');
     });
 
     it('Should validate signal after 3 votes', async function () {
@@ -316,15 +303,9 @@ describe('SignalRegistry', function () {
 
   describe('View Functions', function () {
     beforeEach(async function () {
-      await signalRegistry.connect(creator).submitSignal(
-        'BTC',
-        'LONG',
-        50000_00000000,
-        48000_00000000,
-        55000_00000000,
-        85,
-        'BRONZE'
-      );
+      await signalRegistry
+        .connect(creator)
+        .submitSignal('BTC', 'LONG', 50000_00000000, 48000_00000000, 55000_00000000, 85, 'BRONZE');
 
       await signalRegistry.connect(validator1).voteOnSignal(1);
       await signalRegistry.connect(validator2).voteOnSignal(1);
@@ -367,9 +348,8 @@ describe('SignalRegistry', function () {
     });
 
     it('Should reject non-owner gas cost update', async function () {
-      await expect(
-        signalRegistry.connect(creator).updateGasCost('BRONZE', ethers.parseEther('15'))
-      ).to.be.reverted;
+      await expect(signalRegistry.connect(creator).updateGasCost('BRONZE', ethers.parseEther('15')))
+        .to.be.reverted;
     });
 
     it('Should reject zero gas cost', async function () {

@@ -78,6 +78,7 @@ nano .env.staging
 ```
 
 Edit these key values:
+
 - `POSTGRES_PASSWORD`
 - `REDIS_PASSWORD`
 - `JWT_SECRET`
@@ -201,6 +202,7 @@ jobs:
 5. Copy token (save securely!)
 
 Add to GitHub Secrets:
+
 - `DOCKER_USERNAME`: willnoon
 - `DOCKER_TOKEN`: <your-access-token>
 
@@ -288,6 +290,7 @@ For staging, public repos are fine. For production, consider private repos.
 ---
 
 **Related Documentation:**
+
 - [DOCKER_SETUP.md](./DOCKER_SETUP.md) - Complete Docker setup guide
 - [docker-compose.deploy.yml](./docker-compose.deploy.yml) - Deployment configuration
 - [.env.staging.example](./.env.staging.example) - Environment configuration template

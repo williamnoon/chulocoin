@@ -1,6 +1,7 @@
 # ChuloBots Staging Deployment Guide
 
 ## Table of Contents
+
 - [Architecture Overview](#architecture-overview)
 - [Prerequisites](#prerequisites)
 - [Step 1: Initial Setup](#step-1-initial-setup)
@@ -44,6 +45,7 @@ The ChuloBots staging environment consists of four main components:
 ```
 
 **Components:**
+
 - **Smart Contracts**: Deployed on Arbitrum Sepolia testnet
 - **Backend API**: Node.js/Express server on Railway with PostgreSQL + Redis
 - **Frontend Landing**: Next.js landing page on Vercel
@@ -55,12 +57,14 @@ The ChuloBots staging environment consists of four main components:
 Before you begin, ensure you have:
 
 ### Required Accounts
+
 - [ ] [Railway](https://railway.app) account (free tier available)
 - [ ] [Vercel](https://vercel.com) account (free tier available)
 - [ ] [GitHub](https://github.com) account with repository access
 - [ ] [Arbiscan](https://sepolia.arbiscan.io) API key (for contract verification)
 
 ### Required Tools
+
 - [ ] Node.js 20+ and npm 10+
 - [ ] Git
 - [ ] Testnet ETH on Arbitrum Sepolia (0.5 ETH recommended)
@@ -68,6 +72,7 @@ Before you begin, ensure you have:
   - Or bridge from [Ethereum Sepolia](https://bridge.arbitrum.io/?destinationChain=arbitrum-sepolia&sourceChain=sepolia)
 
 ### Required Credentials
+
 - [ ] Private key with testnet ETH for contract deployment
 - [ ] Exchange API keys (testnet):
   - Hyperliquid testnet API key
@@ -75,6 +80,7 @@ Before you begin, ensure you have:
   - Coinbase testnet API key/secret
 
 ### Repository Setup
+
 - [ ] Clone the repository
 - [ ] Create a `staging` branch (if not exists)
 - [ ] Ensure all tests pass locally
@@ -149,6 +155,7 @@ npm run deploy:sepolia
 ```
 
 This will deploy:
+
 - CHULO Token
 - ChainlinkPriceOracle
 - TierNFT
@@ -160,6 +167,7 @@ This will deploy:
 The deployment script will create `contracts/deployments/sepolia.json` with all contract addresses.
 
 **Example output:**
+
 ```json
 {
   "network": "arbitrumSepolia",
@@ -326,6 +334,7 @@ Save this URL - you'll need it for frontend configuration.
    - **Output Directory**: `.next`
 
 5. Add environment variables:
+
 ```env
 NEXT_PUBLIC_API_URL=https://your-backend.railway.app
 NEXT_PUBLIC_WEBAPP_URL=https://staging-webapp.vercel.app
@@ -344,6 +353,7 @@ NEXT_PUBLIC_WEBAPP_URL=https://staging-webapp.vercel.app
    - **Output Directory**: `dist`
 
 4. Add environment variables:
+
 ```env
 VITE_API_URL=https://your-backend.railway.app
 VITE_WS_URL=wss://your-backend.railway.app
@@ -423,6 +433,7 @@ Run the verification script to ensure everything is working:
 ```
 
 This script will check:
+
 - [ ] Smart contracts are deployed and verified
 - [ ] Backend API is responding
 - [ ] Frontend landing page is accessible
@@ -465,6 +476,7 @@ This script will check:
 ### Test 1: End-to-End Signal Flow
 
 1. **Submit a Signal via CLI**
+
    ```bash
    ./target/release/chulobot --config staging.toml submit-signal \
      --asset BTC \
@@ -476,6 +488,7 @@ This script will check:
    ```
 
 2. **Verify in Backend**
+
    ```bash
    curl https://your-backend.railway.app/api/signals/pending
    ```
@@ -493,6 +506,7 @@ This script will check:
 ### Test 2: User Tier Management
 
 1. **Create Test User**
+
    ```bash
    curl -X POST https://your-backend.railway.app/api/users \
      -H "Content-Type: application/json" \
@@ -500,6 +514,7 @@ This script will check:
    ```
 
 2. **Check CHULO Balance**
+
    ```bash
    curl https://your-backend.railway.app/api/users/0x.../balance
    ```
@@ -527,14 +542,16 @@ This script will check:
 ### Test 4: Validator Staking
 
 1. **Stake CHULO Tokens**
+
    ```javascript
    // Via web3
-   const stakeAmount = ethers.parseEther("10000");
+   const stakeAmount = ethers.parseEther('10000');
    await chuloToken.approve(validatorStakingAddress, stakeAmount);
    await validatorStaking.stake(stakeAmount);
    ```
 
 2. **Verify Stake**
+
    ```bash
    curl https://your-backend.railway.app/api/validators/0x...
    ```
@@ -547,47 +564,47 @@ This script will check:
 
 ### Complete Environment Variables Table
 
-| Variable | Service | Required | Description | Example |
-|----------|---------|----------|-------------|---------|
-| `NODE_ENV` | Backend | Yes | Environment name | `staging` |
-| `PORT` | Backend | Yes | Server port | `3000` |
-| `DATABASE_URL` | Backend | Yes | PostgreSQL connection | `postgresql://...` |
-| `REDIS_URL` | Backend | Yes | Redis connection | `redis://...` |
-| `JWT_SECRET` | Backend | Yes | JWT signing key | `random-secret-key` |
-| `JWT_EXPIRATION` | Backend | No | Token expiration | `7d` |
-| `ALLOWED_ORIGINS` | Backend | Yes | CORS origins | `https://app.vercel.app` |
-| `RATE_LIMIT_WINDOW` | Backend | No | Rate limit window | `15m` |
-| `RATE_LIMIT_MAX_REQUESTS` | Backend | No | Max requests | `100` |
-| `CHULO_ADDRESS` | Backend/Frontend | Yes | CHULO token address | `0x...` |
-| `SIGNAL_REGISTRY_ADDRESS` | Backend/Frontend | Yes | Signal registry address | `0x...` |
-| `VALIDATOR_STAKING_ADDRESS` | Backend/Frontend | Yes | Staking contract address | `0x...` |
-| `ARBITRUM_SEPOLIA_RPC` | Backend | Yes | RPC endpoint | `https://sepolia-rollup...` |
-| `ORACLE_CONTRACT_ADDRESS` | Backend | Yes | Oracle address | `0x...` |
-| `CHAINLINK_PRICE_FEED_BTC` | Backend | Yes | BTC price feed | `0x...` |
-| `CHAINLINK_PRICE_FEED_ETH` | Backend | Yes | ETH price feed | `0x...` |
-| `HYPERLIQUID_API_KEY` | Backend | Yes | Hyperliquid key | `testnet-key` |
-| `BINANCE_API_KEY` | Backend | Yes | Binance key | `testnet-key` |
-| `BINANCE_API_SECRET` | Backend | Yes | Binance secret | `testnet-secret` |
-| `COINBASE_API_KEY` | Backend | Yes | Coinbase key | `testnet-key` |
-| `COINBASE_API_SECRET` | Backend | Yes | Coinbase secret | `testnet-secret` |
-| `ENCRYPTION_KEY` | Backend | Yes | API key encryption | `32-byte-hex` |
-| `VITE_API_URL` | Frontend | Yes | Backend API URL | `https://api.railway.app` |
-| `VITE_WS_URL` | Frontend | Yes | WebSocket URL | `wss://api.railway.app` |
-| `VITE_CHAIN_ID` | Frontend | Yes | Chain ID | `421614` |
-| `PRIVATE_KEY` | Contracts | Yes | Deployer key | `0x...` |
-| `ARBISCAN_API_KEY` | Contracts | Yes | Verification key | `ABC123...` |
+| Variable                    | Service          | Required | Description              | Example                     |
+| --------------------------- | ---------------- | -------- | ------------------------ | --------------------------- |
+| `NODE_ENV`                  | Backend          | Yes      | Environment name         | `staging`                   |
+| `PORT`                      | Backend          | Yes      | Server port              | `3000`                      |
+| `DATABASE_URL`              | Backend          | Yes      | PostgreSQL connection    | `postgresql://...`          |
+| `REDIS_URL`                 | Backend          | Yes      | Redis connection         | `redis://...`               |
+| `JWT_SECRET`                | Backend          | Yes      | JWT signing key          | `random-secret-key`         |
+| `JWT_EXPIRATION`            | Backend          | No       | Token expiration         | `7d`                        |
+| `ALLOWED_ORIGINS`           | Backend          | Yes      | CORS origins             | `https://app.vercel.app`    |
+| `RATE_LIMIT_WINDOW`         | Backend          | No       | Rate limit window        | `15m`                       |
+| `RATE_LIMIT_MAX_REQUESTS`   | Backend          | No       | Max requests             | `100`                       |
+| `CHULO_ADDRESS`             | Backend/Frontend | Yes      | CHULO token address      | `0x...`                     |
+| `SIGNAL_REGISTRY_ADDRESS`   | Backend/Frontend | Yes      | Signal registry address  | `0x...`                     |
+| `VALIDATOR_STAKING_ADDRESS` | Backend/Frontend | Yes      | Staking contract address | `0x...`                     |
+| `ARBITRUM_SEPOLIA_RPC`      | Backend          | Yes      | RPC endpoint             | `https://sepolia-rollup...` |
+| `ORACLE_CONTRACT_ADDRESS`   | Backend          | Yes      | Oracle address           | `0x...`                     |
+| `CHAINLINK_PRICE_FEED_BTC`  | Backend          | Yes      | BTC price feed           | `0x...`                     |
+| `CHAINLINK_PRICE_FEED_ETH`  | Backend          | Yes      | ETH price feed           | `0x...`                     |
+| `HYPERLIQUID_API_KEY`       | Backend          | Yes      | Hyperliquid key          | `testnet-key`               |
+| `BINANCE_API_KEY`           | Backend          | Yes      | Binance key              | `testnet-key`               |
+| `BINANCE_API_SECRET`        | Backend          | Yes      | Binance secret           | `testnet-secret`            |
+| `COINBASE_API_KEY`          | Backend          | Yes      | Coinbase key             | `testnet-key`               |
+| `COINBASE_API_SECRET`       | Backend          | Yes      | Coinbase secret          | `testnet-secret`            |
+| `ENCRYPTION_KEY`            | Backend          | Yes      | API key encryption       | `32-byte-hex`               |
+| `VITE_API_URL`              | Frontend         | Yes      | Backend API URL          | `https://api.railway.app`   |
+| `VITE_WS_URL`               | Frontend         | Yes      | WebSocket URL            | `wss://api.railway.app`     |
+| `VITE_CHAIN_ID`             | Frontend         | Yes      | Chain ID                 | `421614`                    |
+| `PRIVATE_KEY`               | Contracts        | Yes      | Deployer key             | `0x...`                     |
+| `ARBISCAN_API_KEY`          | Contracts        | Yes      | Verification key         | `ABC123...`                 |
 
 ### Where Each Variable Comes From
 
-| Variable | Source |
-|----------|--------|
-| Contract addresses | Deployment output in `contracts/deployments/sepolia.json` |
-| `DATABASE_URL` | Railway PostgreSQL service |
-| `REDIS_URL` | Railway Redis service |
-| `JWT_SECRET` | Generate with `openssl rand -hex 32` |
-| `ENCRYPTION_KEY` | Generate with `openssl rand -hex 32` |
-| Exchange API keys | Sign up for testnet accounts |
-| `ARBISCAN_API_KEY` | [Arbiscan](https://arbiscan.io/apis) account |
+| Variable              | Source                                                                                      |
+| --------------------- | ------------------------------------------------------------------------------------------- |
+| Contract addresses    | Deployment output in `contracts/deployments/sepolia.json`                                   |
+| `DATABASE_URL`        | Railway PostgreSQL service                                                                  |
+| `REDIS_URL`           | Railway Redis service                                                                       |
+| `JWT_SECRET`          | Generate with `openssl rand -hex 32`                                                        |
+| `ENCRYPTION_KEY`      | Generate with `openssl rand -hex 32`                                                        |
+| Exchange API keys     | Sign up for testnet accounts                                                                |
+| `ARBISCAN_API_KEY`    | [Arbiscan](https://arbiscan.io/apis) account                                                |
 | Chainlink price feeds | [Chainlink Docs](https://docs.chain.link/data-feeds/price-feeds/addresses?network=arbitrum) |
 
 ## Troubleshooting
@@ -595,22 +612,26 @@ This script will check:
 ### Backend Issues
 
 #### Database Connection Failed
+
 ```
 Error: P1001: Can't reach database server
 ```
 
 **Solution:**
+
 1. Check `DATABASE_URL` is correct in Railway
 2. Ensure PostgreSQL service is running
 3. Check Railway service logs
 4. Verify database is in same region as backend
 
 #### Migration Errors
+
 ```
 Error: Migration failed to apply
 ```
 
 **Solution:**
+
 ```bash
 # Reset database (CAUTION: Deletes all data)
 railway run npx prisma migrate reset
@@ -620,11 +641,13 @@ railway run npx prisma db push
 ```
 
 #### Redis Connection Failed
+
 ```
 Error: Redis connection timeout
 ```
 
 **Solution:**
+
 1. Verify `REDIS_URL` format: `redis://host:port`
 2. Check Redis service is running in Railway
 3. Ensure Redis is in same project
@@ -632,21 +655,25 @@ Error: Redis connection timeout
 ### Frontend Issues
 
 #### Cannot Connect to Backend
+
 ```
 Network Error / CORS Error
 ```
 
 **Solution:**
+
 1. Verify `VITE_API_URL` matches Railway backend URL
 2. Check `ALLOWED_ORIGINS` in backend includes Vercel URL
 3. Ensure backend is deployed and running
 
 #### Build Failed on Vercel
+
 ```
 Error: Failed to compile
 ```
 
 **Solution:**
+
 1. Check all environment variables are set
 2. Verify `Root Directory` is correct
 3. Check build logs for specific errors
@@ -655,32 +682,38 @@ Error: Failed to compile
 ### Smart Contract Issues
 
 #### Deployment Failed
+
 ```
 Error: Insufficient funds
 ```
 
 **Solution:**
+
 1. Check deployer wallet has enough testnet ETH
 2. Get more from [faucet](https://faucet.quicknode.com/arbitrum/sepolia)
 3. Verify `PRIVATE_KEY` is correct
 
 #### Contract Verification Failed
+
 ```
 Error: Contract already verified
 ```
 
 **Solution:**
+
 - Contract is already verified, skip this step
 - Or verify manually on Arbiscan
 
 ### CLI Issues
 
 #### Cannot Connect to RPC
+
 ```
 Error: Connection refused
 ```
 
 **Solution:**
+
 1. Check RPC URL is correct: `https://sepolia-rollup.arbitrum.io/rpc`
 2. Try alternative RPC: `https://arbitrum-sepolia.publicnode.com`
 3. Check internet connection
@@ -688,14 +721,17 @@ Error: Connection refused
 ### Common Errors
 
 #### Environment Variable Missing
+
 Always check `.env` files match the examples and all required variables are set.
 
 #### Port Already in Use
+
 ```
 Error: Port 3000 is already in use
 ```
 
 **Solution:**
+
 ```bash
 # Find and kill process
 lsof -ti:3000 | xargs kill -9
@@ -705,11 +741,13 @@ PORT=3001 npm start
 ```
 
 #### Memory Issues
+
 ```
 JavaScript heap out of memory
 ```
 
 **Solution:**
+
 ```bash
 # Increase Node memory
 NODE_OPTIONS=--max-old-space-size=4096 npm run build
@@ -747,7 +785,7 @@ When you need to clean up the staging environment:
 
 ```javascript
 // Transfer ownership
-await contract.transferOwnership("0x000000000000000000000000000000000000dEaD");
+await contract.transferOwnership('0x000000000000000000000000000000000000dEaD');
 ```
 
 ### 4. Clean Local Files

@@ -99,7 +99,9 @@ export function useWebSocket(options: UseWebSocketOptions = {}) {
   };
 
   // Subscribe to positions
-  const subscribeToPositions = (callback: (position: Position) => void): (() => void) | undefined => {
+  const subscribeToPositions = (
+    callback: (position: Position) => void
+  ): (() => void) | undefined => {
     const socket = socketRef.current;
     if (!socket || !address) return undefined;
 
@@ -112,7 +114,10 @@ export function useWebSocket(options: UseWebSocketOptions = {}) {
   };
 
   // Subscribe to price updates
-  const subscribeToPrices = (assets: string[], callback: (data: PriceUpdate) => void): (() => void) | undefined => {
+  const subscribeToPrices = (
+    assets: string[],
+    callback: (data: PriceUpdate) => void
+  ): (() => void) | undefined => {
     const socket = socketRef.current;
     if (!socket) return undefined;
 
@@ -125,7 +130,9 @@ export function useWebSocket(options: UseWebSocketOptions = {}) {
   };
 
   // Listen for notifications
-  const subscribeToNotifications = (callback: (notification: Notification) => void): (() => void) | undefined => {
+  const subscribeToNotifications = (
+    callback: (notification: Notification) => void
+  ): (() => void) | undefined => {
     const socket = socketRef.current;
     if (!socket) return undefined;
 

@@ -64,9 +64,7 @@ export default function Dashboard() {
       <div className="text-center py-12">
         <div className="text-6xl mb-4">🔒</div>
         <h2 className="text-2xl font-bold mb-2">Connect Your Wallet</h2>
-        <p className="text-gray-400">
-          Connect your wallet to access your dashboard
-        </p>
+        <p className="text-gray-400">Connect your wallet to access your dashboard</p>
       </div>
     );
   }
@@ -132,9 +130,7 @@ export default function Dashboard() {
           </div>
           <p className="text-3xl font-bold text-white">{stats.totalSignals}</p>
           {recentSignalCount > 0 && (
-            <p className="text-sm text-green-400 mt-2">
-              +{recentSignalCount} new
-            </p>
+            <p className="text-sm text-green-400 mt-2">+{recentSignalCount} new</p>
           )}
         </div>
 
@@ -143,12 +139,8 @@ export default function Dashboard() {
             <p className="text-sm text-gray-400">Win Rate</p>
             <span className="text-2xl">🎯</span>
           </div>
-          <p className="text-3xl font-bold text-white">
-            {(stats.winRate * 100).toFixed(1)}%
-          </p>
-          <p className="text-sm text-gray-400 mt-2">
-            {stats.totalSignals} trades
-          </p>
+          <p className="text-3xl font-bold text-white">{(stats.winRate * 100).toFixed(1)}%</p>
+          <p className="text-sm text-gray-400 mt-2">{stats.totalSignals} trades</p>
         </div>
 
         <div className="bg-slate-900 p-6 rounded-lg border border-slate-700">
@@ -161,15 +153,11 @@ export default function Dashboard() {
               stats.totalPnL >= 0 ? 'text-green-400' : 'text-red-400'
             }`}
           >
-            {stats.totalPnL >= 0 ? '+' : ''}
-            ${stats.totalPnL.toFixed(2)}
+            {stats.totalPnL >= 0 ? '+' : ''}${stats.totalPnL.toFixed(2)}
           </p>
           <div className="flex gap-4 mt-2 text-sm">
-            <span
-              className={stats.todayPnL >= 0 ? 'text-green-400' : 'text-red-400'}
-            >
-              Today: {stats.todayPnL >= 0 ? '+' : ''}
-              ${stats.todayPnL.toFixed(2)}
+            <span className={stats.todayPnL >= 0 ? 'text-green-400' : 'text-red-400'}>
+              Today: {stats.todayPnL >= 0 ? '+' : ''}${stats.todayPnL.toFixed(2)}
             </span>
           </div>
         </div>
@@ -185,9 +173,7 @@ export default function Dashboard() {
             <h3 className="text-lg font-bold text-white">View Signals</h3>
             <span className="text-2xl group-hover:scale-110 transition">📡</span>
           </div>
-          <p className="text-sm text-gray-400">
-            Browse validated trading signals
-          </p>
+          <p className="text-sm text-gray-400">Browse validated trading signals</p>
         </Link>
 
         <Link
@@ -198,9 +184,7 @@ export default function Dashboard() {
             <h3 className="text-lg font-bold text-white">Manage Positions</h3>
             <span className="text-2xl group-hover:scale-110 transition">📊</span>
           </div>
-          <p className="text-sm text-gray-400">
-            Track and close active trades
-          </p>
+          <p className="text-sm text-gray-400">Track and close active trades</p>
         </Link>
 
         <Link
@@ -211,9 +195,7 @@ export default function Dashboard() {
             <h3 className="text-lg font-bold text-white">Bot Settings</h3>
             <span className="text-2xl group-hover:scale-110 transition">⚙️</span>
           </div>
-          <p className="text-sm text-gray-400">
-            Configure exchanges and risk
-          </p>
+          <p className="text-sm text-gray-400">Configure exchanges and risk</p>
         </Link>
       </div>
 
@@ -222,12 +204,10 @@ export default function Dashboard() {
         <div className="bg-yellow-500/10 border border-yellow-500/30 p-6 rounded-lg">
           <div className="flex items-start justify-between">
             <div>
-              <h3 className="text-lg font-bold text-yellow-500 mb-2">
-                Unlock Real-Time Signals
-              </h3>
+              <h3 className="text-lg font-bold text-yellow-500 mb-2">Unlock Real-Time Signals</h3>
               <p className="text-gray-300 mb-4">
-                Observer tier signals are delayed 24 hours. Hold 1,000 CHULO to
-                unlock Bronze tier with real-time access.
+                Observer tier signals are delayed 24 hours. Hold 1,000 CHULO to unlock Bronze tier
+                with real-time access.
               </p>
               <Link
                 to="/settings"

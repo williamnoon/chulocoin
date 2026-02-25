@@ -1,6 +1,7 @@
 # Quick Start: Deploy to Arbitrum Sepolia
 
 ## Prerequisites Checklist
+
 - [ ] Node.js installed
 - [ ] Dependencies installed (`npm install`)
 - [ ] `.env` file configured (see `.env.example`)
@@ -26,6 +27,7 @@ All 5 ChuloBots contracts will be deployed in this order:
 ## Post-Deployment
 
 Deployment addresses will be saved to:
+
 ```
 contracts/deployments/sepolia.json
 ```
@@ -35,6 +37,7 @@ contracts/deployments/sepolia.json
 After deployment, verify on Arbiscan using the commands output by the deployment script.
 
 Example:
+
 ```bash
 npx hardhat verify --network arbitrumSepolia <ADDRESS> <CONSTRUCTOR_ARGS>
 ```

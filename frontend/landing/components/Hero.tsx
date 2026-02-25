@@ -22,8 +22,8 @@ export default function Hero() {
 
           {/* Subheadline */}
           <p className="text-xl md:text-2xl text-gray-300 mb-12 max-w-3xl mx-auto">
-            The first decentralized trading signal network validated by Chainlink oracles.
-            Generate signals, stake to validate, or auto-execute verified trades.
+            The first decentralized trading signal network validated by Chainlink oracles. Generate
+            signals, stake to validate, or auto-execute verified trades.
           </p>
 
           {/* CTA Buttons */}

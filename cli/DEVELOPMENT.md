@@ -421,17 +421,20 @@ cargo outdated
 ## Resources
 
 ### Rust Learning
+
 - [The Rust Book](https://doc.rust-lang.org/book/)
 - [Rust by Example](https://doc.rust-lang.org/rust-by-example/)
 - [Rustlings](https://github.com/rust-lang/rustlings)
 
 ### Libraries
+
 - [Ratatui Docs](https://ratatui.rs/)
 - [ethers-rs Book](https://gakonst.com/ethers-rs/)
 - [Tokio Tutorial](https://tokio.rs/tokio/tutorial)
 - [Serde Guide](https://serde.rs/)
 
 ### Tools
+
 - [Rust Analyzer](https://rust-analyzer.github.io/) - IDE support
 - [Clippy](https://github.com/rust-lang/rust-clippy) - Linter
 - [cargo-watch](https://github.com/watchexec/cargo-watch) - Auto-reload

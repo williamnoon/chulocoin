@@ -139,6 +139,7 @@ function testFuzzStake(uint256 amount) public {
 ```
 
 Configuration in foundry.toml:
+
 ```toml
 [profile.default.fuzz]
 runs = 256
@@ -199,6 +200,7 @@ test-foundry/
 ### ValidatorStaking.sol
 
 - Validator struct has 6 fields - always destructure with 6 commas:
+
   ```solidity
   (uint256 stake, , , , , ) = staking.validators(addr);
   ```
@@ -212,6 +214,7 @@ test-foundry/
 ### Gas Benchmarks
 
 Current gas usage (from CI):
+
 ```
 testStake: ~XXX gas
 testUnstake: ~XXX gas
@@ -221,6 +224,7 @@ testSlashValidator: ~XXX gas
 ## Continuous Integration
 
 CI automatically runs:
+
 - `forge test` - All tests
 - Gas reports enabled in foundry.toml
 - Coverage tracking (future)

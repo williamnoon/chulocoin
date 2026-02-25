@@ -57,6 +57,7 @@ All major dependencies configured in Cargo.toml:
 ### ✅ Core Modules
 
 #### 1. Main Application (`main.rs`)
+
 - Tokio async runtime setup
 - Terminal UI initialization
 - Event loop with keyboard input handling
@@ -64,6 +65,7 @@ All major dependencies configured in Cargo.toml:
 - Graceful shutdown
 
 #### 2. Mining Engine (`mining/mod.rs`)
+
 - `MiningEngine` struct with state management
 - Start/stop/toggle functionality
 - Statistics tracking:
@@ -75,6 +77,7 @@ All major dependencies configured in Cargo.toml:
 - Unit tests (100% coverage)
 
 #### 3. Blockchain Client (`blockchain/mod.rs`)
+
 - `BlockchainClient` struct (stubbed for now)
 - `WalletInfo` with address, balance, tier
 - Tier calculation based on CHULO balance:
@@ -87,6 +90,7 @@ All major dependencies configured in Cargo.toml:
 - Unit tests for tier logic
 
 #### 4. UI Module (`ui/mod.rs`)
+
 - Complete terminal UI layout:
   - Header with app name and version
   - Status indicator (● ACTIVE / ○ PAUSED)
@@ -192,6 +196,7 @@ cargo test
 **Status**: Stubbed with mock data
 
 **What needs to be done**:
+
 - Implement ethers-rs wallet connection
 - Connect to Arbitrum One RPC
 - Load CHULO contract ABI
@@ -199,6 +204,7 @@ cargo test
 - Add transaction signing
 
 **Files to modify**:
+
 - `src/blockchain/mod.rs`
 
 ### 🚧 Backend Connection
@@ -206,12 +212,14 @@ cargo test
 **Status**: Not implemented
 
 **What needs to be done**:
+
 - WebSocket client for signal feed
 - HTTP client for API calls
 - Authentication flow
 - Reconnection logic
 
 **Files to create**:
+
 - `src/network/mod.rs`
 - `src/network/ws.rs`
 - `src/network/http.rs`
@@ -221,12 +229,14 @@ cargo test
 **Status**: Not implemented
 
 **What needs to be done**:
+
 - Signal validation algorithm
 - Oracle price verification
 - Confidence scoring
 - Proof generation and submission
 
 **Files to create**:
+
 - `src/validation/mod.rs`
 - `src/validation/oracle.rs`
 - `src/validation/proof.rs`
@@ -236,12 +246,14 @@ cargo test
 **Status**: Example file only
 
 **What needs to be done**:
+
 - Load from TOML file
 - Environment variable override
 - Interactive setup wizard
 - Validation and defaults
 
 **Files to create**:
+
 - `src/config/mod.rs`
 
 ### 🚧 Private Key Storage
@@ -249,12 +261,14 @@ cargo test
 **Status**: Not implemented
 
 **What needs to be done**:
+
 - System keyring integration
 - Encrypted local storage
 - Hardware wallet support
 - Memory zeroization
 
 **Files to create**:
+
 - `src/wallet/mod.rs`
 - `src/wallet/keyring.rs`
 
@@ -299,6 +313,7 @@ cargo run
 ### 4. Test Controls
 
 When running:
+
 - Press **S** → Status changes to "● MINING ACTIVE"
 - Wait 10+ seconds → Stats should increment (stub simulation)
 - Press **S** again → Status changes to "○ PAUSED"
@@ -321,6 +336,7 @@ build.bat
 ### 6. Verify Documentation
 
 All documentation files should be readable and well-formatted:
+
 - README.md
 - QUICKSTART.md
 - ARCHITECTURE.md
@@ -384,12 +400,14 @@ These are intentional stubs for Phase 1:
 **Current Status**: Development/Preview Only
 
 **Not ready for production because**:
+
 - No real blockchain integration
 - No backend connection
 - No actual mining logic
 - No security measures for keys
 
 **Ready for**:
+
 - Developer preview
 - UI/UX testing
 - Architecture review
@@ -404,7 +422,7 @@ These are intentional stubs for Phase 1:
 - **Startup Time**: < 500ms
 - **UI Refresh Rate**: 100ms (10 FPS)
 
-*Actual measurements TBD after Phase 2 integration*
+_Actual measurements TBD after Phase 2 integration_
 
 ## File Count
 
@@ -418,6 +436,7 @@ These are intentional stubs for Phase 1:
 ## Lines of Code
 
 Approximate:
+
 - **Rust code**: ~800 LOC
 - **Comments/docs**: ~200 LOC
 - **Tests**: ~100 LOC

@@ -103,6 +103,7 @@ pytest tests/test_strategies.py
 ## Backtesting Engine
 
 The backtesting engine includes:
+
 - **Walk-forward analysis**: 12-month training, 3-month testing
 - **Monte Carlo simulation**: 10,000 runs for robustness
 - **Realistic costs**: Trading fees, slippage, and funding rates
@@ -111,6 +112,7 @@ The backtesting engine includes:
 ## Quality Scoring
 
 Strategies are scored on:
+
 - Sharpe ratio (> 1.5 preferred)
 - Win rate (> 50% preferred)
 - Max drawdown (< 20% preferred)

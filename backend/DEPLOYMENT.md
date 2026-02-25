@@ -155,6 +155,7 @@ curl https://your-backend-url.railway.app/api/status
 ```
 
 Expected response:
+
 ```json
 {
   "status": "ok",
@@ -250,6 +251,7 @@ railway logs
 ### Metrics
 
 Railway provides automatic metrics:
+
 - CPU usage
 - Memory usage
 - Request count
@@ -276,6 +278,7 @@ Access via **"Metrics"** tab in the Railway dashboard.
 **Issue**: Application crashes on startup
 
 **Solution**:
+
 1. Check Railway logs for error messages
 2. Verify all required environment variables are set
 3. Ensure `DATABASE_URL` and `REDIS_URL` are correct
@@ -285,6 +288,7 @@ Access via **"Metrics"** tab in the Railway dashboard.
 **Issue**: Database connection errors
 
 **Solution**:
+
 1. Verify PostgreSQL service is running in Railway
 2. Check `DATABASE_URL` format: `postgresql://user:password@host:port/database`
 3. Ensure database migrations have run
@@ -294,6 +298,7 @@ Access via **"Metrics"** tab in the Railway dashboard.
 **Issue**: Redis connection errors
 
 **Solution**:
+
 1. Verify Redis service is running in Railway
 2. Check `REDIS_URL` format: `redis://host:port`
 3. Ensure Redis service is in the same Railway project
@@ -303,6 +308,7 @@ Access via **"Metrics"** tab in the Railway dashboard.
 **Issue**: Migrations fail on deployment
 
 **Solution**:
+
 1. Check migration files in `prisma/migrations/`
 2. Manually run migrations: `railway run npx prisma migrate deploy`
 3. If needed, reset database (⚠️ DATA LOSS): `railway run npx prisma migrate reset`
@@ -331,6 +337,7 @@ Railway supports horizontal scaling:
 ### Vertical Scaling
 
 Upgrade Railway plan for more resources:
+
 - More CPU
 - More RAM
 - Higher request limits

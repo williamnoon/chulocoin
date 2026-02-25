@@ -7,6 +7,7 @@ Utility scripts for deployment, testing, and maintenance.
 ### Staging Deployment
 
 #### `verify-staging.sh`
+
 Comprehensive verification of staging environment deployment.
 
 ```bash
@@ -14,6 +15,7 @@ Comprehensive verification of staging environment deployment.
 ```
 
 Checks:
+
 - Smart contract deployment on Arbitrum Sepolia
 - Backend API health and endpoints
 - Frontend landing page accessibility
@@ -22,6 +24,7 @@ Checks:
 - Blockchain RPC connectivity
 
 **Custom URLs:**
+
 ```bash
 BACKEND_URL=https://your-backend.railway.app \
 FRONTEND_LANDING_URL=https://your-landing.vercel.app \
@@ -30,6 +33,7 @@ FRONTEND_WEBAPP_URL=https://your-webapp.vercel.app \
 ```
 
 #### `setup-staging.sh`
+
 Interactive setup wizard for staging environment.
 
 ```bash
@@ -37,6 +41,7 @@ Interactive setup wizard for staging environment.
 ```
 
 Guides you through:
+
 1. Creating Railway project
 2. Deploying smart contracts
 3. Configuring environment variables
@@ -46,6 +51,7 @@ Guides you through:
 ### Database Management
 
 #### `backup-db.sh`
+
 Backup production or staging database.
 
 ```bash
@@ -57,6 +63,7 @@ Backup production or staging database.
 ```
 
 #### `restore-db.sh`
+
 Restore database from backup.
 
 ```bash
@@ -66,6 +73,7 @@ Restore database from backup.
 ### Contract Management
 
 #### `deploy-contracts.sh`
+
 Deploy smart contracts to specified network.
 
 ```bash
@@ -79,6 +87,7 @@ Deploy smart contracts to specified network.
 ### Monitoring
 
 #### `health-check.sh`
+
 Quick health check of all services.
 
 ```bash
@@ -86,6 +95,7 @@ Quick health check of all services.
 ```
 
 #### `generate-report.sh`
+
 Generate deployment status report.
 
 ```bash
@@ -95,11 +105,13 @@ Generate deployment status report.
 ## Usage
 
 Make scripts executable:
+
 ```bash
 chmod +x scripts/*.sh
 ```
 
 Run any script:
+
 ```bash
 ./scripts/<script-name>.sh
 ```
@@ -125,6 +137,7 @@ DEPLOYMENT_FILE=contracts/deployments/sepolia.json
 ```
 
 Override by setting environment variables:
+
 ```bash
 BACKEND_URL=https://custom.railway.app ./scripts/verify-staging.sh
 ```
@@ -132,6 +145,7 @@ BACKEND_URL=https://custom.railway.app ./scripts/verify-staging.sh
 ## Requirements
 
 Required tools:
+
 - `curl` - HTTP requests
 - `jq` - JSON parsing (optional but recommended)
 - `node` - For some scripts
@@ -140,6 +154,7 @@ Required tools:
 ## Contributing
 
 When adding new scripts:
+
 1. Add shebang: `#!/bin/bash`
 2. Set strict mode: `set -e`
 3. Add description in header comment

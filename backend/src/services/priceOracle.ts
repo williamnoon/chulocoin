@@ -112,9 +112,7 @@ export class PriceOracleService {
   /**
    * Validate multiple signals at once
    */
-  async verifyMultipleSignals(
-    signals: Array<{ asset: string; price: number }>
-  ): Promise<
+  async verifyMultipleSignals(signals: Array<{ asset: string; price: number }>): Promise<
     Array<{
       asset: string;
       signalPrice: number;

@@ -80,13 +80,13 @@ echo "private_key = \"your-private-key\"" > ~/.chulobots/config.toml
 
 Your tier is automatically detected based on CHULO balance:
 
-| Tier | CHULO Required | Signals/Day |
-|------|----------------|-------------|
-| Free | 0 | 10 |
-| Starter | 100 | 50 |
-| Builder | 1,000 | 200 |
-| Pro | 10,000 | 1,000 |
-| Whale | 50,000 | Unlimited |
+| Tier    | CHULO Required | Signals/Day |
+| ------- | -------------- | ----------- |
+| Free    | 0              | 10          |
+| Starter | 100            | 50          |
+| Builder | 1,000          | 200         |
+| Pro     | 10,000         | 1,000       |
+| Whale   | 50,000         | Unlimited   |
 
 ## Architecture
 
@@ -143,6 +143,7 @@ RUST_LOG=debug cargo run
 ## Configuration
 
 Configuration is stored in:
+
 - **Linux/macOS**: `~/.config/chulobots/config.toml`
 - **Windows**: `%APPDATA%\chulobots\config.toml`
 

@@ -42,12 +42,14 @@ vercel link
 Create these in Vercel dashboard for the landing page project:
 
 **Staging:**
+
 ```
 NEXT_PUBLIC_API_URL=https://api-staging.chulobots.com
 NEXT_PUBLIC_WEBAPP_URL=https://app-staging.chulobots.com
 ```
 
 **Production:**
+
 ```
 NEXT_PUBLIC_API_URL=https://api.chulobots.com
 NEXT_PUBLIC_WEBAPP_URL=https://app.chulobots.com
@@ -58,6 +60,7 @@ NEXT_PUBLIC_WEBAPP_URL=https://app.chulobots.com
 Create these in Vercel dashboard for the web app project:
 
 **Staging:**
+
 ```
 VITE_API_URL=https://api-staging.chulobots.com
 VITE_WS_URL=wss://api-staging.chulobots.com
@@ -67,6 +70,7 @@ VITE_CHAIN_ID=421614
 ```
 
 **Production:**
+
 ```
 VITE_API_URL=https://api.chulobots.com
 VITE_WS_URL=wss://api.chulobots.com
@@ -82,16 +86,19 @@ VITE_CHAIN_ID=42161
 From `/frontend/landing`:
 
 **Development (Preview):**
+
 ```bash
 vercel
 ```
 
 **Staging:**
+
 ```bash
 vercel --prod
 ```
 
 **Production:**
+
 ```bash
 vercel --prod
 ```
@@ -101,16 +108,19 @@ vercel --prod
 From `/frontend/webapp`:
 
 **Development (Preview):**
+
 ```bash
 vercel
 ```
 
 **Staging:**
+
 ```bash
 vercel --prod
 ```
 
 **Production:**
+
 ```bash
 vercel --prod
 ```
@@ -249,6 +259,7 @@ The `vercel.json` in the project root is configured to handle both applications:
 Both applications have the correct build scripts configured:
 
 ### Landing Page (`frontend/landing/package.json`)
+
 ```json
 {
   "scripts": {
@@ -258,6 +269,7 @@ Both applications have the correct build scripts configured:
 ```
 
 ### Web App (`frontend/webapp/package.json`)
+
 ```json
 {
   "scripts": {
@@ -271,9 +283,11 @@ Both applications have the correct build scripts configured:
 ### Build Failures
 
 **Issue**: Build fails with "Cannot find module"
+
 - **Solution**: Ensure all dependencies are in `dependencies`, not `devDependencies`
 
 **Issue**: Environment variables not available
+
 - **Solution**: Ensure variables are prefixed correctly:
   - Next.js: `NEXT_PUBLIC_*`
   - Vite: `VITE_*`
@@ -281,17 +295,21 @@ Both applications have the correct build scripts configured:
 ### Deployment Issues
 
 **Issue**: Wrong application deployed
+
 - **Solution**: Check root directory setting in Vercel project settings
 
 **Issue**: Static files not found (Vite)
+
 - **Solution**: Verify `distDir: "dist"` in vercel.json and output directory in Vercel settings
 
 ### Environment Variable Issues
 
 **Issue**: Variables not updating
+
 - **Solution**: Redeploy after changing environment variables in Vercel dashboard
 
 **Issue**: Variables showing as undefined
+
 - **Solution**: Make sure to prefix variables correctly and restart dev server
 
 ## Testing Deployments

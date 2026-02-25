@@ -8,41 +8,41 @@ Configure these secrets in: **Settings → Secrets and variables → Actions**
 
 ### Contract Deployment
 
-| Secret Name | Description | How to Get | Example |
-|-------------|-------------|------------|---------|
-| `DEPLOYER_PRIVATE_KEY_TESTNET` | Private key for deploying to testnet | Create new wallet with testnet ETH | `0x1234...` |
-| `DEPLOYER_PRIVATE_KEY_MAINNET` | Private key for deploying to mainnet | Create new wallet with mainnet ETH | `0x5678...` |
-| `ARBISCAN_API_KEY` | API key for contract verification | [arbiscan.io/myapikey](https://arbiscan.io/myapikey) | `ABC123...` |
+| Secret Name                    | Description                          | How to Get                                           | Example     |
+| ------------------------------ | ------------------------------------ | ---------------------------------------------------- | ----------- |
+| `DEPLOYER_PRIVATE_KEY_TESTNET` | Private key for deploying to testnet | Create new wallet with testnet ETH                   | `0x1234...` |
+| `DEPLOYER_PRIVATE_KEY_MAINNET` | Private key for deploying to mainnet | Create new wallet with mainnet ETH                   | `0x5678...` |
+| `ARBISCAN_API_KEY`             | API key for contract verification    | [arbiscan.io/myapikey](https://arbiscan.io/myapikey) | `ABC123...` |
 
 ### CI/CD Testing
 
-| Secret Name | Description | How to Get | Example |
-|-------------|-------------|------------|---------|
+| Secret Name      | Description                                                   | How to Get                              | Example             |
+| ---------------- | ------------------------------------------------------------- | --------------------------------------- | ------------------- |
 | `TC_CLOUD_TOKEN` | Testcontainers Cloud token for running PostgreSQL/Redis in CI | Testcontainers Cloud → Service Accounts | `aj_tcc_svc_xxx...` |
 
 ### Railway (Backend)
 
-| Secret Name | Description | How to Get | Example |
-|-------------|-------------|------------|---------|
-| `RAILWAY_TOKEN` | Railway API token | Railway Dashboard → Account → Tokens | `railway_xxx...` |
-| `RAILWAY_DOMAIN` | Railway backend domain | After deployment | `your-backend.railway.app` |
+| Secret Name      | Description            | How to Get                           | Example                    |
+| ---------------- | ---------------------- | ------------------------------------ | -------------------------- |
+| `RAILWAY_TOKEN`  | Railway API token      | Railway Dashboard → Account → Tokens | `railway_xxx...`           |
+| `RAILWAY_DOMAIN` | Railway backend domain | After deployment                     | `your-backend.railway.app` |
 
 ### Vercel (Frontend)
 
-| Secret Name | Description | How to Get | Example |
-|-------------|-------------|------------|---------|
-| `VERCEL_TOKEN` | Vercel API token | Vercel → Settings → Tokens | `vercel_xxx...` |
-| `VERCEL_ORG_ID` | Vercel organization ID | `.vercel/project.json` or Vercel dashboard | `team_xxx...` |
-| `VERCEL_PROJECT_ID_LANDING` | Landing page project ID | `.vercel/project.json` in landing/ | `prj_xxx...` |
-| `VERCEL_PROJECT_ID_WEBAPP` | WebApp project ID | `.vercel/project.json` in webapp/ | `prj_yyy...` |
-| `VERCEL_LANDING_DOMAIN` | Landing page domain | After deployment | `your-landing.vercel.app` |
-| `VERCEL_WEBAPP_DOMAIN` | WebApp domain | After deployment | `your-webapp.vercel.app` |
+| Secret Name                 | Description             | How to Get                                 | Example                   |
+| --------------------------- | ----------------------- | ------------------------------------------ | ------------------------- |
+| `VERCEL_TOKEN`              | Vercel API token        | Vercel → Settings → Tokens                 | `vercel_xxx...`           |
+| `VERCEL_ORG_ID`             | Vercel organization ID  | `.vercel/project.json` or Vercel dashboard | `team_xxx...`             |
+| `VERCEL_PROJECT_ID_LANDING` | Landing page project ID | `.vercel/project.json` in landing/         | `prj_xxx...`              |
+| `VERCEL_PROJECT_ID_WEBAPP`  | WebApp project ID       | `.vercel/project.json` in webapp/          | `prj_yyy...`              |
+| `VERCEL_LANDING_DOMAIN`     | Landing page domain     | After deployment                           | `your-landing.vercel.app` |
+| `VERCEL_WEBAPP_DOMAIN`      | WebApp domain           | After deployment                           | `your-webapp.vercel.app`  |
 
 ### Notifications (Optional)
 
-| Secret Name | Description | How to Get | Example |
-|-------------|-------------|------------|---------|
-| `SLACK_WEBHOOK_URL` | Slack webhook for notifications | Slack → Apps → Incoming Webhooks | `https://hooks.slack.com/...` |
+| Secret Name           | Description                       | How to Get                               | Example                                |
+| --------------------- | --------------------------------- | ---------------------------------------- | -------------------------------------- |
+| `SLACK_WEBHOOK_URL`   | Slack webhook for notifications   | Slack → Apps → Incoming Webhooks         | `https://hooks.slack.com/...`          |
 | `DISCORD_WEBHOOK_URL` | Discord webhook for notifications | Discord → Server Settings → Integrations | `https://discord.com/api/webhooks/...` |
 
 ## Setup Instructions
@@ -58,6 +58,7 @@ node -e "console.log(require('ethers').Wallet.createRandom().privateKey)"
 ```
 
 **IMPORTANT**:
+
 - NEVER use your personal wallet's private key
 - NEVER commit private keys to git
 - Use separate keys for testnet and mainnet
@@ -82,6 +83,7 @@ node -e "console.log(require('ethers').Wallet.createRandom().privateKey)"
 7. Add to GitHub secrets as `TC_CLOUD_TOKEN`
 
 **Token Value:**
+
 ```
 aj_tcc_svc_sIoEUgubzFu41lxHArJhC0YSwLU9jE5F5mZDciyWoumnQ
 ```
@@ -89,6 +91,7 @@ aj_tcc_svc_sIoEUgubzFu41lxHArJhC0YSwLU9jE5F5mZDciyWoumnQ
 **Purpose:** Testcontainers Cloud runs PostgreSQL and Redis containers during CI tests, providing better reliability and management than GitHub Actions services.
 
 **Used in:**
+
 - `.github/workflows/ci.yml` - Backend test job
 
 ### 4. Railway Token
@@ -100,6 +103,7 @@ aj_tcc_svc_sIoEUgubzFu41lxHArJhC0YSwLU9jE5F5mZDciyWoumnQ
 5. Add to GitHub secrets as `RAILWAY_TOKEN`
 
 **Get Railway Domain:**
+
 ```bash
 # After first deployment
 railway domain --service backend --environment staging
@@ -117,6 +121,7 @@ railway domain --service backend --environment staging
 **Get Vercel Project IDs:**
 
 Method 1: Via Vercel CLI
+
 ```bash
 # Install Vercel CLI
 npm i -g vercel
@@ -135,11 +140,13 @@ cat .vercel/project.json
 ```
 
 Method 2: Via Vercel Dashboard
+
 1. Go to project settings
 2. URL will be: `vercel.com/<team>/<project>/settings`
 3. Project ID is in the URL or settings page
 
 **Get Vercel Organization ID:**
+
 ```bash
 # From .vercel/project.json
 cat .vercel/project.json | jq -r '.orgId'
@@ -195,6 +202,7 @@ gh run view --log-failed
 ## Security Best Practices
 
 ### Private Keys
+
 - ✅ Use dedicated deployment wallets
 - ✅ Keep testnet and mainnet keys separate
 - ✅ Rotate keys periodically
@@ -203,6 +211,7 @@ gh run view --log-failed
 - ❌ NEVER commit keys to git
 
 ### API Tokens
+
 - ✅ Use fine-grained permissions
 - ✅ Rotate tokens periodically
 - ✅ Monitor token usage
@@ -211,6 +220,7 @@ gh run view --log-failed
 - ❌ NEVER commit tokens to git
 
 ### GitHub Secrets
+
 - ✅ Use environment-specific secrets
 - ✅ Limit workflow permissions
 - ✅ Review access logs
@@ -251,16 +261,19 @@ gh run view --log-failed
 Some secrets can be environment-specific:
 
 **Staging Environment:**
+
 ```
 Settings → Environments → staging → Secrets
 ```
 
 **Production Environment:**
+
 ```
 Settings → Environments → production → Secrets
 ```
 
 This allows different values for staging vs production:
+
 - Different API keys
 - Different deployment keys
 - Different webhook URLs
@@ -278,6 +291,7 @@ When adding new secrets to workflows:
 ## Support
 
 For issues with secrets:
+
 1. Check this documentation
 2. Review workflow logs
 3. Verify secret values
