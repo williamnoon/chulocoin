@@ -6,7 +6,7 @@ const router = Router();
  * GET /api/status
  * System status endpoint
  */
-router.get('/', (req: Request, res: Response) => {
+router.get('/', (_req: Request, res: Response) => {
   res.status(200).json({
     success: true,
     data: {

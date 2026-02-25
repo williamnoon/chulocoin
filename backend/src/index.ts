@@ -41,7 +41,7 @@ app.use('/api/positions', positionsRouter);
 app.use('/api/oracle', oracleRouter);
 
 // Root health check for Railway/monitoring
-app.get('/health', (req, res) => {
+app.get('/health', (_req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
@@ -51,8 +51,7 @@ app.use(errorHandler);
 
 // Create HTTP server and initialize WebSocket
 const httpServer = createServer(app);
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const _wsService = initializeWebSocket(httpServer); // Will be used for future WebSocket management
+initializeWebSocket(httpServer); // Initialize WebSocket service
 
 // Start server
 httpServer.listen(PORT, () => {

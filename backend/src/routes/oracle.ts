@@ -91,7 +91,7 @@ router.post('/verify-batch', async (req: Request, res: Response, next) => {
  * GET /api/oracle/status
  * Get oracle configuration and status
  */
-router.get('/status', async (req: Request, res: Response, next) => {
+router.get('/status', async (_req: Request, res: Response, next) => {
   try {
     const oracle = getOracleService();
     const tolerance = await oracle.getPriceTolerance();
