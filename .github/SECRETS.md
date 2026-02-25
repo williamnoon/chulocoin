@@ -14,6 +14,12 @@ Configure these secrets in: **Settings → Secrets and variables → Actions**
 | `DEPLOYER_PRIVATE_KEY_MAINNET` | Private key for deploying to mainnet | Create new wallet with mainnet ETH | `0x5678...` |
 | `ARBISCAN_API_KEY` | API key for contract verification | [arbiscan.io/myapikey](https://arbiscan.io/myapikey) | `ABC123...` |
 
+### CI/CD Testing
+
+| Secret Name | Description | How to Get | Example |
+|-------------|-------------|------------|---------|
+| `TC_CLOUD_TOKEN` | Testcontainers Cloud token for running PostgreSQL/Redis in CI | Testcontainers Cloud → Service Accounts | `aj_tcc_svc_xxx...` |
+
 ### Railway (Backend)
 
 | Secret Name | Description | How to Get | Example |
@@ -65,7 +71,27 @@ node -e "console.log(require('ethers').Wallet.createRandom().privateKey)"
 4. Copy the API key
 5. Add to GitHub secrets as `ARBISCAN_API_KEY`
 
-### 3. Railway Token
+### 3. Testcontainers Cloud Token
+
+1. Go to [Testcontainers Cloud](https://testcontainers.cloud)
+2. Sign in or create account
+3. Navigate to Service Accounts
+4. Create service account named "chulo" (or use existing)
+5. Generate access token
+6. Copy the token (format: `aj_tcc_svc_...`)
+7. Add to GitHub secrets as `TC_CLOUD_TOKEN`
+
+**Token Value:**
+```
+aj_tcc_svc_sIoEUgubzFu41lxHArJhC0YSwLU9jE5F5mZDciyWoumnQ
+```
+
+**Purpose:** Testcontainers Cloud runs PostgreSQL and Redis containers during CI tests, providing better reliability and management than GitHub Actions services.
+
+**Used in:**
+- `.github/workflows/ci.yml` - Backend test job
+
+### 4. Railway Token
 
 1. Go to [Railway Dashboard](https://railway.app/account/tokens)
 2. Click "Create Token"
@@ -79,7 +105,7 @@ node -e "console.log(require('ethers').Wallet.createRandom().privateKey)"
 railway domain --service backend --environment staging
 ```
 
-### 4. Vercel Token
+### 5. Vercel Token
 
 1. Go to [Vercel Settings → Tokens](https://vercel.com/account/tokens)
 2. Click "Create"
@@ -123,7 +149,7 @@ cat .vercel/project.json | jq -r '.orgId'
 # orgId is the team_xxx part
 ```
 
-### 5. Slack Webhook (Optional)
+### 6. Slack Webhook (Optional)
 
 1. Go to [Slack Apps](https://api.slack.com/apps)
 2. Create new app or use existing
@@ -144,6 +170,7 @@ gh secret list
 # Expected output:
 # DEPLOYER_PRIVATE_KEY_TESTNET
 # ARBISCAN_API_KEY
+# TC_CLOUD_TOKEN
 # RAILWAY_TOKEN
 # VERCEL_TOKEN
 # VERCEL_ORG_ID
@@ -210,6 +237,14 @@ gh run view --log-failed
 1. Check token has required scopes
 2. Verify organization/team permissions
 3. Ensure repository access is configured
+
+### "Testcontainers Cloud connection failed" Error
+
+1. Verify TC_CLOUD_TOKEN secret is set correctly
+2. Check service account "chulo" is active at testcontainers.cloud
+3. Ensure token hasn't expired (regenerate if needed)
+4. Verify Testcontainers Cloud service is operational
+5. Check workflow logs for specific error messages
 
 ## Environment-Specific Secrets
 
