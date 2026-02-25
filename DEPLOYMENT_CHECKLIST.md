@@ -374,13 +374,13 @@ If deployment fails, document rollback steps:
 
 ## Sign-Off
 
-Deployment completed by: ******\_\_\_******
+Deployment completed by: **\*\***\_\_\_**\*\***
 
-Date: ******\_\_\_******
+Date: **\*\***\_\_\_**\*\***
 
-Verified by: ******\_\_\_******
+Verified by: **\*\***\_\_\_**\*\***
 
-Date: ******\_\_\_******
+Date: **\*\***\_\_\_**\*\***
 
 ## Notes
 
