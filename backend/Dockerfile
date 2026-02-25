@@ -3,14 +3,14 @@ FROM node:20-alpine AS base
 
 # Install dependencies only when needed
 FROM base AS deps
-WORKDIR /app
 
 # Copy root package files for monorepo
-COPY package*.json ./
-COPY backend/package*.json ./backend/
+COPY package*.json /app/
+COPY backend/package*.json /app/backend/
 
 # Install ALL dependencies (including dev deps for building)
-RUN npm ci --workspace=backend
+WORKDIR /app/backend
+RUN npm ci
 
 # Build stage
 FROM base AS builder
@@ -31,10 +31,10 @@ RUN npm run build
 
 # Reinstall production-only dependencies
 FROM base AS prod-deps
-WORKDIR /app
-COPY package*.json ./
-COPY backend/package*.json ./backend/
-RUN npm ci --only=production --workspace=backend
+COPY package*.json /app/
+COPY backend/package*.json /app/backend/
+WORKDIR /app/backend
+RUN npm ci --only=production
 
 # Production stage
 FROM base AS runner
