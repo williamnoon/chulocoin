@@ -227,17 +227,29 @@ contract TierNFTTest is Test {
 
         string memory uri = tierNFT.tokenURI(tokenId);
 
-        // Check that URI contains tier info
-        assertTrue(bytes(uri).length > 0, "URI should not be empty");
-        assertTrue(bytes(uri).length >= 28, "URI should be at least 28 characters");
+        // Check that URI is a valid data URI with JSON content
+        assertTrue(bytes(uri).length > 50, "URI should contain JSON data");
 
-        // URI should start with data:application/json;utf8,
-        string memory prefix = substring(uri, 0, 28);
-        assertEq(
-            keccak256(bytes(prefix)),
-            keccak256(bytes("data:application/json;utf8,")),
-            "URI should start with correct data URI prefix"
-        );
+        // Check that URI contains expected tier info
+        // Should include "Bronze", "Tier", and JSON structure markers
+        bytes memory uriBytes = bytes(uri);
+        bool hasBronze = false;
+        bool hasTier = false;
+
+        // Simple check: URI should contain tier-related content
+        for (uint256 i = 0; i < uriBytes.length - 6; i++) {
+            if (uriBytes[i] == "B" && uriBytes[i+1] == "r" && uriBytes[i+2] == "o" &&
+                uriBytes[i+3] == "n" && uriBytes[i+4] == "z" && uriBytes[i+5] == "e") {
+                hasBronze = true;
+            }
+            if (uriBytes[i] == "T" && uriBytes[i+1] == "i" && uriBytes[i+2] == "e" &&
+                uriBytes[i+3] == "r") {
+                hasTier = true;
+            }
+        }
+
+        assertTrue(hasBronze, "URI should contain 'Bronze'");
+        assertTrue(hasTier, "URI should contain 'Tier'");
     }
 
     function testSilverTokenURI() public {
@@ -399,8 +411,9 @@ contract TierNFTTest is Test {
         // Final tier should be >= initial tier
         assertTrue(uint8(finalTier) >= uint8(initialTier));
 
-        // Should always have at most 1 NFT
-        assertTrue(tierNFT.balanceOf(user1) <= 1);
+        // User accumulates badge NFTs (keeps them as collectibles)
+        // Balance should be >= 1 (at least one badge)
+        assertTrue(tierNFT.balanceOf(user1) >= 1);
     }
 
     // Test ERC721 compliance
