@@ -116,11 +116,18 @@ jobs:
     needs: [lint, test-contracts, test-backend, test-frontend]
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: nightly
 
       - name: Install dependencies
         run: npm install
