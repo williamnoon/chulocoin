@@ -9,12 +9,12 @@ import "./CHULO.sol";
 
 /**
  * @title TierSubscription
- * @dev Subscription-based tier system - burn CHULO for monthly/yearly access
+ * @dev Subscription-based tier system - burn CHULO for monthly/quarterly access
  *
  * Features:
- * - Burn CHULO to subscribe (monthly or yearly with discount)
+ * - Burn CHULO to subscribe (monthly or quarterly with discount)
  * - Credits system for actions
- * - Gas fee multipliers (higher tiers pay less)
+ * - Feature-based tier limits (bots, positions, position size)
  * - NFT badges as proof of subscription
  * - No balance requirement - just active subscription
  */
@@ -33,8 +33,7 @@ contract TierSubscription is ERC721, ERC721URIStorage, Ownable {
 
     enum SubscriptionPeriod {
         MONTHLY,
-        QUARTERLY,  // Default - 3 months with discount
-        YEARLY
+        QUARTERLY  // Default - 3 months with tiered discount
     }
 
     struct Subscription {
@@ -45,17 +44,19 @@ contract TierSubscription is ERC721, ERC721URIStorage, Ownable {
     }
 
     struct TierConfig {
-        uint256 monthlyPrice;      // CHULO to burn per month (USD equivalent)
-        uint256 quarterlyPrice;    // CHULO to burn per quarter (~10% discount)
-        uint256 yearlyPrice;       // CHULO to burn per year (~20% discount)
-        uint256 monthlyCredits;    // Credits granted per month
-        uint256 gasMultiplier;     // Gas fee multiplier (100 = 1.0x, 50 = 0.5x)
+        uint256 monthlyPrice;       // CHULO to burn per month (USD equivalent)
+        uint256 quarterlyPrice;     // CHULO to burn per quarter (monthly * 3 * discount)
+        uint256 monthlyCredits;     // Credits granted per month
+        uint256 maxBots;            // Maximum number of bots allowed
+        uint256 maxActivePositions; // Maximum active positions
+        uint256 maxPositionSize;    // Maximum position size in USD
+        uint256 signalDelaySeconds; // Signal delay (0 = real-time, 86400 = 24hr)
+        uint256 strategyAccessLevel; // 0 = none, 1 = basic, 2 = intermediate, 3 = advanced, 4 = all + custom
     }
 
     // Subscription duration
     uint256 public constant MONTH_DURATION = 30 days;
     uint256 public constant QUARTER_DURATION = 90 days;  // 3 months
-    uint256 public constant YEAR_DURATION = 365 days;
 
     // User subscriptions
     mapping(address => Subscription) public subscriptions;
@@ -92,52 +93,70 @@ contract TierSubscription is ERC721, ERC721URIStorage, Ownable {
 
         // Initialize tier configs
         // Assuming $0.01 per CHULO for pricing conversions
-        // Quarterly (default): 10% discount
-        // Yearly: 20% discount
+        // Quarterly discounts: 5%, 10%, 20%, 40% respectively
 
         // FREE tier (default for everyone)
         tierConfigs[Tier.FREE] = TierConfig({
             monthlyPrice: 0,
             quarterlyPrice: 0,
-            yearlyPrice: 0,
             monthlyCredits: 0,
-            gasMultiplier: 100 // 1.0x gas (no discount)
+            maxBots: 0,
+            maxActivePositions: 1,
+            maxPositionSize: 100, // $100 max
+            signalDelaySeconds: 86400, // 24 hour delay
+            strategyAccessLevel: 0 // No strategies
         });
 
         // OBSERVER: $10/mo = 1,000 CHULO/mo
+        // Quarterly: $10 * 3 * 0.95 = $28.50 = 2,850 CHULO (5% off)
         tierConfigs[Tier.OBSERVER] = TierConfig({
             monthlyPrice: 1_000 * 10**18,
-            quarterlyPrice: 2_700 * 10**18,   // $27 (10% off)
-            yearlyPrice: 9_600 * 10**18,       // $96 (20% off)
+            quarterlyPrice: 2_850 * 10**18,
             monthlyCredits: 100,
-            gasMultiplier: 90 // 0.9x gas (10% discount)
+            maxBots: 1,
+            maxActivePositions: 3,
+            maxPositionSize: 500, // $500 max
+            signalDelaySeconds: 0, // Real-time signals
+            strategyAccessLevel: 1 // Basic strategies
         });
 
         // JUNIOR_QUANT: $30/mo = 3,000 CHULO/mo
+        // Quarterly: $30 * 3 * 0.90 = $81 = 8,100 CHULO (10% off)
         tierConfigs[Tier.JUNIOR_QUANT] = TierConfig({
             monthlyPrice: 3_000 * 10**18,
-            quarterlyPrice: 8_100 * 10**18,    // $81 (10% off)
-            yearlyPrice: 28_800 * 10**18,      // $288 (20% off)
+            quarterlyPrice: 8_100 * 10**18,
             monthlyCredits: 500,
-            gasMultiplier: 75 // 0.75x gas (25% discount)
+            maxBots: 3,
+            maxActivePositions: 10,
+            maxPositionSize: 2_500, // $2,500 max
+            signalDelaySeconds: 0, // Real-time signals
+            strategyAccessLevel: 2 // Intermediate strategies
         });
 
         // SENIOR_QUANT: $90/mo = 9,000 CHULO/mo
+        // Quarterly: $90 * 3 * 0.80 = $216 = 21,600 CHULO (20% off)
         tierConfigs[Tier.SENIOR_QUANT] = TierConfig({
             monthlyPrice: 9_000 * 10**18,
-            quarterlyPrice: 24_300 * 10**18,   // $243 (10% off)
-            yearlyPrice: 86_400 * 10**18,      // $864 (20% off)
+            quarterlyPrice: 21_600 * 10**18,
             monthlyCredits: 2_000,
-            gasMultiplier: 60 // 0.6x gas (40% discount)
+            maxBots: 10,
+            maxActivePositions: 50,
+            maxPositionSize: 10_000, // $10,000 max
+            signalDelaySeconds: 0, // Real-time signals
+            strategyAccessLevel: 3 // Advanced strategies
         });
 
         // SAGE: $250/mo = 25,000 CHULO/mo
+        // Quarterly: $250 * 3 * 0.60 = $450 = 45,000 CHULO (40% off)
         tierConfigs[Tier.SAGE] = TierConfig({
             monthlyPrice: 25_000 * 10**18,
-            quarterlyPrice: 67_500 * 10**18,   // $675 (10% off)
-            yearlyPrice: 240_000 * 10**18,     // $2,400 (20% off)
+            quarterlyPrice: 45_000 * 10**18,
             monthlyCredits: 10_000,
-            gasMultiplier: 50 // 0.5x gas (50% discount)
+            maxBots: 50,
+            maxActivePositions: 200,
+            maxPositionSize: 100_000, // $100,000 max
+            signalDelaySeconds: 0, // Real-time signals
+            strategyAccessLevel: 4 // All strategies + custom
         });
     }
 
@@ -159,14 +178,11 @@ contract TierSubscription is ERC721, ERC721URIStorage, Ownable {
             price = config.monthlyPrice;
             duration = MONTH_DURATION;
             monthsInPeriod = 1;
-        } else if (period == SubscriptionPeriod.QUARTERLY) {
+        } else {
+            // QUARTERLY
             price = config.quarterlyPrice;
             duration = QUARTER_DURATION;
             monthsInPeriod = 3;
-        } else {
-            price = config.yearlyPrice;
-            duration = YEAR_DURATION;
-            monthsInPeriod = 12;
         }
 
         require(chuloToken.balanceOf(msg.sender) >= price, "Insufficient CHULO");
@@ -253,11 +269,24 @@ contract TierSubscription is ERC721, ERC721URIStorage, Ownable {
     }
 
     /**
-     * @dev Get gas multiplier for user
+     * @dev Get tier limits for user
      */
-    function getGasMultiplier(address user) external view returns (uint256) {
+    function getTierLimits(address user) external view returns (
+        uint256 maxBots,
+        uint256 maxActivePositions,
+        uint256 maxPositionSize,
+        uint256 signalDelaySeconds,
+        uint256 strategyAccessLevel
+    ) {
         Tier tier = _getActiveTier(user);
-        return tierConfigs[tier].gasMultiplier;
+        TierConfig memory config = tierConfigs[tier];
+        return (
+            config.maxBots,
+            config.maxActivePositions,
+            config.maxPositionSize,
+            config.signalDelaySeconds,
+            config.strategyAccessLevel
+        );
     }
 
     /**
@@ -292,22 +321,28 @@ contract TierSubscription is ERC721, ERC721URIStorage, Ownable {
     }
 
     /**
-     * @dev Get tier pricing
+     * @dev Get tier pricing and limits
      */
     function getTierPricing(Tier tier) external view returns (
         uint256 monthlyPrice,
         uint256 quarterlyPrice,
-        uint256 yearlyPrice,
         uint256 monthlyCredits,
-        uint256 gasMultiplier
+        uint256 maxBots,
+        uint256 maxActivePositions,
+        uint256 maxPositionSize,
+        uint256 signalDelaySeconds,
+        uint256 strategyAccessLevel
     ) {
         TierConfig memory config = tierConfigs[tier];
         return (
             config.monthlyPrice,
             config.quarterlyPrice,
-            config.yearlyPrice,
             config.monthlyCredits,
-            config.gasMultiplier
+            config.maxBots,
+            config.maxActivePositions,
+            config.maxPositionSize,
+            config.signalDelaySeconds,
+            config.strategyAccessLevel
         );
     }
 
@@ -318,16 +353,22 @@ contract TierSubscription is ERC721, ERC721URIStorage, Ownable {
         Tier tier,
         uint256 monthlyPrice,
         uint256 quarterlyPrice,
-        uint256 yearlyPrice,
         uint256 monthlyCredits,
-        uint256 gasMultiplier
+        uint256 maxBots,
+        uint256 maxActivePositions,
+        uint256 maxPositionSize,
+        uint256 signalDelaySeconds,
+        uint256 strategyAccessLevel
     ) external onlyOwner {
         tierConfigs[tier] = TierConfig({
             monthlyPrice: monthlyPrice,
             quarterlyPrice: quarterlyPrice,
-            yearlyPrice: yearlyPrice,
             monthlyCredits: monthlyCredits,
-            gasMultiplier: gasMultiplier
+            maxBots: maxBots,
+            maxActivePositions: maxActivePositions,
+            maxPositionSize: maxPositionSize,
+            signalDelaySeconds: signalDelaySeconds,
+            strategyAccessLevel: strategyAccessLevel
         });
     }
 

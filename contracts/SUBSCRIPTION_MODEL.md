@@ -6,69 +6,83 @@ ChuloBots uses a **quarterly subscription model** where users burn CHULO tokens 
 
 ## Tier Pricing (USD Equivalent in CHULO)
 
-**Default: Quarterly** (10% discount) | Toggle: Monthly (regular price)
+**Default: Quarterly** | Toggle: Monthly (regular price)
 
-| Tier | USD/Month | Monthly CHULO | **Quarterly CHULO** | Yearly CHULO | Credits/Mo | Gas Discount |
-|------|-----------|---------------|---------------------|--------------|------------|--------------|
-| **Free** | $0 | FREE | FREE | FREE | 0 | 0% |
-| **Observer** | $10 | 1,000 | **2,700** (10% off) | 9,600 (20% off) | 100 | 10% |
-| **Junior Quant** | $30 | 3,000 | **8,100** (10% off) | 28,800 (20% off) | 500 | 25% |
-| **Senior Quant** | $90 | 9,000 | **24,300** (10% off) | 86,400 (20% off) | 2,000 | 40% |
-| **Sage** | $250 | 25,000 | **67,500** (10% off) | 240,000 (20% off) | 10,000 | 50% |
+| Tier | USD/Month | **Quarterly CHULO** | Discount | Credits/Mo | Max Bots | Max Positions | Max Position Size | Signal Access | Strategy Access |
+|------|-----------|---------------------|----------|------------|----------|---------------|-------------------|---------------|-----------------|
+| **Free** | $0 | FREE | - | 0 | 0 | 1 | $100 | 24hr delay | None |
+| **Observer** | $10 | **2,850** | 5% off | 100 | 1 | 3 | $500 | Real-time | Basic |
+| **Junior Quant** | $30 | **8,100** | 10% off | 500 | 3 | 10 | $2,500 | Real-time | Intermediate |
+| **Senior Quant** | $90 | **21,600** | 20% off | 2,000 | 10 | 50 | $10,000 | Real-time | Advanced |
+| **Sage** | $250 | **45,000** | 40% off | 10,000 | 50 | 200 | $100,000 | Real-time | All + Custom |
 
 *Pricing assumes $0.01 per CHULO - actual CHULO amount may vary with token price*
 
 ### Subscription Discounts
 
 - **Monthly**: Full price, pay as you go
-- **Quarterly** (DEFAULT): 10% discount - best for active traders
-- **Yearly**: 20% discount - best for professional quants
+- **Quarterly** (DEFAULT): Tiered discounts (5% to 40%) - best for active traders
+  - Observer: 5% off
+  - Junior Quant: 10% off
+  - Senior Quant: 20% off
+  - Sage: 40% off
 
 ## Tier Descriptions
 
 ### 🆓 Free Tier
 **Perfect for:** Exploring the platform
 - **Cost**: $0
+- **Limits**: 0 bots, 1 position, $100 max position size
+- **Signal Access**: 24-hour delay
+- **Strategy Access**: None (manual trading only)
 - **Features**:
   - View public signals (24hr delay)
   - Basic market data
   - Community access
-- **Limitations**: No credits, full gas fees, delayed signals
+- **Limitations**: No credits, no bots, no strategies, delayed signals
 
 ---
 
 ### 👁️ Observer - $10/month
 **Perfect for:** Casual traders learning the ropes
-- **Quarterly**: 2,700 CHULO ($27 - save $3)
+- **Quarterly**: 2,850 CHULO ($28.50 - save 5%)
 - **Credits**: 100/month
-- **Gas Discount**: 10% off all transactions
+- **Limits**: 1 bot, 3 positions, $500 max position size
+- **Signal Access**: Real-time (no delay)
+- **Strategy Access**: Basic strategies (trend following, moving averages)
 - **Features**:
   - Real-time signal feed
   - Basic analytics
   - Signal submission (limited)
   - Portfolio tracking
+  - 1 automated trading bot with basic strategies
 
 ---
 
 ### 🎓 Junior Quant - $30/month
 **Perfect for:** Active traders & junior analysts
-- **Quarterly**: 8,100 CHULO ($81 - save $9)
+- **Quarterly**: 8,100 CHULO ($81 - save 10%)
 - **Credits**: 500/month
-- **Gas Discount**: 25% off all transactions
+- **Limits**: 3 bots, 10 positions, $2,500 max position size
+- **Signal Access**: Real-time (no delay)
+- **Strategy Access**: Intermediate (momentum, mean reversion, breakout)
 - **Features**:
   - Everything in Observer +
   - Advanced analytics dashboard
   - Backtesting tools (basic)
   - Signal validation rewards
   - Priority signal feed
+  - 3 automated trading bots with intermediate strategies
 
 ---
 
 ### 🏆 Senior Quant - $90/month
 **Perfect for:** Professional traders & fund managers
-- **Quarterly**: 24,300 CHULO ($243 - save $27)
+- **Quarterly**: 21,600 CHULO ($216 - save 20%)
 - **Credits**: 2,000/month
-- **Gas Discount**: 40% off all transactions
+- **Limits**: 10 bots, 50 positions, $10,000 max position size
+- **Signal Access**: Real-time (no delay)
+- **Strategy Access**: Advanced (arbitrage, market making, statistical arbitrage, ML-based)
 - **Features**:
   - Everything in Junior Quant +
   - Advanced backtesting suite
@@ -76,22 +90,26 @@ ChuloBots uses a **quarterly subscription model** where users burn CHULO tokens 
   - API access (limited)
   - Signal performance analytics
   - Multi-position management
+  - 10 automated trading bots with advanced strategies
 
 ---
 
 ### 🧙 Sage - $250/month
 **Perfect for:** Quantitative funds & institutions
-- **Quarterly**: 67,500 CHULO ($675 - save $75)
+- **Quarterly**: 45,000 CHULO ($450 - save 40%)
 - **Credits**: 10,000/month
-- **Gas Discount**: 50% off all transactions
+- **Limits**: 50 bots, 200 positions, $100,000 max position size
+- **Signal Access**: Real-time (no delay) + priority queue
+- **Strategy Access**: All strategies + custom strategy deployment
 - **Features**:
   - Everything in Senior Quant +
   - Full API access
-  - Custom strategy deployment
+  - Custom strategy deployment & backtesting
   - White-glove support
   - Advanced risk management
   - Team collaboration tools
   - Institutional-grade infrastructure
+  - 50 automated trading bots with unlimited strategy access
 
 ---
 
@@ -162,63 +180,148 @@ Credits are consumed by platform actions:
 **Credit Rules:**
 - Credits don't expire - they accumulate forever
 - Quarterly subscriptions grant 3 months of credits upfront
-- Yearly subscriptions grant 12 months of credits upfront
 - Can't transfer credits between users
 
 ---
 
-## Gas Fee Examples
+## Signal Headstart & Strategy Access
 
-Example: Signal submission costs 1,000 CHULO in gas
+### Signal Access Tiers
 
-| Tier | Gas Multiplier | Actual Cost | Monthly Savings (10 signals) |
-|------|----------------|-------------|------------------------------|
-| Free | 1.0x | 1,000 CHULO | $0 |
-| Observer | 0.9x | 900 CHULO | 1,000 CHULO ($10) |
-| Junior Quant | 0.75x | 750 CHULO | 2,500 CHULO ($25) |
-| Senior Quant | 0.6x | 600 CHULO | 4,000 CHULO ($40) |
-| Sage | 0.5x | 500 CHULO | 5,000 CHULO ($50) |
+**Free Tier:**
+- **24-hour delay** - Signals are shown after they've already moved
+- Good for learning, but too late to act on most opportunities
 
-**Gas savings alone can pay for your subscription!**
+**Paid Tiers (Observer+):**
+- **Real-time access** - Get signals as they're generated (0 delay)
+- Act on opportunities while they're fresh
+- **Sage gets priority queue** - First in line when signals are published
+
+### Strategy Access Levels
+
+**Level 0 - None (Free)**
+- Manual trading only
+- No automated strategies
+
+**Level 1 - Basic (Observer)**
+- Trend following
+- Simple moving averages (SMA, EMA)
+- Basic momentum indicators
+
+**Level 2 - Intermediate (Junior Quant)**
+- Everything in Level 1 +
+- Mean reversion strategies
+- Breakout detection
+- RSI/MACD-based systems
+- Volatility-based entries
+
+**Level 3 - Advanced (Senior Quant)**
+- Everything in Level 2 +
+- Statistical arbitrage
+- Market making strategies
+- Cross-exchange arbitrage
+- ML-based prediction models
+- Multi-timeframe analysis
+
+**Level 4 - All + Custom (Sage)**
+- Everything in Level 3 +
+- **Deploy custom strategies** - Build your own proprietary algorithms
+- **Private strategy library** - Keep your edge secret
+- **Custom backtesting** - Test strategies on historical data
+- **White-glove strategy consultation** - Work with our quant team
 
 ---
 
-## ROI Calculator
+## Feature Access
 
-### Junior Quant Example (Active Trader)
-**Quarterly subscription: $81 (8,100 CHULO)**
+### Free Tier
+**Cost: $0**
 
-Monthly Activity:
-- Submit 20 signals: 200 credits used
-- Validate 30 signals: 150 credits used
-- Create 10 positions: 150 credits used
-- **Total: 500 credits (included)**
+**Limitations:**
+- **0 bots** - Manual trading only
+- **1 position** - One trade at a time
+- **$100 max** - Small position size limit
+- **24hr signal delay** - See signals a day late
+- **No strategy access** - Manual trading only
+- No credits for actions
 
-Gas Savings:
-- 60 actions × 1,000 CHULO base gas = 60,000 CHULO
-- 25% discount saves: 15,000 CHULO/month
-- **Quarterly gas savings: 45,000 CHULO ($450)**
-
-**Net Benefit: $450 - $81 = $369 profit per quarter!**
+**Use Case:** Test the platform before committing
 
 ---
 
-### Senior Quant Example (Professional)
-**Quarterly subscription: $243 (24,300 CHULO)**
+### Observer - $10/month (Active Trader Entry)
+**Quarterly: $28.50 (2,850 CHULO) - save 5%**
 
-Monthly Activity:
-- Submit 50 signals: 500 credits
-- Validate 100 signals: 500 credits
-- Create 30 positions: 450 credits
-- Backtest 20 strategies: 500 credits
-- **Total: 1,950 credits (under 2,000 limit)**
+**What You Get:**
+- **Real-time signals** - No delay, instant access
+- **Basic strategies** - Trend following, moving averages
+- **1 automated bot** - Set and forget basic strategy
+- **3 active positions** - Diversify across multiple trades
+- **$500 max per position** - Grow your portfolio
+- **300 credits/quarter** (100/mo × 3) for:
+  - Submit 30 signals (10 credits each)
+  - Validate 60 signals (5 credits each)
 
-Gas Savings:
-- 200 actions × 1,000 CHULO = 200,000 CHULO
-- 40% discount saves: 80,000 CHULO/month
-- **Quarterly gas savings: 240,000 CHULO ($2,400)**
+**Use Case:** Casual traders learning automated strategies with real-time data
 
-**Net Benefit: $2,400 - $243 = $2,157 profit per quarter!**
+---
+
+### Junior Quant - $30/month (Active Trader)
+**Quarterly: $81 (8,100 CHULO) - save 10%**
+
+**What You Get:**
+- **Real-time signals** - No delay, instant access
+- **Intermediate strategies** - Momentum, mean reversion, breakout detection
+- **3 automated bots** - Run multiple strategies simultaneously
+- **10 active positions** - Professional diversification
+- **$2,500 max per position** - Serious capital deployment
+- **1,500 credits/quarter** (500/mo × 3) for:
+  - Submit 50 signals (500 credits)
+  - Validate 100 signals (500 credits)
+  - Create 33 positions (15 credits each, 495 total)
+  - Advanced analytics access
+
+**Use Case:** Active traders running multiple algorithmic strategies with diverse tactics
+
+---
+
+### Senior Quant - $90/month (Professional)
+**Quarterly: $216 (21,600 CHULO) - save 20%**
+
+**What You Get:**
+- **Real-time signals** - No delay, instant access
+- **Advanced strategies** - Arbitrage, market making, statistical arbitrage, ML-based algorithms
+- **10 automated bots** - Full strategy portfolio
+- **50 active positions** - Fund-level diversification
+- **$10,000 max per position** - Professional capital
+- **6,000 credits/quarter** (2,000/mo × 3) for:
+  - Submit 200 signals (2,000 credits)
+  - Validate 400 signals (2,000 credits)
+  - Create 133 positions (2,000 credits)
+  - Backtest 80 strategies (25 credits each, 2,000 total)
+  - API access for automation
+
+**Use Case:** Professional quant traders and small funds running sophisticated strategies
+
+---
+
+### Sage - $250/month (Institutional)
+**Quarterly: $450 (45,000 CHULO) - save 40%**
+
+**What You Get:**
+- **Real-time signals + priority queue** - First access to alpha
+- **All strategies + custom deployment** - Build your own proprietary strategies
+- **50 automated bots** - Institutional-grade infrastructure
+- **200 active positions** - Maximum diversification
+- **$100,000 max per position** - Institutional capital
+- **30,000 credits/quarter** (10,000/mo × 3) for:
+  - Unlimited signals and validations
+  - Full API access
+  - Custom strategy deployment & backtesting
+  - White-glove support
+  - Team collaboration tools
+
+**Use Case:** Quantitative funds and institutions deploying custom proprietary strategies
 
 ---
 
@@ -231,12 +334,12 @@ Gas Savings:
 ┌─────────────────────────────────────────┐
 │  Choose Your Plan (Billed Quarterly)   │
 │                                         │
-│  [Monthly] [●Quarterly] [Yearly]       │
+│  [Monthly] [●Quarterly]                 │
 │                                         │
 │  ┌─────────────────────────────────┐  │
 │  │ Junior Quant                    │  │
 │  │ $81 / quarter                   │  │
-│  │ Save $9 vs monthly!             │  │
+│  │ Save 10% vs monthly!            │  │
 │  │                                 │  │
 │  │ • 1,500 credits (500/mo × 3)   │  │
 │  │ • 25% gas discount              │  │
@@ -276,23 +379,44 @@ function getSubscriptionInfo(address user) external view returns (
 )
 ```
 
-### Get Pricing
+### Get Pricing and Limits
 ```solidity
 function getTierPricing(Tier tier) external view returns (
     uint256 monthlyPrice,
     uint256 quarterlyPrice,
-    uint256 yearlyPrice,
     uint256 monthlyCredits,
-    uint256 gasMultiplier
+    uint256 maxBots,
+    uint256 maxActivePositions,
+    uint256 maxPositionSize,
+    uint256 signalDelaySeconds,
+    uint256 strategyAccessLevel
 )
 ```
+
+### Get User's Tier Limits
+```solidity
+function getTierLimits(address user) external view returns (
+    uint256 maxBots,
+    uint256 maxActivePositions,
+    uint256 maxPositionSize,
+    uint256 signalDelaySeconds,
+    uint256 strategyAccessLevel
+)
+```
+
+**Strategy Access Levels:**
+- `0` = None (manual trading only)
+- `1` = Basic (trend following, moving averages)
+- `2` = Intermediate (momentum, mean reversion, breakout)
+- `3` = Advanced (arbitrage, market making, statistical arbitrage, ML)
+- `4` = All + Custom (deploy proprietary strategies)
 
 ---
 
 ## FAQ
 
 **Q: Why quarterly by default?**
-A: Most traders prefer to "set it and forget it" for a quarter. 10% discount makes it a no-brainer.
+A: Most traders prefer to "set it and forget it" for a quarter. Tiered discounts (5-40% off) make it a no-brainer.
 
 **Q: Can I switch between monthly and quarterly?**
 A: Yes! Your current subscription runs its course, then subscribe with new period.
@@ -301,7 +425,7 @@ A: Yes! Your current subscription runs its course, then subscribe with new perio
 A: Currently $0.01 per CHULO. Actual amounts may be adjusted based on market price.
 
 **Q: Do credits expire?**
-A: No! Credits accumulate forever. Quarterly gives you 3 months upfront.
+A: No! Credits accumulate forever. Quarterly subscriptions give you 3 months of credits upfront.
 
 **Q: Can I downgrade mid-subscription?**
 A: Let your current subscription expire, then subscribe to lower tier. No refunds.
