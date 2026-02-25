@@ -380,7 +380,9 @@ router.get('/history', async (req: Request, res: Response, next) => {
     ]);
 
     // Calculate win rate
-    const winningPositions = positions.filter((p: { pnl: number | null }) => p.pnl && p.pnl > 0).length;
+    const winningPositions = positions.filter(
+      (p: { pnl: number | null }) => p.pnl && p.pnl > 0
+    ).length;
     const winRate = positions.length > 0 ? (winningPositions / positions.length) * 100 : 0;
 
     res.status(200).json({
