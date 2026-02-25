@@ -4,11 +4,12 @@ import { useWalletStore } from '@/store/walletStore';
 import { useWebSocket } from '@/hooks/useWebSocket';
 import { getSignals } from '@/services/api';
 import SignalCard from '@/components/SignalCard';
+import type { Signal } from '@/types';
 
 export default function SignalFeed() {
   const { address, isConnected } = useWalletStore();
   const { subscribeToSignals } = useWebSocket();
-  const [realtimeSignals, setRealtimeSignals] = useState<any[]>([]);
+  const [realtimeSignals, setRealtimeSignals] = useState<Signal[]>([]);
 
   // Fetch initial signals
   const { data, isLoading, error } = useQuery({
@@ -22,7 +23,7 @@ export default function SignalFeed() {
   useEffect(() => {
     if (!isConnected) return;
 
-    const unsubscribe = subscribeToSignals((signal: any) => {
+    const unsubscribe = subscribeToSignals((signal: Signal) => {
       console.log('New signal received:', signal);
       setRealtimeSignals(prev => [signal, ...prev]);
     });
