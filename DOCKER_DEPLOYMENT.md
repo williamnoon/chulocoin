@@ -23,19 +23,20 @@ docker-compose -f docker-compose.production.yml ps
 
 ## Services Overview
 
-| Service | Port | Description |
-|---------|------|-------------|
-| **Backend** | 3000 | API server & WebSocket |
-| **Bot Executor** | 3001 | Trading automation |
-| **Webapp** | 3002 | Trading dashboard (React) |
-| **Landing** | 3003 | Marketing site (Next.js) |
-| **PostgreSQL** | 5432 | Database |
-| **Redis** | 6379 | Cache & job queue |
-| **CLI** | - | Validator/miner (optional) |
+| Service          | Port | Description                |
+| ---------------- | ---- | -------------------------- |
+| **Backend**      | 3000 | API server & WebSocket     |
+| **Bot Executor** | 3001 | Trading automation         |
+| **Webapp**       | 3002 | Trading dashboard (React)  |
+| **Landing**      | 3003 | Marketing site (Next.js)   |
+| **PostgreSQL**   | 5432 | Database                   |
+| **Redis**        | 6379 | Cache & job queue          |
+| **CLI**          | -    | Validator/miner (optional) |
 
 ## Prerequisites
 
 1. **Docker & Docker Compose**
+
    ```bash
    docker --version  # Should be 20.10+
    docker-compose --version  # Should be 2.0+
@@ -53,11 +54,13 @@ docker-compose -f docker-compose.production.yml ps
 ### 1. Environment Variables
 
 Copy and edit the environment file:
+
 ```bash
 cp .env.production.example .env.production
 ```
 
 **Required variables:**
+
 - `POSTGRES_PASSWORD` - Database password (generate secure password)
 - `REDIS_PASSWORD` - Redis password (generate secure password)
 - `JWT_SECRET` - JWT signing secret (min 32 characters)
@@ -67,12 +70,14 @@ cp .env.production.example .env.production
 - `VALIDATOR_STAKING_ADDRESS` - Deployed ValidatorStaking address
 
 **Trading (Bot Executor):**
+
 - `HYPERLIQUID_PRIVATE_KEY` - Trading wallet private key
 - `HYPERLIQUID_VAULT_ADDRESS` - Hyperliquid vault address
 - `MAX_POSITION_SIZE` - Maximum position size in USD
 - `DAILY_LOSS_LIMIT` - Daily loss limit in USD
 
 **Frontend:**
+
 - `API_URL` - Backend API URL (https://api.yourdomain.com)
 - `APP_URL` - Frontend URL (https://app.yourdomain.com)
 - `CHAIN_ID` - 42161 for Arbitrum mainnet
@@ -130,10 +135,11 @@ cli:
     API_URL: http://backend:3000
   volumes:
     - ./cli-config:/app/config
-  command: ["mine", "--auto"]
+  command: ['mine', '--auto']
 ```
 
 Then add to `.env.production`:
+
 ```bash
 VALIDATOR_PRIVATE_KEY=0x...  # Validator wallet private key
 ```
@@ -141,6 +147,7 @@ VALIDATOR_PRIVATE_KEY=0x...  # Validator wallet private key
 ## Management Commands
 
 ### View Logs
+
 ```bash
 # All services
 docker-compose -f docker-compose.production.yml logs -f
@@ -153,6 +160,7 @@ docker-compose -f docker-compose.production.yml logs --tail=100
 ```
 
 ### Restart Services
+
 ```bash
 # Restart all
 docker-compose -f docker-compose.production.yml restart
@@ -162,6 +170,7 @@ docker-compose -f docker-compose.production.yml restart backend
 ```
 
 ### Update to Latest Version
+
 ```bash
 # Pull new images
 docker-compose -f docker-compose.production.yml pull
@@ -171,6 +180,7 @@ docker-compose -f docker-compose.production.yml up -d
 ```
 
 ### Stop Services
+
 ```bash
 # Stop all
 docker-compose -f docker-compose.production.yml down
@@ -180,6 +190,7 @@ docker-compose -f docker-compose.production.yml down -v
 ```
 
 ### Database Backup
+
 ```bash
 # Backup
 docker-compose -f docker-compose.production.yml exec postgres \
@@ -201,6 +212,7 @@ docker-compose -f docker-compose.production.yml ps
 Healthy services show `healthy` in the status column.
 
 ### Manual Health Check
+
 ```bash
 # Backend
 curl http://localhost:3000/health
@@ -218,6 +230,7 @@ curl http://localhost:3003
 ## Monitoring
 
 ### Resource Usage
+
 ```bash
 # View resource usage
 docker stats
@@ -229,6 +242,7 @@ docker-compose -f docker-compose.production.yml logs -f --timestamps
 ### Troubleshooting
 
 **Container won't start:**
+
 ```bash
 # Check logs
 docker-compose -f docker-compose.production.yml logs service-name
@@ -238,6 +252,7 @@ sudo lsof -i :3000
 ```
 
 **Database connection failed:**
+
 ```bash
 # Check if PostgreSQL is healthy
 docker-compose -f docker-compose.production.yml exec postgres pg_isready
@@ -248,6 +263,7 @@ docker-compose -f docker-compose.production.yml exec postgres \
 ```
 
 **Redis connection failed:**
+
 ```bash
 # Check if Redis is running
 docker-compose -f docker-compose.production.yml exec redis redis-cli ping
@@ -321,6 +337,7 @@ server {
 ## Performance Tuning
 
 ### PostgreSQL
+
 ```yaml
 environment:
   # Add to postgres service
@@ -330,6 +347,7 @@ environment:
 ```
 
 ### Redis
+
 ```yaml
 command: >
   redis-server
@@ -339,10 +357,11 @@ command: >
 ```
 
 ### Backend (Node.js)
+
 ```yaml
 environment:
   # Add to backend service
-  NODE_OPTIONS: "--max-old-space-size=2048"
+  NODE_OPTIONS: '--max-old-space-size=2048'
   WEB_CONCURRENCY: 2
 ```
 
