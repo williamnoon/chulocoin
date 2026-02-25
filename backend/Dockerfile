@@ -4,8 +4,8 @@ FROM node:20-alpine AS base
 # Install dependencies only when needed
 FROM base AS deps
 
-# Copy root package files for monorepo
-COPY package*.json /app/
+# Copy root package files for monorepo (including lock file!)
+COPY package*.json package-lock.json /app/
 COPY backend/package*.json /app/backend/
 
 # Install ALL dependencies (including dev deps for building)
@@ -31,7 +31,7 @@ RUN npm run build
 
 # Reinstall production-only dependencies
 FROM base AS prod-deps
-COPY package*.json /app/
+COPY package*.json package-lock.json /app/
 COPY backend/package*.json /app/backend/
 WORKDIR /app/backend
 RUN npm ci --only=production

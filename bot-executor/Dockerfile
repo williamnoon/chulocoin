@@ -1,8 +1,8 @@
 # ChuloBots Bot Executor - Trading Automation Service
 FROM node:20-alpine as builder
 
-# Copy root package files for monorepo
-COPY package*.json /app/
+# Copy root package files for monorepo (including lock file!)
+COPY package*.json package-lock.json /app/
 COPY bot-executor/package*.json /app/bot-executor/
 
 # Install ALL dependencies (including dev deps for building)
@@ -18,7 +18,7 @@ RUN npm run build
 
 # Install production dependencies only (for runtime)
 FROM node:20-alpine as prod-deps
-COPY package*.json /app/
+COPY package*.json package-lock.json /app/
 COPY bot-executor/package*.json /app/bot-executor/
 WORKDIR /app/bot-executor
 RUN npm ci --only=production
