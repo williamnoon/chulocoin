@@ -1,0 +1,154 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: chulobots-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: chulobots
+      POSTGRES_USER: chulobots
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U chulobots"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis Cache & Queue
+  redis:
+    image: redis:7-alpine
+    container_name: chulobots-redis
+    restart: unless-stopped
+    command: redis-server --requirepass ${REDIS_PASSWORD:-changeme}
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Backend API
+  backend:
+    image: willnoon/chulobots-backend:production-latest
+    container_name: chulobots-backend
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      DATABASE_URL: postgresql://chulobots:${POSTGRES_PASSWORD:-changeme}@postgres:5432/chulobots
+      REDIS_URL: redis://:${REDIS_PASSWORD:-changeme}@redis:6379
+      JWT_SECRET: ${JWT_SECRET}
+      ARBITRUM_RPC_URL: ${ARBITRUM_RPC_URL}
+      CHULO_TOKEN_ADDRESS: ${CHULO_TOKEN_ADDRESS}
+      SIGNAL_REGISTRY_ADDRESS: ${SIGNAL_REGISTRY_ADDRESS}
+      VALIDATOR_STAKING_ADDRESS: ${VALIDATOR_STAKING_ADDRESS}
+      CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:3001,http://localhost:3002}
+    ports:
+      - "3000:3000"
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Trading Bot Executor
+  bot-executor:
+    image: willnoon/chulobots-bot-executor:production-latest
+    container_name: chulobots-bot-executor
+    restart: unless-stopped
+    depends_on:
+      backend:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      PORT: 3001
+      API_URL: http://backend:3000
+      REDIS_URL: redis://:${REDIS_PASSWORD:-changeme}@redis:6379
+      HYPERLIQUID_PRIVATE_KEY: ${HYPERLIQUID_PRIVATE_KEY}
+      HYPERLIQUID_VAULT_ADDRESS: ${HYPERLIQUID_VAULT_ADDRESS}
+      MAX_POSITION_SIZE: ${MAX_POSITION_SIZE:-1000}
+      DAILY_LOSS_LIMIT: ${DAILY_LOSS_LIMIT:-100}
+    ports:
+      - "3001:3001"
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Web Application (Trading Dashboard)
+  webapp:
+    image: willnoon/chulobots-webapp:production-latest
+    container_name: chulobots-webapp
+    restart: unless-stopped
+    depends_on:
+      - backend
+    environment:
+      VITE_API_URL: ${API_URL:-http://localhost:3000}
+      VITE_CHAIN_ID: ${CHAIN_ID:-42161}
+      VITE_WS_URL: ${WS_URL:-ws://localhost:3000}
+    ports:
+      - "3002:80"
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:80"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Landing Page
+  landing:
+    image: willnoon/chulobots-landing:production-latest
+    container_name: chulobots-landing
+    restart: unless-stopped
+    environment:
+      NEXT_PUBLIC_API_URL: ${API_URL:-http://localhost:3000}
+      NEXT_PUBLIC_APP_URL: ${APP_URL:-http://localhost:3002}
+    ports:
+      - "3003:3000"
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # CLI Validator/Miner (optional - for running validators)
+  # Uncomment to run a validator node
+  # cli:
+  #   image: willnoon/chulobots-cli:production-latest
+  #   container_name: chulobots-cli
+  #   restart: unless-stopped
+  #   depends_on:
+  #     - backend
+  #   environment:
+  #     RPC_URL: ${ARBITRUM_RPC_URL}
+  #     WALLET_PRIVATE_KEY: ${VALIDATOR_PRIVATE_KEY}
+  #     API_URL: http://backend:3000
+  #   volumes:
+  #     - ./cli-config:/app/config
+  #   command: ["mine", "--auto"]
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+
+networks:
+  default:
+    name: chulobots-network
