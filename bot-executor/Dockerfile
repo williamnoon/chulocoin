@@ -3,20 +3,26 @@ FROM node:20-alpine as builder
 
 WORKDIR /app
 
-# Copy package files
+# Copy root package files for monorepo
 COPY package*.json ./
+COPY bot-executor/package*.json ./bot-executor/
 
 # Install ALL dependencies (including dev deps for building)
-RUN npm ci
+RUN npm ci --workspace=bot-executor
 
 # Copy source code
-COPY . .
+COPY bot-executor ./bot-executor
 
 # Build TypeScript
+WORKDIR /app/bot-executor
 RUN npm run build
 
 # Install production dependencies only (for runtime)
-RUN npm ci --only=production
+FROM node:20-alpine as prod-deps
+WORKDIR /app
+COPY package*.json ./
+COPY bot-executor/package*.json ./bot-executor/
+RUN npm ci --only=production --workspace=bot-executor
 
 # Runtime stage
 FROM node:20-alpine
@@ -27,9 +33,9 @@ WORKDIR /app
 RUN apk add --no-cache dumb-init
 
 # Copy built app from builder
-COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/package*.json ./
+COPY --from=builder /app/bot-executor/dist ./dist
+COPY --from=prod-deps /app/bot-executor/node_modules ./node_modules
+COPY --from=builder /app/bot-executor/package*.json ./
 
 # Create non-root user
 RUN addgroup -g 1000 chulobots && \

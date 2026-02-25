@@ -5,11 +5,12 @@ FROM node:20-alpine AS base
 FROM base AS deps
 WORKDIR /app
 
-# Copy package files
+# Copy root package files for monorepo
 COPY package*.json ./
+COPY backend/package*.json ./backend/
 
 # Install ALL dependencies (including dev deps for building)
-RUN npm ci
+RUN npm ci --workspace=backend
 
 # Build stage
 FROM base AS builder
@@ -17,9 +18,12 @@ WORKDIR /app
 
 # Copy dependencies from deps stage
 COPY --from=deps /app/node_modules ./node_modules
-COPY . .
+COPY --from=deps /app/backend/node_modules ./backend/node_modules
+COPY backend ./backend
+COPY package*.json ./
 
 # Generate Prisma Client
+WORKDIR /app/backend
 RUN npx prisma generate
 
 # Build TypeScript
@@ -29,7 +33,8 @@ RUN npm run build
 FROM base AS prod-deps
 WORKDIR /app
 COPY package*.json ./
-RUN npm ci --only=production
+COPY backend/package*.json ./backend/
+RUN npm ci --only=production --workspace=backend
 
 # Production stage
 FROM base AS runner
@@ -41,11 +46,11 @@ ENV NODE_ENV=production
 RUN addgroup --system --gid 1001 nodejs && \
     adduser --system --uid 1001 expressjs
 
-# Copy necessary files
-COPY --from=builder /app/dist ./dist
-COPY --from=prod-deps /app/node_modules ./node_modules
-COPY --from=builder /app/package.json ./package.json
-COPY --from=builder /app/prisma ./prisma
+# Copy necessary files from backend
+COPY --from=builder /app/backend/dist ./dist
+COPY --from=prod-deps /app/backend/node_modules ./node_modules
+COPY --from=builder /app/backend/package.json ./package.json
+COPY --from=builder /app/backend/prisma ./prisma
 
 # Set ownership
 RUN chown -R expressjs:nodejs /app

@@ -57,7 +57,8 @@ jobs:
       - name: Build and push Backend image
         uses: docker/build-push-action@v5
         with:
-          context: ./backend
+          context: .
+          file: ./backend/Dockerfile
           push: true
           tags: |
             ${{ env.DOCKER_USERNAME }}/chulobots-backend:${{ steps.vars.outputs.environment }}-${{ steps.vars.outputs.version }}
@@ -68,7 +69,8 @@ jobs:
       - name: Build and push Webapp image
         uses: docker/build-push-action@v5
         with:
-          context: ./frontend/webapp
+          context: .
+          file: ./frontend/webapp/Dockerfile
           push: true
           tags: |
             ${{ env.DOCKER_USERNAME }}/chulobots-webapp:${{ steps.vars.outputs.environment }}-${{ steps.vars.outputs.version }}
@@ -79,7 +81,8 @@ jobs:
       - name: Build and push Landing image
         uses: docker/build-push-action@v5
         with:
-          context: ./frontend/landing
+          context: .
+          file: ./frontend/landing/Dockerfile
           push: true
           tags: |
             ${{ env.DOCKER_USERNAME }}/chulobots-landing:${{ steps.vars.outputs.environment }}-${{ steps.vars.outputs.version }}
@@ -90,7 +93,8 @@ jobs:
       - name: Build and push CLI image
         uses: docker/build-push-action@v5
         with:
-          context: ./cli
+          context: .
+          file: ./cli/Dockerfile
           push: true
           tags: |
             ${{ env.DOCKER_USERNAME }}/chulobots-cli:${{ steps.vars.outputs.environment }}-${{ steps.vars.outputs.version }}
@@ -101,7 +105,8 @@ jobs:
       - name: Build and push Bot Executor image
         uses: docker/build-push-action@v5
         with:
-          context: ./bot-executor
+          context: .
+          file: ./bot-executor/Dockerfile
           push: true
           tags: |
             ${{ env.DOCKER_USERNAME }}/chulobots-bot-executor:${{ steps.vars.outputs.environment }}-${{ steps.vars.outputs.version }}
