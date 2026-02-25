@@ -140,8 +140,8 @@ contract ValidatorStakingTest is Test {
         staking.stake(stake2);
         vm.stopPrank();
 
-        (uint256 amount1, , , ) = staking.validators(validator1);
-        (uint256 amount2, , , ) = staking.validators(validator2);
+        (uint256 amount1, , , , , ) = staking.validators(validator1);
+        (uint256 amount2, , , , , ) = staking.validators(validator2);
 
         assertEq(amount1, stake1);
         assertEq(amount2, stake2);
@@ -272,7 +272,7 @@ contract ValidatorStakingTest is Test {
         staking.stake(amount);
         vm.stopPrank();
 
-        (uint256 stakedAmount, , , ) = staking.validators(validator1);
+        (uint256 stakedAmount, , , , , ) = staking.validators(validator1);
         assertEq(stakedAmount, amount);
     }
 
