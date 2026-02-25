@@ -408,7 +408,7 @@ contract TierSubscription is ERC721, ERC721URIStorage, Ownable {
 
         // Find which tier this badge represents
         Tier badgeTier = Tier.OBSERVER;
-        for (uint8 i = 0; i <= uint8(Tier.DIAMOND); i++) {
+        for (uint8 i = 0; i <= uint8(Tier.SAGE); i++) {
             if (userTierBadges[owner][Tier(i)] == tokenId) {
                 badgeTier = Tier(i);
                 break;
