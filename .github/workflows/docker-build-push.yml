@@ -87,6 +87,28 @@ jobs:
           cache-from: type=registry,ref=${{ env.DOCKER_USERNAME }}/chulobots-landing:buildcache
           cache-to: type=registry,ref=${{ env.DOCKER_USERNAME }}/chulobots-landing:buildcache,mode=max
 
+      - name: Build and push CLI image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./cli
+          push: true
+          tags: |
+            ${{ env.DOCKER_USERNAME }}/chulobots-cli:${{ steps.vars.outputs.environment }}-${{ steps.vars.outputs.version }}
+            ${{ env.DOCKER_USERNAME }}/chulobots-cli:${{ steps.vars.outputs.environment }}-latest
+          cache-from: type=registry,ref=${{ env.DOCKER_USERNAME }}/chulobots-cli:buildcache
+          cache-to: type=registry,ref=${{ env.DOCKER_USERNAME }}/chulobots-cli:buildcache,mode=max
+
+      - name: Build and push Bot Executor image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./bot-executor
+          push: true
+          tags: |
+            ${{ env.DOCKER_USERNAME }}/chulobots-bot-executor:${{ steps.vars.outputs.environment }}-${{ steps.vars.outputs.version }}
+            ${{ env.DOCKER_USERNAME }}/chulobots-bot-executor:${{ steps.vars.outputs.environment }}-latest
+          cache-from: type=registry,ref=${{ env.DOCKER_USERNAME }}/chulobots-bot-executor:buildcache
+          cache-to: type=registry,ref=${{ env.DOCKER_USERNAME }}/chulobots-bot-executor:buildcache,mode=max
+
       - name: Create deployment summary
         run: |
           echo "## Docker Images Published" >> $GITHUB_STEP_SUMMARY
@@ -98,10 +120,14 @@ jobs:
           echo "- \`${{ env.DOCKER_USERNAME }}/chulobots-backend:${{ steps.vars.outputs.environment }}-${{ steps.vars.outputs.version }}\`" >> $GITHUB_STEP_SUMMARY
           echo "- \`${{ env.DOCKER_USERNAME }}/chulobots-webapp:${{ steps.vars.outputs.environment }}-${{ steps.vars.outputs.version }}\`" >> $GITHUB_STEP_SUMMARY
           echo "- \`${{ env.DOCKER_USERNAME }}/chulobots-landing:${{ steps.vars.outputs.environment }}-${{ steps.vars.outputs.version }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- \`${{ env.DOCKER_USERNAME }}/chulobots-cli:${{ steps.vars.outputs.environment }}-${{ steps.vars.outputs.version }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- \`${{ env.DOCKER_USERNAME }}/chulobots-bot-executor:${{ steps.vars.outputs.environment }}-${{ steps.vars.outputs.version }}\`" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### Pull commands:" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`bash" >> $GITHUB_STEP_SUMMARY
           echo "docker pull ${{ env.DOCKER_USERNAME }}/chulobots-backend:${{ steps.vars.outputs.environment }}-${{ steps.vars.outputs.version }}" >> $GITHUB_STEP_SUMMARY
           echo "docker pull ${{ env.DOCKER_USERNAME }}/chulobots-webapp:${{ steps.vars.outputs.environment }}-${{ steps.vars.outputs.version }}" >> $GITHUB_STEP_SUMMARY
           echo "docker pull ${{ env.DOCKER_USERNAME }}/chulobots-landing:${{ steps.vars.outputs.environment }}-${{ steps.vars.outputs.version }}" >> $GITHUB_STEP_SUMMARY
+          echo "docker pull ${{ env.DOCKER_USERNAME }}/chulobots-cli:${{ steps.vars.outputs.environment }}-${{ steps.vars.outputs.version }}" >> $GITHUB_STEP_SUMMARY
+          echo "docker pull ${{ env.DOCKER_USERNAME }}/chulobots-bot-executor:${{ steps.vars.outputs.environment }}-${{ steps.vars.outputs.version }}" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
