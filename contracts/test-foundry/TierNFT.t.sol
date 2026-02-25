@@ -145,9 +145,9 @@ contract TierNFTTest is Test {
 
         uint256 silverTokenId = tierNFT.userTierToken(user1);
 
-        // Transfer away tokens to downgrade
+        // Transfer away tokens to downgrade to Bronze (keep at least BRONZE_THRESHOLD)
         vm.prank(user1);
-        chulo.transfer(user2, SILVER_THRESHOLD - BRONZE_THRESHOLD + 1);
+        chulo.transfer(user2, SILVER_THRESHOLD - BRONZE_THRESHOLD - 1);
 
         vm.expectEmit(true, false, false, false);
         emit TierDowngraded(user1, TierNFT.Tier.SILVER, TierNFT.Tier.BRONZE);
@@ -227,10 +227,10 @@ contract TierNFTTest is Test {
 
         // Check that URI contains tier info
         assertTrue(bytes(uri).length > 0);
-        // URI should start with data:application/json
+        // URI should start with data:application/json;utf8,
         assertTrue(
-            keccak256(bytes(substring(uri, 0, 22))) ==
-            keccak256(bytes("data:application/json"))
+            keccak256(bytes(substring(uri, 0, 28))) ==
+            keccak256(bytes("data:application/json;utf8,"))
         );
     }
 

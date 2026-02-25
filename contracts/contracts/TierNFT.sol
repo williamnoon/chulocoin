@@ -79,10 +79,10 @@ contract TierNFT is ERC721, ERC721URIStorage, Ownable {
         }
 
         if (newTier > currentTier) {
-            // Upgrade: burn old NFT, mint new one
+            // Upgrade: mint new tier NFT (keep old as collectible)
             _upgradeTier(user, currentTier, newTier, balance);
         } else {
-            // Downgrade: burn current NFT
+            // Downgrade: just update tier (keep all NFTs as collectibles)
             _downgradeTier(user, currentTier, newTier);
         }
     }
