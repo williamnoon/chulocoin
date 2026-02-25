@@ -6,9 +6,9 @@
   "workspaces": [
     "contracts",
     "backend",
+    "bot-executor",
     "frontend/landing",
     "frontend/webapp",
-    "cli",
     "packages/*"
   ],
   "scripts": {

@@ -13,6 +13,7 @@ import usersRouter from './routes/users';
 import signalsRouter from './routes/signals';
 import positionsRouter from './routes/positions';
 import oracleRouter from './routes/oracle';
+import validatorsRouter from './routes/validators';
 
 // Load environment variables
 dotenv.config({ path: '../.env' });
@@ -39,6 +40,7 @@ app.use('/api/users', usersRouter);
 app.use('/api/signals', signalsRouter);
 app.use('/api/positions', positionsRouter);
 app.use('/api/oracle', oracleRouter);
+app.use('/api/validators', validatorsRouter);
 
 // Root health check for Railway/monitoring
 app.get('/health', (_req, res) => {
