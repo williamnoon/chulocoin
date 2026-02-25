@@ -33,7 +33,7 @@ RUN apk add --no-cache dumb-init
 
 # Copy built app from builder
 COPY --from=builder /app/bot-executor/dist ./dist
-COPY --from=prod-deps /app/bot-executor/node_modules ./node_modules
+COPY --from=prod-deps /app/node_modules ./node_modules
 COPY --from=builder /app/bot-executor/package*.json ./
 
 # Create non-root user
