@@ -32,31 +32,19 @@ contract DeployScript is Script {
         console.log("ChainlinkPriceOracle deployed to:", address(priceOracle));
 
         // Deploy TierNFT
-        TierNFT tierNFT = new TierNFT(
-            "ChuloBots Tier NFT",
-            "CBTIER",
-            "https://api.chulobots.com/metadata/"
-        );
+        TierNFT tierNFT = new TierNFT(address(chulo));
         console.log("TierNFT deployed to:", address(tierNFT));
 
         // Deploy ValidatorStaking
-        ValidatorStaking staking = new ValidatorStaking(
-            address(chulo),
-            address(tierNFT)
-        );
+        ValidatorStaking staking = new ValidatorStaking(address(chulo));
         console.log("ValidatorStaking deployed to:", address(staking));
 
         // Deploy SignalRegistry
         SignalRegistry signalRegistry = new SignalRegistry(
-            address(staking),
-            address(tierNFT),
-            address(priceOracle)
+            address(chulo),
+            address(staking)
         );
         console.log("SignalRegistry deployed to:", address(signalRegistry));
-
-        // Setup permissions
-        tierNFT.grantRole(tierNFT.MINTER_ROLE(), address(staking));
-        console.log("Granted MINTER_ROLE to ValidatorStaking");
 
         vm.stopBroadcast();
 
