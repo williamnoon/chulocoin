@@ -24,15 +24,16 @@ contract TierSubscription is ERC721, ERC721URIStorage, Ownable {
     CHULO public chuloToken;
 
     enum Tier {
-        OBSERVER,   // Free tier
-        BRONZE,
-        SILVER,
-        GOLD,
-        DIAMOND
+        FREE,           // Free tier (was OBSERVER)
+        OBSERVER,       // $10/mo
+        JUNIOR_QUANT,   // $30/mo
+        SENIOR_QUANT,   // $90/mo
+        SAGE            // $250/mo
     }
 
     enum SubscriptionPeriod {
         MONTHLY,
+        QUARTERLY,  // Default - 3 months with discount
         YEARLY
     }
 
@@ -44,14 +45,16 @@ contract TierSubscription is ERC721, ERC721URIStorage, Ownable {
     }
 
     struct TierConfig {
-        uint256 monthlyPrice;      // CHULO to burn per month
-        uint256 yearlyPrice;       // CHULO to burn per year (discounted)
+        uint256 monthlyPrice;      // CHULO to burn per month (USD equivalent)
+        uint256 quarterlyPrice;    // CHULO to burn per quarter (~10% discount)
+        uint256 yearlyPrice;       // CHULO to burn per year (~20% discount)
         uint256 monthlyCredits;    // Credits granted per month
         uint256 gasMultiplier;     // Gas fee multiplier (100 = 1.0x, 50 = 0.5x)
     }
 
     // Subscription duration
     uint256 public constant MONTH_DURATION = 30 days;
+    uint256 public constant QUARTER_DURATION = 90 days;  // 3 months
     uint256 public constant YEAR_DURATION = 365 days;
 
     // User subscriptions
@@ -88,44 +91,53 @@ contract TierSubscription is ERC721, ERC721URIStorage, Ownable {
         _nextTokenId = 1;
 
         // Initialize tier configs
-        // OBSERVER is free, no credits, standard gas
-        tierConfigs[Tier.OBSERVER] = TierConfig({
+        // Assuming $0.01 per CHULO for pricing conversions
+        // Quarterly (default): 10% discount
+        // Yearly: 20% discount
+
+        // FREE tier (default for everyone)
+        tierConfigs[Tier.FREE] = TierConfig({
             monthlyPrice: 0,
+            quarterlyPrice: 0,
             yearlyPrice: 0,
             monthlyCredits: 0,
-            gasMultiplier: 100 // 1.0x gas
+            gasMultiplier: 100 // 1.0x gas (no discount)
         });
 
-        // BRONZE: 100 CHULO/month, 10 months for yearly
-        tierConfigs[Tier.BRONZE] = TierConfig({
-            monthlyPrice: 100 * 10**18,
-            yearlyPrice: 1000 * 10**18,  // ~16% discount
+        // OBSERVER: $10/mo = 1,000 CHULO/mo
+        tierConfigs[Tier.OBSERVER] = TierConfig({
+            monthlyPrice: 1_000 * 10**18,
+            quarterlyPrice: 2_700 * 10**18,   // $27 (10% off)
+            yearlyPrice: 9_600 * 10**18,       // $96 (20% off)
             monthlyCredits: 100,
-            gasMultiplier: 90 // 0.9x gas
+            gasMultiplier: 90 // 0.9x gas (10% discount)
         });
 
-        // SILVER: 250 CHULO/month, 10 months for yearly
-        tierConfigs[Tier.SILVER] = TierConfig({
-            monthlyPrice: 250 * 10**18,
-            yearlyPrice: 2500 * 10**18,  // ~16% discount
-            monthlyCredits: 300,
-            gasMultiplier: 75 // 0.75x gas
+        // JUNIOR_QUANT: $30/mo = 3,000 CHULO/mo
+        tierConfigs[Tier.JUNIOR_QUANT] = TierConfig({
+            monthlyPrice: 3_000 * 10**18,
+            quarterlyPrice: 8_100 * 10**18,    // $81 (10% off)
+            yearlyPrice: 28_800 * 10**18,      // $288 (20% off)
+            monthlyCredits: 500,
+            gasMultiplier: 75 // 0.75x gas (25% discount)
         });
 
-        // GOLD: 500 CHULO/month, 10 months for yearly
-        tierConfigs[Tier.GOLD] = TierConfig({
-            monthlyPrice: 500 * 10**18,
-            yearlyPrice: 5000 * 10**18,  // ~16% discount
-            monthlyCredits: 750,
-            gasMultiplier: 60 // 0.6x gas
+        // SENIOR_QUANT: $90/mo = 9,000 CHULO/mo
+        tierConfigs[Tier.SENIOR_QUANT] = TierConfig({
+            monthlyPrice: 9_000 * 10**18,
+            quarterlyPrice: 24_300 * 10**18,   // $243 (10% off)
+            yearlyPrice: 86_400 * 10**18,      // $864 (20% off)
+            monthlyCredits: 2_000,
+            gasMultiplier: 60 // 0.6x gas (40% discount)
         });
 
-        // DIAMOND: 1000 CHULO/month, 10 months for yearly
-        tierConfigs[Tier.DIAMOND] = TierConfig({
-            monthlyPrice: 1000 * 10**18,
-            yearlyPrice: 10000 * 10**18, // ~16% discount
-            monthlyCredits: 2000,
-            gasMultiplier: 50 // 0.5x gas
+        // SAGE: $250/mo = 25,000 CHULO/mo
+        tierConfigs[Tier.SAGE] = TierConfig({
+            monthlyPrice: 25_000 * 10**18,
+            quarterlyPrice: 67_500 * 10**18,   // $675 (10% off)
+            yearlyPrice: 240_000 * 10**18,     // $2,400 (20% off)
+            monthlyCredits: 10_000,
+            gasMultiplier: 50 // 0.5x gas (50% discount)
         });
     }
 
@@ -133,16 +145,29 @@ contract TierSubscription is ERC721, ERC721URIStorage, Ownable {
      * @dev Subscribe to a tier by burning CHULO
      */
     function subscribe(Tier tier, SubscriptionPeriod period) external {
-        require(tier != Tier.OBSERVER, "Cannot subscribe to Observer tier");
-        require(tier > Tier.OBSERVER && tier <= Tier.DIAMOND, "Invalid tier");
+        require(tier != Tier.FREE, "Cannot subscribe to Free tier");
+        require(tier > Tier.FREE && tier <= Tier.SAGE, "Invalid tier");
 
         TierConfig memory config = tierConfigs[tier];
-        uint256 price = (period == SubscriptionPeriod.MONTHLY)
-            ? config.monthlyPrice
-            : config.yearlyPrice;
-        uint256 duration = (period == SubscriptionPeriod.MONTHLY)
-            ? MONTH_DURATION
-            : YEAR_DURATION;
+
+        // Get price and duration based on period
+        uint256 price;
+        uint256 duration;
+        uint256 monthsInPeriod;
+
+        if (period == SubscriptionPeriod.MONTHLY) {
+            price = config.monthlyPrice;
+            duration = MONTH_DURATION;
+            monthsInPeriod = 1;
+        } else if (period == SubscriptionPeriod.QUARTERLY) {
+            price = config.quarterlyPrice;
+            duration = QUARTER_DURATION;
+            monthsInPeriod = 3;
+        } else {
+            price = config.yearlyPrice;
+            duration = YEAR_DURATION;
+            monthsInPeriod = 12;
+        }
 
         require(chuloToken.balanceOf(msg.sender) >= price, "Insufficient CHULO");
 
@@ -159,9 +184,7 @@ contract TierSubscription is ERC721, ERC721URIStorage, Ownable {
         uint256 newExpiresAt = startTime + duration;
 
         // Grant credits based on period
-        uint256 creditsToGrant = (period == SubscriptionPeriod.MONTHLY)
-            ? config.monthlyCredits
-            : config.monthlyCredits * 12;
+        uint256 creditsToGrant = config.monthlyCredits * monthsInPeriod;
 
         // Update subscription
         sub.tier = tier;
@@ -176,7 +199,7 @@ contract TierSubscription is ERC721, ERC721URIStorage, Ownable {
 
         emit Subscribed(msg.sender, tier, period, price, newExpiresAt, creditsToGrant);
 
-        if (oldTier != tier && oldTier != Tier.OBSERVER) {
+        if (oldTier != tier && oldTier != Tier.FREE) {
             emit SubscriptionUpgraded(msg.sender, oldTier, tier);
         }
     }
@@ -216,7 +239,7 @@ contract TierSubscription is ERC721, ERC721URIStorage, Ownable {
         Subscription memory sub = subscriptions[user];
 
         if (sub.expiresAt < block.timestamp) {
-            return Tier.OBSERVER; // Subscription expired
+            return Tier.FREE; // Subscription expired - revert to free tier
         }
 
         return sub.tier;
@@ -273,6 +296,7 @@ contract TierSubscription is ERC721, ERC721URIStorage, Ownable {
      */
     function getTierPricing(Tier tier) external view returns (
         uint256 monthlyPrice,
+        uint256 quarterlyPrice,
         uint256 yearlyPrice,
         uint256 monthlyCredits,
         uint256 gasMultiplier
@@ -280,6 +304,7 @@ contract TierSubscription is ERC721, ERC721URIStorage, Ownable {
         TierConfig memory config = tierConfigs[tier];
         return (
             config.monthlyPrice,
+            config.quarterlyPrice,
             config.yearlyPrice,
             config.monthlyCredits,
             config.gasMultiplier
@@ -292,12 +317,14 @@ contract TierSubscription is ERC721, ERC721URIStorage, Ownable {
     function updateTierConfig(
         Tier tier,
         uint256 monthlyPrice,
+        uint256 quarterlyPrice,
         uint256 yearlyPrice,
         uint256 monthlyCredits,
         uint256 gasMultiplier
     ) external onlyOwner {
         tierConfigs[tier] = TierConfig({
             monthlyPrice: monthlyPrice,
+            quarterlyPrice: quarterlyPrice,
             yearlyPrice: yearlyPrice,
             monthlyCredits: monthlyCredits,
             gasMultiplier: gasMultiplier
@@ -372,11 +399,11 @@ contract TierSubscription is ERC721, ERC721URIStorage, Ownable {
     }
 
     function _getTierName(Tier tier) internal pure returns (string memory) {
-        if (tier == Tier.BRONZE) return "Bronze";
-        if (tier == Tier.SILVER) return "Silver";
-        if (tier == Tier.GOLD) return "Gold";
-        if (tier == Tier.DIAMOND) return "Diamond";
-        return "Observer";
+        if (tier == Tier.OBSERVER) return "Observer";
+        if (tier == Tier.JUNIOR_QUANT) return "Junior Quant";
+        if (tier == Tier.SENIOR_QUANT) return "Senior Quant";
+        if (tier == Tier.SAGE) return "Sage";
+        return "Free";
     }
 
     /**
