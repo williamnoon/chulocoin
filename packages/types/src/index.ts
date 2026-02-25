@@ -15,7 +15,7 @@ export interface Signal {
   id: string;
   minerId: string;
   pair: string;
-  action: "long" | "short";
+  action: 'long' | 'short';
   confidence: number;
   timestamp: Date;
 }
@@ -27,4 +27,4 @@ export interface Tier {
 }
 
 // Export all types
-export * from "./index";
+export * from './index';

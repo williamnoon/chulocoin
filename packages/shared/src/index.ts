@@ -32,4 +32,4 @@ export function formatTimestamp(timestamp: Date | number): string {
 }
 
 // Export all utilities
-export * from "./index";
+export * from './index';
