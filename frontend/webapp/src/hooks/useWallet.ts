@@ -20,16 +20,17 @@ export function useWallet() {
       }
 
       // Request account access
-      const accounts = await window.ethereum.request({
+      const accounts = (await window.ethereum.request({
         method: 'eth_requestAccounts',
-      });
+      })) as string[];
 
       if (accounts && accounts.length > 0) {
         setAddress(accounts[0]);
         setIsConnected(true);
 
         // Listen for account changes
-        window.ethereum.on('accountsChanged', (newAccounts: string[]) => {
+        window.ethereum.on('accountsChanged', (...args: unknown[]) => {
+          const newAccounts = args[0] as string[];
           if (newAccounts.length === 0) {
             storeDisconnect();
           } else {

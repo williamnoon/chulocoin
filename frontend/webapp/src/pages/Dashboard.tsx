@@ -54,8 +54,8 @@ export default function Dashboard() {
     });
 
     return () => {
-      unsubSignals();
-      unsubPositions();
+      unsubSignals?.();
+      unsubPositions?.();
     };
   }, [isConnected, subscribeToSignals, subscribeToPositions, refetch]);
 

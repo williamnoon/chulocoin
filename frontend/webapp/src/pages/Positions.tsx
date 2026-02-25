@@ -25,7 +25,7 @@ export default function Positions() {
   const [positions, setPositions] = useState<Position[]>([]);
   const [filter, setFilter] = useState<'all' | 'profitable' | 'losing'>('all');
 
-  const { data, isLoading, refetch } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['positions', address],
     queryFn: async () => {
       return {
@@ -53,18 +53,20 @@ export default function Positions() {
 
   useEffect(() => {
     if (!isConnected) return;
-    const unsub = subscribeToPositions((position: Position) => {
+    const unsub = subscribeToPositions((position) => {
       setPositions(prev => {
         const index = prev.findIndex(p => p.id === position.id);
         if (index >= 0) {
           const newPositions = [...prev];
-          newPositions[index] = position;
+          newPositions[index] = position as Position;
           return newPositions;
         }
-        return [...prev, position];
+        return [...prev, position as Position];
       });
     });
-    return unsub;
+    return () => {
+      unsub?.();
+    };
   }, [isConnected, subscribeToPositions]);
 
   useEffect(() => {

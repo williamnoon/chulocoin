@@ -20,19 +20,25 @@ interface Signal {
 }
 
 interface Position {
-  id: number;
-  walletAddress: string;
-  signalId: number;
+  id: string | number;
+  walletAddress?: string;
+  signalId: string | number;
   exchange: string;
   asset: string;
-  side: 'LONG' | 'SHORT';
-  entryPrice: number;
+  side?: 'LONG' | 'SHORT';
+  direction?: 'LONG' | 'SHORT';
+  entry: number;
+  entryPrice?: number;
+  stop: number;
+  target: number;
   size: number;
   currentPrice: number;
   pnl: number;
-  status: string;
-  createdAt: string;
-  updatedAt: string;
+  pnlPercent?: number;
+  status?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  openedAt?: string;
 }
 
 interface PriceUpdate {
