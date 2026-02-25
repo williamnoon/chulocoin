@@ -6,6 +6,48 @@ interface UseWebSocketOptions {
   autoConnect?: boolean;
 }
 
+interface Signal {
+  id: number;
+  asset: string;
+  direction: 'LONG' | 'SHORT';
+  entry: number;
+  stop: number;
+  target: number;
+  confidence: number;
+  tier: string;
+  status: string;
+  createdAt: string;
+}
+
+interface Position {
+  id: number;
+  walletAddress: string;
+  signalId: number;
+  exchange: string;
+  asset: string;
+  side: 'LONG' | 'SHORT';
+  entryPrice: number;
+  size: number;
+  currentPrice: number;
+  pnl: number;
+  status: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+interface PriceUpdate {
+  asset: string;
+  price: number;
+  timestamp: number;
+}
+
+interface Notification {
+  id: string;
+  type: 'success' | 'error' | 'info' | 'warning';
+  message: string;
+  timestamp: number;
+}
+
 export function useWebSocket(options: UseWebSocketOptions = {}) {
   const { autoConnect = true } = options;
   const { address } = useWalletStore();
@@ -49,9 +91,9 @@ export function useWebSocket(options: UseWebSocketOptions = {}) {
   }, [autoConnect, address]);
 
   // Subscribe to signals
-  const subscribeToSignals = (callback: (signal: any) => void) => {
+  const subscribeToSignals = (callback: (signal: Signal) => void): (() => void) | undefined => {
     const socket = socketRef.current;
-    if (!socket) return;
+    if (!socket) return undefined;
 
     socket.emit('subscribe:signals');
     socket.on('signal:new', callback);
@@ -63,9 +105,9 @@ export function useWebSocket(options: UseWebSocketOptions = {}) {
   };
 
   // Subscribe to positions
-  const subscribeToPositions = (callback: (position: any) => void) => {
+  const subscribeToPositions = (callback: (position: Position) => void): (() => void) | undefined => {
     const socket = socketRef.current;
-    if (!socket || !address) return;
+    if (!socket || !address) return undefined;
 
     socket.emit('subscribe:positions');
     socket.on('position:update', callback);
@@ -76,9 +118,9 @@ export function useWebSocket(options: UseWebSocketOptions = {}) {
   };
 
   // Subscribe to price updates
-  const subscribeToPrices = (assets: string[], callback: (data: any) => void) => {
+  const subscribeToPrices = (assets: string[], callback: (data: PriceUpdate) => void): (() => void) | undefined => {
     const socket = socketRef.current;
-    if (!socket) return;
+    if (!socket) return undefined;
 
     socket.emit('subscribe:prices', { assets });
     socket.on('price:update', callback);
@@ -89,9 +131,9 @@ export function useWebSocket(options: UseWebSocketOptions = {}) {
   };
 
   // Listen for notifications
-  const subscribeToNotifications = (callback: (notification: any) => void) => {
+  const subscribeToNotifications = (callback: (notification: Notification) => void): (() => void) | undefined => {
     const socket = socketRef.current;
-    if (!socket) return;
+    if (!socket) return undefined;
 
     socket.on('notification', callback);
 
