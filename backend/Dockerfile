@@ -7,10 +7,9 @@ WORKDIR /app
 
 # Copy package files
 COPY package*.json ./
-COPY ../package*.json ../
 
-# Install dependencies
-RUN npm ci --only=production
+# Install ALL dependencies (including dev deps for building)
+RUN npm ci
 
 # Build stage
 FROM base AS builder
@@ -26,6 +25,12 @@ RUN npx prisma generate
 # Build TypeScript
 RUN npm run build
 
+# Reinstall production-only dependencies
+FROM base AS prod-deps
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --only=production
+
 # Production stage
 FROM base AS runner
 WORKDIR /app
@@ -38,7 +43,7 @@ RUN addgroup --system --gid 1001 nodejs && \
 
 # Copy necessary files
 COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/node_modules ./node_modules
+COPY --from=prod-deps /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/prisma ./prisma
 
