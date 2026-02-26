@@ -116,7 +116,7 @@ export default function Upgrade() {
 
       {/* Tiers Grid */}
       <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
-        {tiers.map((tier, index) => {
+        {tiers.map((tier) => {
           const isPopular = tier.name === 'Junior Quant';
           const price = billingPeriod === 'quarterly' ? tier.quarterlyPrice : tier.monthlyPrice;
           const chulo = billingPeriod === 'quarterly' ? tier.quarterlyChulo : tier.monthlyChulo;
