@@ -138,7 +138,7 @@ cd validator && ./install.sh`}
           {/* Cost Breakdown */}
           <div className="mt-8 grid md:grid-cols-2 gap-6">
             <div className="bg-gradient-to-br from-slate-900 to-slate-800 border border-slate-700 rounded-lg p-6">
-              <h4 className="text-xl font-bold text-white mb-4">Initial Investment (Tier 2)</h4>
+              <h4 className="text-xl font-bold text-white mb-4">Initial Investment (Junior Quant)</h4>
               <div className="space-y-3">
                 <div className="flex justify-between text-gray-300">
                   <span>50,000 CHULO Stake</span>
@@ -160,7 +160,7 @@ cd validator && ./install.sh`}
             </div>
 
             <div className="bg-gradient-to-br from-green-900/20 to-chulo/10 border border-chulo/30 rounded-lg p-6">
-              <h4 className="text-xl font-bold text-white mb-4">Monthly Profit (Tier 2)</h4>
+              <h4 className="text-xl font-bold text-white mb-4">Monthly Profit (Junior Quant)</h4>
               <div className="space-y-3">
                 <div className="flex justify-between text-gray-300">
                   <span>Gross Revenue</span>

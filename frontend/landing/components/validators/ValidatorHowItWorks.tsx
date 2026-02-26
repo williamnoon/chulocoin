@@ -3,7 +3,7 @@ export default function ValidatorHowItWorks() {
     {
       number: '1',
       title: 'Stake CHULO',
-      description: 'Lock 50,000 CHULO tokens to become a Tier 2 validator',
+      description: 'Lock 50,000 CHULO tokens to become a Junior Quant validator',
       icon: '🔒',
       time: '5 minutes',
     },

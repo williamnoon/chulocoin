@@ -15,7 +15,7 @@ export default function FAQ() {
       question: 'How much can I realistically earn?',
       answer: (
         <div>
-          <p className="mb-3"><strong>Tier 2 Example (50k CHULO):</strong></p>
+          <p className="mb-3"><strong>Junior Quant Example (50k CHULO):</strong></p>
           <ul className="list-disc pl-5 space-y-2 mb-3">
             <li>Conservative: $3,000-$4,000/month</li>
             <li>Average: $4,275/month</li>

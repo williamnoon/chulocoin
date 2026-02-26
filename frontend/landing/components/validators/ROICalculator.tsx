@@ -10,9 +10,9 @@ interface TierInfo {
 }
 
 const TIERS: TierInfo[] = [
-  { name: 'Tier 1', stake: 10000, validationsPerDay: 100, burnPoolShare: 0 },
-  { name: 'Tier 2', stake: 50000, validationsPerDay: 500, burnPoolShare: 0.02 },
-  { name: 'Tier 3', stake: 200000, validationsPerDay: 1500, burnPoolShare: 0.05 },
+  { name: 'Observer', stake: 10000, validationsPerDay: 100, burnPoolShare: 0 },
+  { name: 'Junior Quant', stake: 50000, validationsPerDay: 500, burnPoolShare: 0.02 },
+  { name: 'Senior Quant', stake: 200000, validationsPerDay: 1500, burnPoolShare: 0.05 },
 ];
 
 export default function ROICalculator() {

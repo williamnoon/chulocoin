@@ -4,7 +4,7 @@ export default function Testimonials() {
   const testimonials = [
     {
       quote: 'Made my money back in 3 months',
-      text: 'Started with Tier 2 (50k CHULO). In 3 months I earned enough to cover my initial investment. Now it&apos;s pure profit every month.',
+      text: 'Started with Junior Quant (50k CHULO). In 3 months I earned enough to cover my initial investment. Now it&apos;s pure profit every month.',
       author: 'Alex K.',
       role: 'Validator since Nov 2025',
       avatar: '👨‍💻',
@@ -22,7 +22,7 @@ export default function Testimonials() {
     },
     {
       quote: 'Scaled to 3 validators',
-      text: 'Started with 1 node, now running 3 Tier 2 validators. Making $12k/month. Best decision in crypto.',
+      text: 'Started with 1 node, now running 3 Junior Quant validators. Making $12k/month. Best decision in crypto.',
       author: 'Marcus T.',
       role: 'Validator since Jan 2026',
       avatar: '🧑‍🔬',

@@ -1,7 +1,7 @@
 const tiers = [
   {
-    name: 'Tier 1',
-    subtitle: 'Starter',
+    name: 'Observer',
+    subtitle: 'Entry Level',
     stake: '10,000',
     price: '~$3,000',
     validationsPerDay: '100',
@@ -18,7 +18,7 @@ const tiers = [
     bestFor: 'Testing validator operations',
   },
   {
-    name: 'Tier 2',
+    name: 'Junior Quant',
     subtitle: 'Professional',
     stake: '50,000',
     price: '~$15,000',
@@ -37,8 +37,8 @@ const tiers = [
     bestFor: 'Serious validator operators',
   },
   {
-    name: 'Tier 3',
-    subtitle: 'Enterprise',
+    name: 'Senior Quant',
+    subtitle: 'Elite',
     stake: '200,000',
     price: '~$60,000',
     validationsPerDay: 'Unlimited',
