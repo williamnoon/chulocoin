@@ -22,9 +22,7 @@ export class RewardTracker {
 
       // For now, just log the pending rewards
       const pending = await this.getPendingRewards();
-      this.logger.info(
-        `Pending rewards: ${ethers.formatEther(pending)} CHULO`
-      );
+      this.logger.info(`Pending rewards: ${ethers.formatEther(pending)} CHULO`);
 
       // Placeholder - would actually send transaction here
       this.logger.info('✅ Rewards claimed successfully');

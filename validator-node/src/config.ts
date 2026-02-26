@@ -30,10 +30,7 @@ export function loadConfig(): ValidatorConfig {
       oracle: getEnvVar('ORACLE_CONTRACT'),
     },
     databaseUrl: getEnvVar('DATABASE_URL'),
-    maxConcurrentBacktests: parseInt(
-      getEnvVar('MAX_CONCURRENT_BACKTESTS', '5'),
-      10
-    ),
+    maxConcurrentBacktests: parseInt(getEnvVar('MAX_CONCURRENT_BACKTESTS', '5'), 10),
     backtestTimeout: parseInt(getEnvVar('BACKTEST_TIMEOUT', '60'), 10) * 1000,
     dashboardPort: parseInt(getEnvVar('DASHBOARD_PORT', '3001'), 10),
     logLevel: getEnvVar('LOG_LEVEL', 'info'),

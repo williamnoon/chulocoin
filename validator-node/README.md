@@ -70,13 +70,13 @@ DATABASE_URL=postgresql://...   # PostgreSQL connection string
 
 ## Validator Tiers
 
-| Tier | Stake Required | Max Validations/Day | Burn Pool Share | Monthly Revenue* |
-|------|---------------|---------------------|-----------------|------------------|
-| **Tier 1** | 10,000 CHULO | 100 | 0% | ~$525 |
-| **Tier 2** ⭐ | 50,000 CHULO | 500 | 2% | ~$4,275 |
-| **Tier 3** | 200,000 CHULO | Unlimited | 5% | ~$25,650 |
+| Tier          | Stake Required | Max Validations/Day | Burn Pool Share | Monthly Revenue\* |
+| ------------- | -------------- | ------------------- | --------------- | ----------------- |
+| **Tier 1**    | 10,000 CHULO   | 100                 | 0%              | ~$525             |
+| **Tier 2** ⭐ | 50,000 CHULO   | 500                 | 2%              | ~$4,275           |
+| **Tier 3**    | 200,000 CHULO  | Unlimited           | 5%              | ~$25,650          |
 
-*At $0.30/CHULO
+\*At $0.30/CHULO
 
 **Recommended:** Tier 2 (50,000 CHULO) for optimal ROI
 
@@ -90,6 +90,7 @@ DATABASE_URL=postgresql://...   # PostgreSQL connection string
 ### Example: Tier 2 Validator
 
 **Daily Earnings:**
+
 ```
 Validations per day: ~300
 Reward per validation: 0.25 CHULO
@@ -104,12 +105,14 @@ At $0.30/CHULO: $142.50/day
 ```
 
 **Monthly Earnings:**
+
 ```
 475 CHULO/day × 30 days = 14,250 CHULO/month
 At $0.30/CHULO: $4,275/month
 ```
 
 **Costs:**
+
 ```
 VPS hosting: $24/month
 RPC API: $50/month
@@ -117,6 +120,7 @@ Total: $74/month
 ```
 
 **ROI:**
+
 ```
 Monthly profit: $4,201
 Annual profit: $50,412
@@ -127,6 +131,7 @@ Annual ROI: 336%
 ## Hardware Requirements
 
 ### Minimum
+
 - CPU: 2 cores
 - RAM: 4GB
 - Storage: 50GB SSD
@@ -134,6 +139,7 @@ Annual ROI: 336%
 - Uptime: >95%
 
 ### Recommended
+
 - CPU: 4 cores
 - RAM: 8GB
 - Storage: 100GB SSD
@@ -147,6 +153,7 @@ Annual ROI: 336%
 Access the validator dashboard at `http://localhost:3001`
 
 Shows:
+
 - Validator status (running/stopped)
 - Total validations
 - Uptime
@@ -216,6 +223,7 @@ npm run format
 ## Slashing & Penalties
 
 ### Slashing Conditions
+
 - Vote against >80% majority: -1% stake
 - Offline >24 hours: -0.5% stake
 - Repeated failures: Up to -10% stake
@@ -225,6 +233,7 @@ npm run format
 ## Troubleshooting
 
 ### Validator won't start
+
 ```bash
 # Check logs
 docker-compose logs validator
@@ -236,6 +245,7 @@ docker-compose logs validator
 ```
 
 ### No validations happening
+
 ```bash
 # Check WebSocket connection
 docker-compose logs validator | grep "WebSocket"
@@ -249,6 +259,7 @@ docker-compose logs validator | grep "WebSocket"
 ```
 
 ### High CPU usage
+
 ```bash
 # Reduce concurrent backtests in .env
 MAX_CONCURRENT_BACKTESTS=3  # Reduce from 5

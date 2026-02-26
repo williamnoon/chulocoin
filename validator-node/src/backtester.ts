@@ -28,7 +28,9 @@ export class BacktestEngine {
       oraclePrice: signal.entryPrice * (1 + (Math.random() - 0.5) * 0.002), // Mock: ±0.1%
     };
 
-    this.logger.debug(`Backtest complete: Sharpe=${result.sharpe.toFixed(2)}, WinRate=${(result.winRate * 100).toFixed(1)}%`);
+    this.logger.debug(
+      `Backtest complete: Sharpe=${result.sharpe.toFixed(2)}, WinRate=${(result.winRate * 100).toFixed(1)}%`
+    );
 
     return result;
   }

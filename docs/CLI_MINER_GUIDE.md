@@ -43,20 +43,21 @@ The ChuloBots CLI is a lightweight terminal application that allows you to parti
 
 ### Key Differences
 
-| Feature | CLI Mining | Validator Node |
-|---------|-----------|----------------|
-| **Setup** | Download & run | VPS + Docker setup |
-| **Requirements** | 100-50,000 CHULO | 10,000-200,000 CHULO |
-| **Hardware** | Personal computer | VPS/server (24/7) |
-| **Uptime** | Run when convenient | 99%+ uptime required |
-| **Rewards** | Lower (tier-based) | Higher (0.25 CHULO + burn pool) |
-| **Complexity** | Beginner-friendly | Technical |
-| **Cost** | $0 (use your PC) | $74/month (VPS + RPC) |
-| **Ideal For** | Casual users, small stakes | Serious operators, large stakes |
+| Feature          | CLI Mining                 | Validator Node                  |
+| ---------------- | -------------------------- | ------------------------------- |
+| **Setup**        | Download & run             | VPS + Docker setup              |
+| **Requirements** | 100-50,000 CHULO           | 10,000-200,000 CHULO            |
+| **Hardware**     | Personal computer          | VPS/server (24/7)               |
+| **Uptime**       | Run when convenient        | 99%+ uptime required            |
+| **Rewards**      | Lower (tier-based)         | Higher (0.25 CHULO + burn pool) |
+| **Complexity**   | Beginner-friendly          | Technical                       |
+| **Cost**         | $0 (use your PC)           | $74/month (VPS + RPC)           |
+| **Ideal For**    | Casual users, small stakes | Serious operators, large stakes |
 
 ### When to Use CLI Mining
 
 ✅ **Use CLI mining if:**
+
 - You have 100-10,000 CHULO
 - You want to test the network first
 - You're comfortable with a terminal
@@ -64,6 +65,7 @@ The ChuloBots CLI is a lightweight terminal application that allows you to parti
 - You want to validate signals occasionally
 
 ❌ **Use a validator node if:**
+
 - You have 50,000+ CHULO
 - You want maximum earnings
 - You can maintain 99%+ uptime
@@ -214,19 +216,20 @@ export CHULOBOTS_PRIVATE_KEY="0xYOUR_PRIVATE_KEY_HERE"
 
 Your tier is automatically detected based on your CHULO balance:
 
-| Tier | CHULO Required | Signals/Day | Daily Earnings* |
-|------|---------------|-------------|-----------------|
-| **Free** | 0 | 10 | 2.5 CHULO (~$0.75) |
-| **Starter** | 100 | 50 | 12.5 CHULO (~$3.75) |
-| **Builder** | 1,000 | 200 | 50 CHULO (~$15) |
-| **Pro** | 10,000 | 1,000 | 250 CHULO (~$75) |
-| **Whale** | 50,000 | Unlimited | 500+ CHULO (~$150+) |
+| Tier        | CHULO Required | Signals/Day | Daily Earnings\*    |
+| ----------- | -------------- | ----------- | ------------------- |
+| **Free**    | 0              | 10          | 2.5 CHULO (~$0.75)  |
+| **Starter** | 100            | 50          | 12.5 CHULO (~$3.75) |
+| **Builder** | 1,000          | 200         | 50 CHULO (~$15)     |
+| **Pro**     | 10,000         | 1,000       | 250 CHULO (~$75)    |
+| **Whale**   | 50,000         | Unlimited   | 500+ CHULO (~$150+) |
 
-*At $0.30/CHULO, assumes max daily signals validated
+\*At $0.30/CHULO, assumes max daily signals validated
 
 ### Tier Details
 
 #### Free Tier
+
 - **Stake:** 0 CHULO
 - **Limit:** 10 signals/day
 - **Reward:** 0.25 CHULO per signal
@@ -234,6 +237,7 @@ Your tier is automatically detected based on your CHULO balance:
 - **Best For:** Testing the platform
 
 #### Starter Tier
+
 - **Stake:** 100 CHULO (~$30)
 - **Limit:** 50 signals/day
 - **Reward:** 0.25 CHULO per signal
@@ -241,6 +245,7 @@ Your tier is automatically detected based on your CHULO balance:
 - **Best For:** Casual miners
 
 #### Builder Tier ⭐
+
 - **Stake:** 1,000 CHULO (~$300)
 - **Limit:** 200 signals/day
 - **Reward:** 0.25 CHULO per signal
@@ -249,6 +254,7 @@ Your tier is automatically detected based on your CHULO balance:
 - **ROI:** ~150% annually
 
 #### Pro Tier
+
 - **Stake:** 10,000 CHULO (~$3,000)
 - **Limit:** 1,000 signals/day
 - **Reward:** 0.25 CHULO per signal
@@ -257,6 +263,7 @@ Your tier is automatically detected based on your CHULO balance:
 - **ROI:** ~900% annually
 
 #### Whale Tier
+
 - **Stake:** 50,000+ CHULO (~$15,000+)
 - **Limit:** Unlimited
 - **Reward:** 0.25 CHULO per signal
@@ -273,6 +280,7 @@ Your tier is automatically detected based on your CHULO balance:
 **Per Signal Validated:** 0.25 CHULO
 
 **Requirements for Reward:**
+
 - Signal must reach consensus (>66% approval)
 - Your vote must match majority vote
 - You must be within daily tier limit
@@ -320,13 +328,13 @@ Annual ROI: 1,350%
 
 ### Keyboard Controls
 
-| Key | Action |
-|-----|--------|
-| **S** | Start/Stop mining |
+| Key   | Action                        |
+| ----- | ----------------------------- |
+| **S** | Start/Stop mining             |
 | **R** | Refresh wallet balance & tier |
-| **Q** | Quit application |
-| **H** | Show help |
-| **C** | Clear statistics |
+| **Q** | Quit application              |
+| **H** | Show help                     |
+| **C** | Clear statistics              |
 
 ### CLI Arguments
 
@@ -350,6 +358,7 @@ Annual ROI: 1,350%
 ### Running in Background
 
 **macOS/Linux:**
+
 ```bash
 # Run in background with nohup
 nohup ./chulobots &
@@ -365,6 +374,7 @@ pkill chulobots
 ```
 
 **Windows:**
+
 ```powershell
 # Run as background process
 Start-Process -NoNewWindow -FilePath "chulobots.exe"
@@ -380,6 +390,7 @@ Stop-Process -Name chulobots
 ### CLI Won't Start
 
 **Error: "No config file found"**
+
 ```bash
 # Create config file
 mkdir -p ~/.chulobots
@@ -388,6 +399,7 @@ nano ~/.chulobots/config.toml
 ```
 
 **Error: "Invalid private key"**
+
 ```bash
 # Verify private key format (should start with 0x)
 # Make sure there are no spaces or newlines
@@ -397,6 +409,7 @@ nano ~/.chulobots/config.toml
 ### No Signals Being Validated
 
 **Check tier:**
+
 ```bash
 # Run CLI and check if you've hit daily limit
 # Free tier: 10/day
@@ -405,6 +418,7 @@ nano ~/.chulobots/config.toml
 ```
 
 **Check network:**
+
 ```bash
 # Verify RPC connection
 curl https://arb1.arbitrum.io/rpc
@@ -416,22 +430,26 @@ curl https://arb1.arbitrum.io/rpc
 ### Rewards Not Appearing
 
 **Timing:**
+
 - Rewards are distributed after consensus is reached
 - Can take 5-10 minutes per signal
 - Check wallet on Arbitrum explorer
 
 **Voting:**
+
 - You only earn if your vote matches majority
 - CLI uses optimal thresholds (should match >95% of time)
 
 ### High CPU Usage
 
 **Normal behavior:**
+
 - CLI uses CPU during validation
 - Peak usage: 25-50% on 1 core
 - Idle: <5%
 
 **If excessive:**
+
 ```bash
 # Check for multiple instances
 ps aux | grep chulobots
@@ -455,6 +473,7 @@ pkill -9 chulobots
 - **Whale (50,000 CHULO):** ~$150+/day max
 
 Actual earnings depend on:
+
 1. How many hours you run the CLI
 2. Network signal volume
 3. Your tier limits
@@ -462,6 +481,7 @@ Actual earnings depend on:
 ### Can I run the CLI 24/7?
 
 **Yes, but:**
+
 - Personal computer = electricity costs
 - Uptime not required (unlike validators)
 - If running 24/7 with 50k+ CHULO, consider a validator node instead (higher rewards)
@@ -469,16 +489,19 @@ Actual earnings depend on:
 ### Do I need to keep the terminal open?
 
 **macOS/Linux:**
+
 - Use `nohup ./chulobots &` to run in background
 - Close terminal, CLI keeps running
 
 **Windows:**
+
 - Run as background process
 - Or minimize terminal window
 
 ### What if I run out of daily signals?
 
 **Your CLI will:**
+
 - Show "Daily limit reached"
 - Pause until next day (resets at 00:00 UTC)
 - Automatically resume next day
@@ -486,6 +509,7 @@ Actual earnings depend on:
 ### Can I upgrade my tier?
 
 **Yes:**
+
 1. Buy more CHULO
 2. Transfer to your wallet
 3. Press 'R' in CLI to refresh
@@ -500,6 +524,7 @@ Actual earnings depend on:
 - **Pro (10,000 CHULO - $3,000):** 900% annual ROI
 
 **Note:** These assume:
+
 - Running CLI daily
 - Hitting max validations
 - CHULO price at $0.30
@@ -507,18 +532,21 @@ Actual earnings depend on:
 ### CLI vs Validator Node - which should I choose?
 
 **Choose CLI if:**
+
 - You have less than 50,000 CHULO
 - You're testing the platform
 - You want simple setup
 - You run it occasionally
 
 **Choose Validator if:**
+
 - You have 50,000+ CHULO
 - You want maximum earnings (includes burn pool)
 - You can maintain 99%+ uptime
 - You're comfortable with VPS/Docker
 
 **You can run both:**
+
 - Use CLI with small stake (1,000 CHULO)
 - Run validator with large stake (50,000 CHULO)
 - Maximize earnings from both
@@ -528,11 +556,13 @@ Actual earnings depend on:
 ## SUPPORT
 
 **Need help?**
+
 - Discord: https://discord.gg/chulobots #cli-support
 - Email: support@chulobots.com
 - Docs: https://docs.chulobots.com/cli
 
 **Report bugs:**
+
 - GitHub Issues: https://github.com/chulobots/chulobots/issues
 
 ---
@@ -540,6 +570,7 @@ Actual earnings depend on:
 ## CLI QUICK REFERENCE
 
 **Installation:**
+
 ```bash
 # Download binary
 curl -L https://github.com/chulobots/chulobots/releases/latest/download/chulobots-[platform] -o chulobots
@@ -554,11 +585,13 @@ echo 'private_key = "0xYOUR_KEY"' > ~/.chulobots/config.toml
 ```
 
 **Controls:**
+
 - **S** - Start/Stop mining
 - **R** - Refresh balance
 - **Q** - Quit
 
 **Tiers:**
+
 - Free: 0 CHULO (10 signals/day)
 - Starter: 100 CHULO (50 signals/day)
 - Builder: 1,000 CHULO (200 signals/day)
@@ -566,6 +599,7 @@ echo 'private_key = "0xYOUR_KEY"' > ~/.chulobots/config.toml
 - Whale: 50,000+ CHULO (unlimited)
 
 **Earnings:**
+
 - 0.25 CHULO per validation
 - Payment after consensus reached
 - Daily limits reset at 00:00 UTC

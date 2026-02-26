@@ -7,6 +7,7 @@
 ## 📊 SUBSCRIPTION TIERS (TierSubscription.sol)
 
 **Model:** Subscription-based (NOT hold-to-unlock)
+
 - Users **burn CHULO tokens** to subscribe monthly or quarterly
 - Subscriptions grant NFT badges (non-transferable)
 - Credits system for actions
@@ -14,15 +15,16 @@
 
 ### Tier Structure
 
-| Tier | Monthly Price | Quarterly Price | Bots | Positions | Max Size | Signal Delay | Strategies | Credits/mo |
-|------|--------------|-----------------|------|-----------|----------|--------------|------------|------------|
-| **Free** | $0 | - | 0 | 1 | $100 | 24 hours | None | 0 |
-| **Observer** | $10 (1,000 CHULO) | $28.50 (2,850 CHULO) -5% | 1 | 3 | $500 | Real-time | Basic | 100 |
-| **Junior Quant** | $30 (3,000 CHULO) | $81 (8,100 CHULO) -10% | 3 | 10 | $2,500 | Real-time | Intermediate | 500 |
-| **Senior Quant** | $90 (9,000 CHULO) | $216 (21,600 CHULO) -20% | 10 | 50 | $10,000 | Real-time | Advanced | 2,000 |
-| **Sage** | $250 (25,000 CHULO) | $450 (45,000 CHULO) -40% | 50 | 200 | $100,000 | Real-time | All + Custom | 10,000 |
+| Tier             | Monthly Price       | Quarterly Price          | Bots | Positions | Max Size | Signal Delay | Strategies   | Credits/mo |
+| ---------------- | ------------------- | ------------------------ | ---- | --------- | -------- | ------------ | ------------ | ---------- |
+| **Free**         | $0                  | -                        | 0    | 1         | $100     | 24 hours     | None         | 0          |
+| **Observer**     | $10 (1,000 CHULO)   | $28.50 (2,850 CHULO) -5% | 1    | 3         | $500     | Real-time    | Basic        | 100        |
+| **Junior Quant** | $30 (3,000 CHULO)   | $81 (8,100 CHULO) -10%   | 3    | 10        | $2,500   | Real-time    | Intermediate | 500        |
+| **Senior Quant** | $90 (9,000 CHULO)   | $216 (21,600 CHULO) -20% | 10   | 50        | $10,000  | Real-time    | Advanced     | 2,000      |
+| **Sage**         | $250 (25,000 CHULO) | $450 (45,000 CHULO) -40% | 50   | 200       | $100,000 | Real-time    | All + Custom | 10,000     |
 
 **Key Features:**
+
 - Subscriptions expire after 30/90 days
 - NFT badge minted on first subscription to each tier
 - Credits roll over but tied to active subscription
@@ -33,11 +35,13 @@
 ## 💰 CHULO TOKENOMICS (CHULO.sol)
 
 ### Supply
+
 - **Max Supply:** 100,000,000 CHULO (100M)
 - **Decimals:** 18
 - **Initial Supply:** Set at deployment (mintable up to max)
 
 ### Mechanisms
+
 1. **Burning:**
    - Subscription payments (TierSubscription.sol)
    - Gas payments for signal submission (SignalRegistry.sol)
@@ -81,6 +85,7 @@
    - Paid from ValidatorStaking contract
 
 ### Signal Structure
+
 ```solidity
 struct Signal {
     uint256 id;
@@ -99,6 +104,7 @@ struct Signal {
 ```
 
 ### Gas Costs (Legacy - Needs Update)
+
 - BRONZE: 10 CHULO
 - SILVER: 5 CHULO
 - GOLD: 2 CHULO
@@ -111,22 +117,26 @@ struct Signal {
 ## 🛡️ VALIDATOR STAKING (ValidatorStaking.sol)
 
 ### Staking Requirements
+
 - **Min Stake:** 1,000 CHULO (MIN_STAKE)
 - **Max Stake:** 100,000 CHULO (MAX_STAKE)
 - **Lock Period:** 7 days cooldown to unstake
 
 ### Validator Earnings
+
 1. **Validation Rewards:** 0.25 CHULO per validation (REWARD_PER_VALIDATION)
 2. **Burn Pool:** Share of accumulated burned tokens
    - Distributed weekly (BURN_DISTRIBUTION_INTERVAL = 7 days)
    - Split proportionally by stake amount
 
 ### Slashing
+
 - **Penalty:** 10% of stake (SLASH_PERCENTAGE)
 - **Reasons:** Misbehavior (voting incorrectly, downtime)
 - **Slashed funds:** Added to burn pool for distribution
 
 ### Reputation System
+
 - **Range:** 0-100
 - **Starts:** 100 (perfect)
 - **Increases:** +1 per successful validation (capped at 100)
@@ -137,12 +147,14 @@ struct Signal {
 ## 🔑 KEY INSIGHTS FOR LANDING PAGE
 
 ### ❌ WRONG (Current Landing Page)
+
 - Tiers based on holding CHULO tokens
 - Bronze/Silver/Gold/Diamond naming
 - Validator tiers mixed with subscription tiers
 - Gas costs per day
 
 ### ✅ CORRECT (From Contracts)
+
 - **Subscription Model:** Burn CHULO monthly/quarterly for access
 - **Tier Names:** Free, Observer, Junior Quant, Senior Quant, Sage
 - **Deflationary:** All subscriptions permanently burn tokens
@@ -163,6 +175,7 @@ struct Signal {
    - Emphasize quarterly savings
 
 2. **How It Works:**
+
    ```
    1. Subscribe → Burn CHULO tokens for monthly/quarterly access
    2. Submit Signals → Additional CHULO burned for gas
@@ -188,6 +201,7 @@ struct Signal {
 ## 🔗 CONTRACT ADDRESSES (From Deployment)
 
 To be populated after deployment:
+
 ```
 CHULO Token: 0x...
 TierSubscription: 0x...

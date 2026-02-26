@@ -41,17 +41,18 @@ ChuloBots validators are independent node operators who verify the quality of tr
 
 ### Minimum Stake
 
-| Tier | CHULO Required | Max Validations/Day | Burn Pool Share |
-|------|---------------|---------------------|-----------------|
-| Tier 1 | 10,000 | 100 | 0% |
-| Tier 2 | 50,000 | 500 | 2% |
-| Tier 3 | 200,000 | Unlimited | 5% |
+| Tier   | CHULO Required | Max Validations/Day | Burn Pool Share |
+| ------ | -------------- | ------------------- | --------------- |
+| Tier 1 | 10,000         | 100                 | 0%              |
+| Tier 2 | 50,000         | 500                 | 2%              |
+| Tier 3 | 200,000        | Unlimited           | 5%              |
 
 **Recommended:** Tier 2 (50,000 CHULO) for optimal ROI
 
 ### Hardware Requirements
 
 **Minimum:**
+
 - CPU: 2 cores
 - RAM: 4GB
 - Storage: 50GB SSD
@@ -59,6 +60,7 @@ ChuloBots validators are independent node operators who verify the quality of tr
 - Uptime: >95% (penalized for downtime)
 
 **Recommended:**
+
 - CPU: 4 cores
 - RAM: 8GB
 - Storage: 100GB SSD
@@ -66,6 +68,7 @@ ChuloBots validators are independent node operators who verify the quality of tr
 - Uptime: >99.5%
 
 **Hosting Options:**
+
 - DigitalOcean Droplet: $24/month (2 CPU, 4GB RAM)
 - Linode VPS: $24/month (2 CPU, 4GB RAM)
 - AWS EC2: t3.medium ($30/month)
@@ -87,6 +90,7 @@ ChuloBots validators are independent node operators who verify the quality of tr
 **Example: Tier 2 Validator (50,000 CHULO staked)**
 
 **Daily Earnings:**
+
 ```
 Validations per day: ~300
 Reward per validation: 0.25 CHULO
@@ -101,6 +105,7 @@ At $0.30/CHULO: $142.50/day
 ```
 
 **Monthly Earnings:**
+
 ```
 475 CHULO/day × 30 days = 14,250 CHULO/month
 At $0.30/CHULO: $4,275/month
@@ -109,6 +114,7 @@ At $0.30/CHULO: $4,275/month
 ### Costs
 
 **Monthly Operating Costs:**
+
 ```
 VPS hosting: $24
 RPC API (Alchemy): $50
@@ -134,6 +140,7 @@ Monthly ROI: 28%
 ### Penalties
 
 **Slashing Conditions:**
+
 - Vote against >80% majority: -1% stake
 - Offline >24 hours: -0.5% stake
 - Repeated failures: Up to -10% stake
@@ -147,6 +154,7 @@ Monthly ROI: 28%
 ### Step 1: Get CHULO Tokens
 
 **Option A: Buy from ChuloBots**
+
 ```
 1. Visit: https://app.chulobots.com/buy-chulo
 2. Purchase 50,000 CHULO (~$15,000)
@@ -154,6 +162,7 @@ Monthly ROI: 28%
 ```
 
 **Option B: Buy from DEX**
+
 ```
 1. Go to Uniswap: https://app.uniswap.org
 2. Connect wallet
@@ -432,11 +441,13 @@ docker logs -f validator
 ### Dashboard Access
 
 **Web Dashboard:**
+
 ```
 http://YOUR_VPS_IP:3001
 ```
 
 **Shows:**
+
 - Validator status (running/stopped)
 - Total validations
 - Uptime
@@ -446,11 +457,13 @@ http://YOUR_VPS_IP:3001
 ### Prometheus Metrics
 
 **Metrics endpoint:**
+
 ```
 http://YOUR_VPS_IP:3001/metrics
 ```
 
 **Metrics Available:**
+
 - Validations per hour
 - Average backtest time
 - Vote breakdown (approve/reject ratio)
@@ -460,6 +473,7 @@ http://YOUR_VPS_IP:3001/metrics
 ### Health Checks
 
 **Manual Health Check:**
+
 ```bash
 curl http://localhost:3001/health
 
@@ -474,6 +488,7 @@ curl http://localhost:3001/health
 ```
 
 **Auto-Monitoring:**
+
 ```bash
 # Add to crontab for email alerts
 crontab -e
@@ -485,6 +500,7 @@ crontab -e
 ### Database Backups
 
 **Daily Backup (Recommended):**
+
 ```bash
 # Create backup script
 cat > /root/backup-validator.sh << 'EOF'
@@ -509,6 +525,7 @@ crontab -e
 ### Validator Won't Start
 
 **Check logs:**
+
 ```bash
 docker logs validator
 
@@ -528,6 +545,7 @@ docker restart validator
 ### No Validations Happening
 
 **Check connection:**
+
 ```bash
 # Check if connected to ChuloBots API
 docker logs validator | grep "WebSocket"
@@ -543,6 +561,7 @@ docker logs validator | grep "WebSocket"
 ### High CPU Usage
 
 **Reduce concurrent backtests:**
+
 ```bash
 # Edit .env
 MAX_CONCURRENT_BACKTESTS=3  # Reduce from 5
@@ -554,6 +573,7 @@ docker restart validator
 ### Database Errors
 
 **Reset database:**
+
 ```bash
 # Stop validator
 docker stop validator
@@ -568,6 +588,7 @@ docker start validator
 ### Out of Disk Space
 
 **Clean Docker:**
+
 ```bash
 # Remove unused images
 docker system prune -a
@@ -579,6 +600,7 @@ docker exec validator sh -c 'rm -f /app/logs/*.old'
 ### Can't Claim Rewards
 
 **Verify gas:**
+
 ```bash
 # Check ETH balance (need for gas)
 docker logs validator | grep "ETH Balance"
@@ -594,6 +616,7 @@ docker logs validator | grep "ETH Balance"
 ### How much can I earn?
 
 **Tier 2 Validator (50k CHULO stake):**
+
 - Daily: 475 CHULO (~$142)
 - Monthly: 14,250 CHULO (~$4,275)
 - Annual: 171,000 CHULO (~$51,300)
@@ -603,10 +626,12 @@ docker logs validator | grep "ETH Balance"
 ### What if I go offline?
 
 **Short outage (<1 hour):**
+
 - No penalty
 - Resume validating when back online
 
 **Extended outage (>24 hours):**
+
 - -0.5% stake penalty
 - Miss validation rewards during downtime
 
@@ -615,22 +640,26 @@ docker logs validator | grep "ETH Balance"
 ### Can I run multiple validators?
 
 **Yes!** Each validator needs:
+
 - Separate wallet address
 - Separate stake (50k CHULO each)
 - Separate VPS (or run multiple containers)
 
 **Example:**
+
 - 3 validators × 50k CHULO = 150k total stake
 - 3 × $4,275/month = $12,825/month revenue
 
 ### Can I unstake anytime?
 
 **Unstaking Process:**
+
 1. Initiate unstake on https://app.chulobots.com/stake
 2. Wait 7 days (cooldown period)
 3. Claim CHULO back to wallet
 
 **During cooldown:**
+
 - Validator is inactive (no validations)
 - No rewards earned
 - No new stakes can be made with that wallet
@@ -638,10 +667,12 @@ docker logs validator | grep "ETH Balance"
 ### What if my validator votes incorrectly?
 
 **Voting against consensus (>80% disagree):**
+
 - -1% stake penalty
 - Example: 50k stake → lose 500 CHULO
 
 **Prevention:**
+
 - Validator software uses same thresholds as other validators
 - Rare to vote against majority
 - Usually means signal is borderline quality
@@ -649,6 +680,7 @@ docker logs validator | grep "ETH Balance"
 ### Do I need coding skills?
 
 **No!** Installation is straightforward:
+
 ```bash
 git clone https://github.com/chulobots/chulobots.git
 cd chulobots/validator-node
@@ -665,6 +697,7 @@ docker run -d --name validator --env-file .env -p 3001:3001 chulobots-validator
 **Yes, but Linux is recommended.**
 
 **Windows setup:**
+
 1. Install Docker Desktop for Windows
 2. Enable WSL2
 3. Follow same steps as Linux
@@ -674,6 +707,7 @@ docker run -d --name validator --env-file .env -p 3001:3001 chulobots-validator
 ### What if ChuloBots API goes down?
 
 **Validator automatically:**
+
 - Retries connection every 30 seconds
 - Resumes validating when API returns
 - No manual intervention needed
@@ -683,11 +717,13 @@ docker run -d --name validator --env-file .env -p 3001:3001 chulobots-validator
 ### How do I upgrade my tier?
 
 **Tier 2 → Tier 3:**
+
 1. Stake additional 150k CHULO (200k total)
 2. Update .env: `STAKE_TIER=3`
 3. Restart: `docker restart validator`
 
 **Benefits:**
+
 - Unlimited validations (no daily cap)
 - 5% burn pool share (vs 2%)
 - Higher revenue
@@ -697,11 +733,13 @@ docker run -d --name validator --env-file .env -p 3001:3001 chulobots-validator
 ## SUPPORT
 
 **Need help?**
+
 - Discord: https://discord.gg/chulobots #validator-support
 - Email: validators@chulobots.com
 - Docs: https://docs.chulobots.com/validators
 
 **Community:**
+
 - Validator leaderboard: https://app.chulobots.com/validators
 - Monthly validator meetup (Discord)
 - Validator incentive programs
@@ -711,21 +749,25 @@ docker run -d --name validator --env-file .env -p 3001:3001 chulobots-validator
 ## VALIDATOR QUICK REFERENCE
 
 **Daily Checklist:**
+
 - [ ] Check dashboard (http://YOUR_VPS_IP:3001)
 - [ ] Verify validations happening
 - [ ] Check uptime >99%
 
 **Weekly:**
+
 - [ ] Review earnings
 - [ ] Check for software updates
 - [ ] Verify disk space >20% free
 
 **Monthly:**
+
 - [ ] Claim rewards (automatic, but verify)
 - [ ] Review performance metrics
 - [ ] Database backup (automatic, but verify)
 
 **Commands:**
+
 ```bash
 # Status
 docker ps

@@ -1,11 +1,6 @@
 // Prometheus metrics collector
 
-import {
-  register,
-  Counter,
-  Histogram,
-  Gauge,
-} from 'prom-client';
+import { register, Counter, Histogram, Gauge } from 'prom-client';
 
 export class MetricsCollector {
   private readonly signalsReceived: Counter;

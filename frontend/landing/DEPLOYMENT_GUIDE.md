@@ -3,12 +3,14 @@
 ## Quick Start (Local Development)
 
 1. **Install dependencies:**
+
    ```bash
    cd /Users/willnoon/Documents/GitHub/chulobots/frontend/landing
    npm install
    ```
 
 2. **Run development server:**
+
    ```bash
    npm run dev
    ```
@@ -20,6 +22,7 @@
 ## Production Build
 
 1. **Build the application:**
+
    ```bash
    npm run build
    ```
@@ -34,11 +37,13 @@
 ### Option 1: Vercel CLI (Recommended)
 
 1. **Install Vercel CLI:**
+
    ```bash
    npm install -g vercel
    ```
 
 2. **Login to Vercel:**
+
    ```bash
    vercel login
    ```
@@ -81,6 +86,7 @@ Once deployed, configure your custom domain:
 1. In Vercel dashboard, go to Domains
 2. Add your domain (e.g., `chulobots.com`)
 3. Configure DNS records:
+
    ```
    Type: A
    Name: @
@@ -94,6 +100,7 @@ Once deployed, configure your custom domain:
 ## Performance Optimization
 
 The site is already optimized with:
+
 - ✅ Static page generation
 - ✅ Automatic code splitting
 - ✅ Image optimization
@@ -103,6 +110,7 @@ The site is already optimized with:
 ## Testing Before Deployment
 
 1. **Check build succeeds:**
+
    ```bash
    npm run build
    ```
@@ -133,6 +141,7 @@ The site is already optimized with:
 ## Monitoring
 
 After deployment, monitor:
+
 - Page load times (Vercel Analytics)
 - Error rates (Vercel Logs)
 - User conversions (validator signups)
@@ -149,6 +158,7 @@ If you need to rollback to a previous version:
 ## Support
 
 If you encounter issues:
+
 - Check Vercel logs for errors
 - Verify all environment variables are set
 - Ensure DNS is configured correctly
@@ -168,11 +178,13 @@ For `chulobots.com`:
 To add analytics:
 
 1. **Vercel Analytics:**
+
    ```bash
    npm install @vercel/analytics
    ```
 
 2. **Update `app/layout.tsx`:**
+
    ```tsx
    import { Analytics } from '@vercel/analytics/react';
 
@@ -194,6 +206,7 @@ To add analytics:
 ## Cache Configuration
 
 The site uses optimal caching via `vercel.json`:
+
 - Static assets: 1 year cache
 - HTML pages: Revalidate on demand
 - API routes: No cache (if added)
@@ -201,6 +214,7 @@ The site uses optimal caching via `vercel.json`:
 ## Security
 
 Ensure security best practices:
+
 - [ ] HTTPS enabled (automatic with Vercel)
 - [ ] No sensitive data in client code
 - [ ] Environment variables for secrets
@@ -235,6 +249,7 @@ npx depcheck
 ## Contact
 
 For deployment issues or questions:
+
 - Discord: discord.gg/chulobots
 - Email: dev@chulobots.com
 - GitHub Issues: github.com/chulobots/chulobots/issues

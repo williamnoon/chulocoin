@@ -5,7 +5,9 @@ This is the landing page and marketing site for ChuloBots, built with Next.js 14
 ## Pages
 
 ### Main Landing Page (`/`)
+
 The main homepage showcasing the ChuloBots platform:
+
 - Hero section with value proposition
 - How It Works section
 - User tier comparison
@@ -14,7 +16,9 @@ The main homepage showcasing the ChuloBots platform:
 - Full navigation and footer
 
 ### Validator Recruitment Page (`/validators`)
+
 Comprehensive landing page for recruiting validators:
+
 - Hero with live terminal demonstration
 - Real-time network statistics
 - Interactive ROI calculator
@@ -30,12 +34,14 @@ Comprehensive landing page for recruiting validators:
 ## Features
 
 ### Interactive Components
+
 - **ROI Calculator**: Real-time earnings calculator with adjustable stake amount and CHULO price
 - **Live Stats**: Animated network statistics (validators, total staked, uptime)
 - **Terminal Demo**: Simulated validator terminal showing real-time earnings
 - **Responsive Design**: Fully responsive across mobile, tablet, and desktop
 
 ### Design System
+
 - **Color Scheme**: Matrix/terminal aesthetic with green (#22c55e) on dark backgrounds
 - **Typography**: Monospace fonts for technical elements, Inter for body text
 - **Components**: Reusable React components with TypeScript
@@ -102,11 +108,13 @@ The `vercel.json` configuration ensures proper routing and optimization.
 ## Key Metrics (Validator Page)
 
 ### Fee Structures
+
 - **Tier 1**: 10,000 CHULO, 100 validations/day, 0% burn pool, ~$525/month
 - **Tier 2**: 50,000 CHULO, 500 validations/day, 2% burn pool, ~$4,275/month (RECOMMENDED)
 - **Tier 3**: 200,000 CHULO, unlimited validations, 5% burn pool, ~$25,650/month
 
 ### Validation Economics
+
 - Validation reward: 0.25 CHULO per validation
 - Default CHULO price: $0.30 (adjustable in calculator)
 - Operating costs: ~$74/month (VPS + RPC APIs)
@@ -131,6 +139,7 @@ NEXT_PUBLIC_API_URL=https://api.chulobots.com
 ## SEO Optimization
 
 Both pages include:
+
 - Optimized metadata (title, description, keywords)
 - Open Graph tags for social sharing
 - Semantic HTML structure
@@ -151,6 +160,7 @@ Both pages include:
 ## Contributing
 
 When adding new pages or components:
+
 1. Follow the existing component structure
 2. Use TypeScript for type safety
 3. Keep components small and reusable

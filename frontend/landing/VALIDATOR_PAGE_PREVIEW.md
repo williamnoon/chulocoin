@@ -1,6 +1,7 @@
 # Validator Recruitment Page - Visual Preview
 
 ## Page URL
+
 `https://chulobots.com/validators`
 
 ---
@@ -8,11 +9,13 @@
 ## Section-by-Section Breakdown
 
 ### 1. Navigation Bar (Sticky)
+
 ```
 ┌─────────────────────────────────────────────────────────┐
 │ ChuloBots    Calculator  Guide  Docs  [Download]        │
 └─────────────────────────────────────────────────────────┘
 ```
+
 - Dark background with green accents
 - Sticky position stays at top while scrolling
 - Links to key sections
@@ -20,6 +23,7 @@
 ---
 
 ### 2. Hero Section
+
 ```
 ┌───────────────────────────────────────────────────────────┐
 │  [●] VALIDATOR NETWORK ONLINE                              │
@@ -35,6 +39,7 @@
 │  Read Docs →                                              │
 └───────────────────────────────────────────────────────────┘
 ```
+
 - Left: Bold headline, subheadline, CTAs
 - Right: Animated terminal window showing live stats
 - Matrix green color scheme
@@ -42,6 +47,7 @@
 ---
 
 ### 3. Network Stats (3 Columns)
+
 ```
 ┌───────────────────────────────────────────────────────┐
 │   87                4.2M              99.8%            │
@@ -49,6 +55,7 @@
 │   Worldwide         CHULO Secured     Average         │
 └───────────────────────────────────────────────────────┘
 ```
+
 - Dark background
 - Numbers in large mono font
 - Hover effects on each card
@@ -56,6 +63,7 @@
 ---
 
 ### 4. How It Works (4 Steps Timeline)
+
 ```
 ┌────────────────────────────────────────────────────────┐
 │         ①────────②────────③────────④                   │
@@ -65,6 +73,7 @@
 │   5 minutes  5 minutes  Automatic   24/7               │
 └────────────────────────────────────────────────────────┘
 ```
+
 - Visual timeline with connecting line
 - Each step shows icon, title, description, time
 - Hover animations
@@ -72,6 +81,7 @@
 ---
 
 ### 5. ROI Calculator (Interactive) ⭐
+
 ```
 ┌──────────────────────────────────────────────────────────┐
 │              Calculate Your Earnings                      │
@@ -90,6 +100,7 @@
 │ [Tier 1: $525] [Tier 2: $4,275] [Tier 3: $25,650]       │
 └──────────────────────────────────────────────────────────┘
 ```
+
 - Real-time calculations as user moves slider
 - Automatic tier selection based on stake
 - Quick tier selection buttons below
@@ -97,6 +108,7 @@
 ---
 
 ### 6. Validator Tiers (3 Cards)
+
 ```
 ┌──────────────────────────────────────────────────────────┐
 │  ┌─ Tier 1 ──┐  ┌─ Tier 2 ⭐ ─┐  ┌─ Tier 3 ──┐        │
@@ -115,6 +127,7 @@
 │  └────────────┘  └──────────────┘  └────────────┘        │
 └──────────────────────────────────────────────────────────┘
 ```
+
 - Tier 2 highlighted with glow effect
 - Clear comparison of features and pricing
 - Best for recommendation
@@ -122,6 +135,7 @@
 ---
 
 ### 7. Requirements (2 Columns + VPS Grid)
+
 ```
 ┌──────────────────────────────────────────────────────────┐
 │  🖥️ Hardware            🛠️ Technical Setup              │
@@ -139,6 +153,7 @@
 │  Initial Investment: $15,074  |  Monthly Profit: $4,201  │
 └──────────────────────────────────────────────────────────┘
 ```
+
 - Side-by-side hardware and technical requirements
 - VPS provider cards with pricing
 - Cost breakdown boxes
@@ -146,6 +161,7 @@
 ---
 
 ### 8. Benefits (4 Cards)
+
 ```
 ┌──────────────────────────────────────────────────────────┐
 │  ┌─ 🔒 Low Risk ──┐  ┌─ 💼 Passive ──┐                 │
@@ -161,6 +177,7 @@
 │  └────────────────┘  └───────────────┘                  │
 └──────────────────────────────────────────────────────────┘
 ```
+
 - 4 benefit categories
 - Colored gradient backgrounds
 - Checkmarks for each point
@@ -168,6 +185,7 @@
 ---
 
 ### 9. Testimonials (3 Cards)
+
 ```
 ┌──────────────────────────────────────────────────────────┐
 │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐      │
@@ -182,6 +200,7 @@
 │                   └─────────────┘  └─────────────┘      │
 └──────────────────────────────────────────────────────────┘
 ```
+
 - 3 validator success stories
 - Avatar, quote, description
 - Key metric displayed
@@ -189,6 +208,7 @@
 ---
 
 ### 10. Getting Started (5 Steps)
+
 ```
 ┌──────────────────────────────────────────────────────────┐
 │              Step-by-Step Launch Guide                    │
@@ -208,6 +228,7 @@
 │  Total Setup Time: ~1.5 hours                            │
 └──────────────────────────────────────────────────────────┘
 ```
+
 - Numbered steps with time estimates
 - Expandable substeps
 - Call to action at bottom
@@ -215,6 +236,7 @@
 ---
 
 ### 11. FAQ (Accordion - 8 Questions)
+
 ```
 ┌──────────────────────────────────────────────────────────┐
 │  ▼ How much can I realistically earn?                    │
@@ -233,6 +255,7 @@
 │  ▷ What hardware do I need?                              │
 └──────────────────────────────────────────────────────────┘
 ```
+
 - Collapsible accordion
 - First question open by default
 - Detailed answers with formatting
@@ -240,6 +263,7 @@
 ---
 
 ### 12. Download Section
+
 ```
 ┌──────────────────────────────────────────────────────────┐
 │           Download Validator Software                     │
@@ -254,6 +278,7 @@
 │  $ curl -sSL https://chulobots.com/install.sh | bash    │
 └──────────────────────────────────────────────────────────┘
 ```
+
 - Platform selection cards
 - Quick install command
 - Clear download buttons
@@ -261,6 +286,7 @@
 ---
 
 ### 13. Final CTA
+
 ```
 ┌──────────────────────────────────────────────────────────┐
 │   Ready to Secure the Network and Earn Rewards?          │
@@ -269,6 +295,7 @@
 │   [Start Validating Now] [Join Discord Community]        │
 └──────────────────────────────────────────────────────────┘
 ```
+
 - Bold headline
 - Two CTA buttons
 - Social proof (87 validators)
@@ -276,6 +303,7 @@
 ---
 
 ### 14. Footer
+
 ```
 ┌──────────────────────────────────────────────────────────┐
 │ ChuloBots          Quick Links      Resources   Social   │
@@ -288,6 +316,7 @@
 │ Terms • Privacy • Risk Disclosures                       │
 └──────────────────────────────────────────────────────────┘
 ```
+
 - 4-column layout
 - All important links
 - Legal links at bottom
@@ -319,6 +348,7 @@
 ## Mobile Responsive
 
 All sections adapt to mobile:
+
 - Stacked layouts on small screens
 - Touch-friendly buttons
 - Readable text sizes

@@ -29,6 +29,7 @@ vercel deploy --prod   # Deploy to Vercel
 ## What You Get
 
 ### Main Landing Page (`/`)
+
 - Hero section
 - How it works
 - User tiers
@@ -37,6 +38,7 @@ vercel deploy --prod   # Deploy to Vercel
 - Full navigation
 
 ### Validator Page (`/validators`)
+
 - Live terminal demo
 - Interactive ROI calculator
 - Tier comparison
@@ -50,6 +52,7 @@ vercel deploy --prod   # Deploy to Vercel
 ## ROI Calculator Features
 
 The calculator automatically:
+
 - Adjusts tier based on stake amount
 - Calculates daily/monthly/annual earnings
 - Shows validation rewards + burn pool share
@@ -57,6 +60,7 @@ The calculator automatically:
 - Calculates break-even time
 
 **Try it:**
+
 1. Go to `/validators`
 2. Scroll to "Calculate Your Earnings"
 3. Adjust the slider (10k - 200k CHULO)
@@ -66,34 +70,39 @@ The calculator automatically:
 
 ## Key Components
 
-| Component | Location | Purpose |
-|-----------|----------|---------|
-| ValidatorHero | `/components/validators/` | Hero with terminal |
-| ROICalculator | `/components/validators/` | Interactive calculator |
-| ValidatorTiers | `/components/validators/` | Tier comparison |
-| FAQ | `/components/validators/` | Q&A accordion |
+| Component      | Location                  | Purpose                |
+| -------------- | ------------------------- | ---------------------- |
+| ValidatorHero  | `/components/validators/` | Hero with terminal     |
+| ROICalculator  | `/components/validators/` | Interactive calculator |
+| ValidatorTiers | `/components/validators/` | Tier comparison        |
+| FAQ            | `/components/validators/` | Q&A accordion          |
 
 ---
 
 ## Customization
 
 ### Change CHULO Price Default
+
 Edit `ROICalculator.tsx` line 18:
+
 ```tsx
-const [chuloPrice, setChuloPrice] = useState(0.30); // Change this
+const [chuloPrice, setChuloPrice] = useState(0.3); // Change this
 ```
 
 ### Update Network Stats
+
 Edit `NetworkStats.tsx` lines 7-9:
+
 ```tsx
 const [stats, setStats] = useState({
-  validators: 87,      // Update this
-  totalStaked: 4.2,    // Update this
-  uptime: 99.8,        // Update this
+  validators: 87, // Update this
+  totalStaked: 4.2, // Update this
+  uptime: 99.8, // Update this
 });
 ```
 
 ### Modify Tier Economics
+
 Edit `ValidatorTiers.tsx` starting at line 1.
 
 ---
@@ -101,12 +110,15 @@ Edit `ValidatorTiers.tsx` starting at line 1.
 ## Common Tasks
 
 ### Add a New Section to Validator Page
+
 1. Create component in `/components/validators/YourComponent.tsx`
 2. Import in `/app/validators/page.tsx`
 3. Add to page: `<YourComponent />`
 
 ### Update Colors
+
 Edit `tailwind.config.ts`:
+
 ```ts
 chulo: {
   light: '#4ade80',    // Light green
@@ -116,6 +128,7 @@ chulo: {
 ```
 
 ### Change Footer Links
+
 Edit bottom of `/app/validators/page.tsx` or `/app/page.tsx`.
 
 ---
@@ -123,6 +136,7 @@ Edit bottom of `/app/validators/page.tsx` or `/app/page.tsx`.
 ## Troubleshooting
 
 ### Build Fails
+
 ```bash
 npm run clean
 npm install
@@ -130,16 +144,19 @@ npm run build
 ```
 
 ### TypeScript Errors
+
 ```bash
 npx tsc --noEmit
 ```
 
 ### ESLint Errors
+
 ```bash
 npm run lint
 ```
 
 ### Port Already in Use
+
 ```bash
 # Kill process on port 3000
 lsof -ti:3000 | xargs kill -9

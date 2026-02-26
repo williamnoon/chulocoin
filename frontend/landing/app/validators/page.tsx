@@ -35,10 +35,16 @@ export default function ValidatorsPage() {
             <span className="text-2xl font-bold text-chulo-light font-mono">ChuloBots</span>
           </a>
           <div className="flex items-center gap-6">
-            <a href="#calculator" className="text-gray-300 hover:text-chulo-light transition-colors">
+            <a
+              href="#calculator"
+              className="text-gray-300 hover:text-chulo-light transition-colors"
+            >
               Calculator
             </a>
-            <a href="#getting-started" className="text-gray-300 hover:text-chulo-light transition-colors">
+            <a
+              href="#getting-started"
+              className="text-gray-300 hover:text-chulo-light transition-colors"
+            >
               Guide
             </a>
             <a
@@ -132,7 +138,7 @@ export default function ValidatorsPage() {
             <div className="bg-slate-800 border border-slate-700 rounded-lg p-6">
               <div className="text-sm text-gray-400 mb-2">Quick Install (Linux/macOS)</div>
               <pre className="text-left bg-slate-900 p-4 rounded-lg text-sm font-mono text-chulo-light overflow-x-auto">
-{`curl -sSL https://chulobots.com/install.sh | bash`}
+                {`curl -sSL https://chulobots.com/install.sh | bash`}
               </pre>
             </div>
           </div>
@@ -145,9 +151,7 @@ export default function ValidatorsPage() {
           <h2 className="text-3xl font-bold text-white mb-4">
             Ready to Secure the Network and Earn Rewards?
           </h2>
-          <p className="text-gray-400 mb-8">
-            Join 87 validators earning passive income 24/7
-          </p>
+          <p className="text-gray-400 mb-8">Join 87 validators earning passive income 24/7</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href="#download"
@@ -183,10 +187,32 @@ export default function ValidatorsPage() {
             <div>
               <h4 className="font-bold text-white mb-4">Quick Links</h4>
               <ul className="space-y-2 text-gray-400 text-sm">
-                <li><a href="/" className="hover:text-chulo-light transition-colors">Home</a></li>
-                <li><a href="/validators" className="hover:text-chulo-light transition-colors">Become a Validator</a></li>
-                <li><a href="https://docs.chulobots.com" className="hover:text-chulo-light transition-colors">Documentation</a></li>
-                <li><a href="https://app.chulobots.com/network" className="hover:text-chulo-light transition-colors">Network Stats</a></li>
+                <li>
+                  <a href="/" className="hover:text-chulo-light transition-colors">
+                    Home
+                  </a>
+                </li>
+                <li>
+                  <a href="/validators" className="hover:text-chulo-light transition-colors">
+                    Become a Validator
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://docs.chulobots.com"
+                    className="hover:text-chulo-light transition-colors"
+                  >
+                    Documentation
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://app.chulobots.com/network"
+                    className="hover:text-chulo-light transition-colors"
+                  >
+                    Network Stats
+                  </a>
+                </li>
               </ul>
             </div>
 
@@ -194,10 +220,35 @@ export default function ValidatorsPage() {
             <div>
               <h4 className="font-bold text-white mb-4">Resources</h4>
               <ul className="space-y-2 text-gray-400 text-sm">
-                <li><a href="https://docs.chulobots.com/validators" className="hover:text-chulo-light transition-colors">Validator Guide</a></li>
-                <li><a href="https://github.com/chulobots" className="hover:text-chulo-light transition-colors">GitHub</a></li>
-                <li><a href="https://medium.com/chulobots" className="hover:text-chulo-light transition-colors">Blog</a></li>
-                <li><a href="#" className="hover:text-chulo-light transition-colors">Whitepaper</a></li>
+                <li>
+                  <a
+                    href="https://docs.chulobots.com/validators"
+                    className="hover:text-chulo-light transition-colors"
+                  >
+                    Validator Guide
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://github.com/chulobots"
+                    className="hover:text-chulo-light transition-colors"
+                  >
+                    GitHub
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://medium.com/chulobots"
+                    className="hover:text-chulo-light transition-colors"
+                  >
+                    Blog
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-chulo-light transition-colors">
+                    Whitepaper
+                  </a>
+                </li>
               </ul>
             </div>
 
@@ -205,10 +256,38 @@ export default function ValidatorsPage() {
             <div>
               <h4 className="font-bold text-white mb-4">Community</h4>
               <ul className="space-y-2 text-gray-400 text-sm">
-                <li><a href="https://discord.gg/chulobots" className="hover:text-chulo-light transition-colors">Discord</a></li>
-                <li><a href="https://twitter.com/chulobots" className="hover:text-chulo-light transition-colors">Twitter</a></li>
-                <li><a href="https://t.me/chulobots" className="hover:text-chulo-light transition-colors">Telegram</a></li>
-                <li><a href="https://youtube.com/chulobots" className="hover:text-chulo-light transition-colors">YouTube</a></li>
+                <li>
+                  <a
+                    href="https://discord.gg/chulobots"
+                    className="hover:text-chulo-light transition-colors"
+                  >
+                    Discord
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://twitter.com/chulobots"
+                    className="hover:text-chulo-light transition-colors"
+                  >
+                    Twitter
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://t.me/chulobots"
+                    className="hover:text-chulo-light transition-colors"
+                  >
+                    Telegram
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://youtube.com/chulobots"
+                    className="hover:text-chulo-light transition-colors"
+                  >
+                    YouTube
+                  </a>
+                </li>
               </ul>
             </div>
           </div>
@@ -216,11 +295,17 @@ export default function ValidatorsPage() {
           <div className="pt-8 border-t border-slate-800 text-center text-gray-500 text-sm">
             <p>© 2026 ChuloBots. Built on Arbitrum. Powered by Chainlink.</p>
             <p className="mt-2">
-              <a href="#" className="hover:text-chulo-light transition-colors">Terms of Service</a>
+              <a href="#" className="hover:text-chulo-light transition-colors">
+                Terms of Service
+              </a>
               {' • '}
-              <a href="#" className="hover:text-chulo-light transition-colors">Privacy Policy</a>
+              <a href="#" className="hover:text-chulo-light transition-colors">
+                Privacy Policy
+              </a>
               {' • '}
-              <a href="#" className="hover:text-chulo-light transition-colors">Risk Disclosures</a>
+              <a href="#" className="hover:text-chulo-light transition-colors">
+                Risk Disclosures
+              </a>
             </p>
           </div>
         </div>

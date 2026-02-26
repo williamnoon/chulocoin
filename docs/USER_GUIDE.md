@@ -32,22 +32,26 @@ ChuloBots is a decentralized network that validates trading signals through bloc
 ### Why Use ChuloBots?
 
 ✅ **Trust Through Decentralization**
+
 - No single point of failure
 - Validators have skin in the game (staked CHULO)
 - Consensus-based approval
 
 ✅ **Quality Assurance**
+
 - Every signal is backtested by multiple validators
 - Minimum Sharpe ratio: 1.5
 - Minimum win rate: 55%
 - Maximum drawdown: 25%
 
 ✅ **Transparency**
+
 - All validations recorded on-chain
 - View validator votes and confidence
 - Historical signal performance tracking
 
 ✅ **Automated Execution**
+
 - Approved signals can auto-execute on Hyperliquid
 - Risk management built-in
 - 24/7 monitoring
@@ -93,6 +97,7 @@ ChuloBots is a decentralized network that validates trading signals through bloc
 ### Step 1: Get CHULO Tokens
 
 **You need CHULO to:**
+
 - Pay signal submission fees (burns CHULO)
 - Access higher tiers (more signals)
 - Participate in governance
@@ -114,12 +119,14 @@ https://app.uniswap.org
 ### Step 2: Connect Your Wallet
 
 **Supported Wallets:**
+
 - MetaMask (recommended)
 - WalletConnect
 - Coinbase Wallet
 - Rainbow Wallet
 
 **Connect:**
+
 1. Visit https://app.chulobots.com
 2. Click "Connect Wallet"
 3. Select your wallet
@@ -130,14 +137,14 @@ https://app.uniswap.org
 
 Your tier determines how many signals you can submit daily:
 
-| Tier | CHULO Required | Signals/Day | Monthly Cost* |
-|------|---------------|-------------|---------------|
-| Free | 0 | 3 | $0 |
-| Basic | 100 | 10 | ~$30 |
-| Pro | 1,000 | 50 | ~$300 |
-| Elite | 10,000 | Unlimited | ~$3,000 |
+| Tier  | CHULO Required | Signals/Day | Monthly Cost\* |
+| ----- | -------------- | ----------- | -------------- |
+| Free  | 0              | 3           | $0             |
+| Basic | 100            | 10          | ~$30           |
+| Pro   | 1,000          | 50          | ~$300          |
+| Elite | 10,000         | Unlimited   | ~$3,000        |
 
-*One-time stake, not monthly cost. Unstake anytime.
+\*One-time stake, not monthly cost. Unstake anytime.
 
 ### Step 4: Submit Your First Signal
 
@@ -178,6 +185,7 @@ Your tier determines how many signals you can submit daily:
 ### Example Signal
 
 **Long BTC:**
+
 ```json
 {
   "pair": "BTC/USD",
@@ -192,6 +200,7 @@ Your tier determines how many signals you can submit daily:
 ```
 
 **Expected:**
+
 - Entry: $50,000
 - Risk: $2,000 (4%)
 - Reward: $5,000 (10%)
@@ -201,27 +210,32 @@ Your tier determines how many signals you can submit daily:
 ### What Makes a Good Signal?
 
 ✅ **Clear Risk Management**
+
 - Stop loss must be set
 - Risk per trade: 1-5% of portfolio
 - Risk/reward ratio: >2:1
 
 ✅ **Realistic Entry Price**
+
 - Within ±0.5% of current market price
 - Validators check against Chainlink oracle
 - Signals with stale prices will be rejected
 
 ✅ **Backtested Strategy**
+
 - Use a proven strategy (EMA, RSI, etc.)
 - Historical win rate >55%
 - Sharpe ratio >1.5
 - Max drawdown <25%
 
 ✅ **Appropriate Leverage**
+
 - 1x-3x for conservative strategies
 - 3x-5x for moderate strategies
 - 5x-10x for aggressive strategies (higher rejection risk)
 
 ❌ **Avoid:**
+
 - Extremely high leverage (>10x)
 - Unrealistic take profits
 - No stop loss
@@ -236,16 +250,19 @@ Your tier determines how many signals you can submit daily:
 Validators check your signal against these thresholds:
 
 **Quality Metrics:**
+
 - **Sharpe Ratio:** ≥1.5 (risk-adjusted return)
 - **Win Rate:** ≥55% (backtested)
 - **Max Drawdown:** ≤25% (worst loss period)
 - **Quality Score:** ≥70/100 (composite score)
 
 **Price Verification:**
+
 - Entry price must match Chainlink oracle ±0.5%
 - Prevents stale or manipulated prices
 
 **Consensus:**
+
 - ≥66% of validators must approve
 - Each validator independently backtests
 - Majority vote determines outcome
@@ -266,6 +283,7 @@ Submit Signal → 0:00
 ### Reading Validation Results
 
 **Approved Signal:**
+
 ```
 ✅ Signal Approved
 ├─ Validators: 15 approve, 3 reject (83% consensus)
@@ -276,6 +294,7 @@ Submit Signal → 0:00
 ```
 
 **Rejected Signal:**
+
 ```
 ❌ Signal Rejected
 ├─ Validators: 4 approve, 14 reject (22% consensus)
@@ -295,23 +314,25 @@ Submit Signal → 0:00
 
 Fees are paid in CHULO and **burned** (removed from supply):
 
-| Tier | Fee per Signal | Daily Cost* |
-|------|---------------|-------------|
-| Free | 10 CHULO (~$3) | $9 (3 signals) |
+| Tier  | Fee per Signal   | Daily Cost\*     |
+| ----- | ---------------- | ---------------- |
+| Free  | 10 CHULO (~$3)   | $9 (3 signals)   |
 | Basic | 8 CHULO (~$2.40) | $24 (10 signals) |
-| Pro | 5 CHULO (~$1.50) | $75 (50 signals) |
-| Elite | 3 CHULO (~$0.90) | Unlimited |
+| Pro   | 5 CHULO (~$1.50) | $75 (50 signals) |
+| Elite | 3 CHULO (~$0.90) | Unlimited        |
 
-*At $0.30/CHULO, assumes max daily signals
+\*At $0.30/CHULO, assumes max daily signals
 
 ### Refund Policy
 
 **If signal is rejected:**
+
 - Refund: 50% of submission fee
 - Example: 10 CHULO fee → 5 CHULO refund
 - Remaining 5 CHULO burned (pays validators)
 
 **If signal is approved:**
+
 - No refund (fee burned)
 - Signal published to network
 - You can execute the signal
@@ -320,14 +341,15 @@ Fees are paid in CHULO and **burned** (removed from supply):
 
 **vs Traditional Signal Services:**
 
-| Service | Monthly Cost | Signals/Month |
-|---------|-------------|---------------|
-| **ChuloBots Pro** | ~$75 | 1,500 (50/day) |
-| Traditional 1 | $99 | ~30 |
-| Traditional 2 | $199 | Unlimited (low quality) |
-| Traditional 3 | $299 | ~100 |
+| Service           | Monthly Cost | Signals/Month           |
+| ----------------- | ------------ | ----------------------- |
+| **ChuloBots Pro** | ~$75         | 1,500 (50/day)          |
+| Traditional 1     | $99          | ~30                     |
+| Traditional 2     | $199         | Unlimited (low quality) |
+| Traditional 3     | $299         | ~100                    |
 
 **ChuloBots advantages:**
+
 - Pay per signal (more flexible)
 - Decentralized validation (higher quality)
 - On-chain transparency
@@ -353,6 +375,7 @@ Quality Score =
 ```
 
 **Example:**
+
 - Sharpe: 1.8 → 45/25 points (capped at 25)
 - Win Rate: 62% → 18.6/30 points
 - R:R: 2.5:1 → 16.7/20 points
@@ -389,7 +412,7 @@ Quality Score =
    - 1x-3x: Best approval rates
    - 3x-5x: Good approval rates
    - 5x-10x: Moderate approval rates
-   - >10x: Low approval rates (high risk)
+   - > 10x: Low approval rates (high risk)
 
 ---
 
@@ -398,26 +421,31 @@ Quality Score =
 ### For Maximum Success
 
 **1. Start with Free Tier**
+
 - Test the platform with 3 free signals/day
 - Learn what gets approved
 - Understand validator criteria
 
 **2. Focus on Quality Over Quantity**
+
 - 1 high-quality signal > 10 low-quality signals
 - Approved signals save you money (no refund loss)
 - Build reputation for future governance
 
 **3. Use Signal Analytics**
+
 - Review why signals were rejected
 - Learn from high-scoring signals
 - Iterate and improve
 
 **4. Join the Community**
+
 - Discord: Share strategies, learn from others
 - Forums: Discuss validation criteria
 - Twitter: Follow network updates
 
 **5. Auto-Execute Wisely**
+
 - Start with small position sizes
 - Test manual execution first
 - Set portfolio limits
@@ -426,22 +454,27 @@ Quality Score =
 ### Common Mistakes to Avoid
 
 ❌ **Mistake 1: Submitting too quickly**
+
 - Wait for clear setups
 - Don't FOMO into trades
 
 ❌ **Mistake 2: Ignoring rejection reasons**
+
 - Learn from rejections
 - Adjust strategy parameters
 
 ❌ **Mistake 3: Using maximum leverage**
+
 - High leverage = high rejection rate
 - Validators prefer conservative signals
 
 ❌ **Mistake 4: No stop loss**
+
 - Always set a stop loss
 - Signals without SL are auto-rejected
 
 ❌ **Mistake 5: Chasing pumps**
+
 - Validators check price staleness
 - Entering late = rejection
 
@@ -452,6 +485,7 @@ Quality Score =
 ### How do I know if my signal is good?
 
 **Before submitting, ask:**
+
 1. Have I backtested this strategy? (Win rate >55%?)
 2. Is my risk/reward ratio >2:1?
 3. Is my entry price current (within ±0.5% of market)?
@@ -463,11 +497,13 @@ If yes to all → High approval chance ✅
 ### What if my signal gets rejected?
 
 **You'll receive:**
+
 - 50% refund (5 CHULO back from 10 CHULO fee)
 - Detailed rejection reasons
 - Validator vote breakdown
 
 **Next steps:**
+
 - Review rejection reasons
 - Adjust strategy parameters
 - Resubmit improved signal
@@ -475,11 +511,13 @@ If yes to all → High approval chance ✅
 ### Can I submit the same signal multiple times?
 
 **Yes, but:**
+
 - Each submission costs a fee
 - If rejected, adjust before resubmitting
 - Validators may reject repeated identical signals
 
 **Better approach:**
+
 - Wait for rejection reasons
 - Modify entry/SL/TP based on feedback
 - Resubmit improved version
@@ -487,17 +525,20 @@ If yes to all → High approval chance ✅
 ### How long does validation take?
 
 **Typical timeline:**
+
 - Minimum: 2 minutes
 - Average: 3-5 minutes
 - Maximum: 10 minutes (if validators are slow)
 
 **If taking >10 minutes:**
+
 - Check validator network status
 - Your signal may be edge case (borderline quality)
 
 ### Can I cancel a submitted signal?
 
 **No**, once submitted:
+
 - Signal is broadcast to validators
 - Validation begins immediately
 - Cannot cancel
@@ -507,6 +548,7 @@ If yes to all → High approval chance ✅
 ### What happens to approved signals?
 
 **Approved signals are:**
+
 1. Published to ChuloBots network
 2. Visible to all users
 3. Available for auto-execution
@@ -514,6 +556,7 @@ If yes to all → High approval chance ✅
 5. Tracked for performance
 
 **You can:**
+
 - Execute manually
 - Enable auto-execution
 - Share with others
@@ -522,6 +565,7 @@ If yes to all → High approval chance ✅
 ### Can I see other users' signals?
 
 **Yes!**
+
 - View all approved signals at https://app.chulobots.com/signals
 - Filter by pair, strategy, time
 - See validation scores and votes
@@ -532,6 +576,7 @@ If yes to all → High approval chance ✅
 **No**, signal submission ≠ execution
 
 **Your options:**
+
 1. **Manual Execution:** Execute on your own exchange
 2. **Auto-Execution:** Connect API, enable auto-trade
 3. **Share Only:** Publish signal, let others execute
@@ -542,12 +587,14 @@ If yes to all → High approval chance ✅
 ## SUPPORT
 
 **Need help?**
+
 - Discord: https://discord.gg/chulobots #user-support
 - Email: support@chulobots.com
 - Docs: https://docs.chulobots.com
 - Twitter: @chulobots
 
 **Report issues:**
+
 - GitHub: https://github.com/chulobots/chulobots/issues
 - Support ticket: https://app.chulobots.com/support
 
@@ -556,6 +603,7 @@ If yes to all → High approval chance ✅
 ## QUICK REFERENCE
 
 **Submit a Signal:**
+
 1. Connect wallet (Arbitrum network)
 2. Go to app.chulobots.com/submit
 3. Fill in: pair, direction, entry, SL, TP, leverage
@@ -564,6 +612,7 @@ If yes to all → High approval chance ✅
 6. Receive result + validator breakdown
 
 **Quality Thresholds:**
+
 - Sharpe ratio: ≥1.5
 - Win rate: ≥55%
 - Max drawdown: ≤25%
@@ -572,6 +621,7 @@ If yes to all → High approval chance ✅
 - Consensus: ≥66%
 
 **Fees:**
+
 - Free tier: 10 CHULO/signal
 - Basic: 8 CHULO/signal
 - Pro: 5 CHULO/signal

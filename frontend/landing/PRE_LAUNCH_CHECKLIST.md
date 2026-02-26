@@ -18,6 +18,7 @@
 ## Pre-Deployment Testing
 
 ### Local Testing
+
 - [ ] Run `npm install` successfully
 - [ ] Run `npm run dev` without errors
 - [ ] Visit http://localhost:3000 - page loads
@@ -26,6 +27,7 @@
 - [ ] Run `npm start` - production build works
 
 ### Main Landing Page (`/`)
+
 - [ ] Navigation bar displays correctly
 - [ ] All nav links work (How It Works, Pricing, Validators, Docs)
 - [ ] Hero section displays
@@ -38,6 +40,7 @@
 - [ ] External links open in new tabs
 
 ### Validator Recruitment Page (`/validators`)
+
 - [ ] Navigation bar displays
 - [ ] Hero terminal animation works
 - [ ] Terminal numbers update dynamically
@@ -65,6 +68,7 @@
 - [ ] Footer displays
 
 ### Mobile Testing
+
 - [ ] Test on mobile device or Chrome DevTools
 - [ ] Navigation works on mobile
 - [ ] Hero displays correctly
@@ -75,6 +79,7 @@
 - [ ] No horizontal scrolling
 
 ### Cross-Browser Testing
+
 - [ ] Chrome/Edge (Chromium)
 - [ ] Firefox
 - [ ] Safari
@@ -82,6 +87,7 @@
 - [ ] Mobile Chrome (Android)
 
 ### Performance Testing
+
 - [ ] Lighthouse score > 90
 - [ ] First Contentful Paint < 1.5s
 - [ ] Time to Interactive < 3s
@@ -94,6 +100,7 @@
 ## Content Review
 
 ### Accuracy Check
+
 - [ ] CHULO price ($0.30) is correct or adjustable
 - [ ] Validator count (87) is current
 - [ ] Total staked ($4.2M) is current
@@ -104,6 +111,7 @@
 - [ ] VPS pricing is current
 
 ### Links Review
+
 - [ ] Discord link: discord.gg/chulobots
 - [ ] Docs link: docs.chulobots.com
 - [ ] GitHub link: github.com/chulobots
@@ -113,6 +121,7 @@
 - [ ] All external links have `rel="noopener noreferrer"`
 
 ### Copy Review
+
 - [ ] No spelling errors
 - [ ] No grammatical errors
 - [ ] Consistent terminology
@@ -125,18 +134,21 @@
 ## SEO & Metadata
 
 ### Main Page
+
 - [ ] Title tag set
 - [ ] Meta description set
 - [ ] Keywords set
 - [ ] Open Graph image (optional)
 
 ### Validator Page
+
 - [ ] Title: "Become a ChuloBots Validator | Earn Up to $4,275/month"
 - [ ] Meta description set
 - [ ] Keywords include validator-related terms
 - [ ] Open Graph tags (optional)
 
 ### Technical SEO
+
 - [ ] Semantic HTML (proper heading hierarchy)
 - [ ] Alt text for images (if any added)
 - [ ] Proper URL structure
@@ -149,16 +161,19 @@
 ## Deployment Preparation
 
 ### Vercel Setup
+
 - [ ] Vercel account created
 - [ ] Vercel CLI installed (`npm install -g vercel`)
 - [ ] Logged into Vercel (`vercel login`)
 
 ### Environment Variables (if needed)
+
 - [ ] No sensitive data in code
 - [ ] Environment variables documented
 - [ ] .env.example file exists
 
 ### Git Repository
+
 - [ ] Code committed to Git
 - [ ] Repository pushed to GitHub (optional)
 - [ ] Clean working directory
@@ -168,18 +183,21 @@
 ## Deployment Steps
 
 ### Pre-Deploy
+
 1. [ ] Final build test: `npm run build`
 2. [ ] Review build output for errors
 3. [ ] Check bundle sizes are reasonable
 4. [ ] Commit all changes
 
 ### Deploy to Vercel
+
 1. [ ] Navigate to project: `cd frontend/landing`
 2. [ ] Deploy: `vercel deploy --prod`
 3. [ ] Wait for deployment to complete
 4. [ ] Note deployment URL
 
 ### Post-Deploy Verification
+
 - [ ] Visit production URL
 - [ ] Test main page loads
 - [ ] Test validator page loads
@@ -206,12 +224,14 @@
 ## Analytics & Monitoring
 
 ### Analytics Setup (Optional)
+
 - [ ] Vercel Analytics enabled
 - [ ] Google Analytics installed (optional)
 - [ ] Event tracking configured (optional)
 - [ ] Conversion goals set (optional)
 
 ### Monitoring
+
 - [ ] Vercel deployment notifications enabled
 - [ ] Error tracking set up (optional)
 - [ ] Uptime monitoring (optional)
@@ -221,18 +241,21 @@
 ## Marketing Preparation
 
 ### Content Marketing
+
 - [ ] Social media posts prepared
 - [ ] Discord announcement ready
 - [ ] Tweet/thread prepared
 - [ ] Email newsletter draft (if applicable)
 
 ### Community Engagement
+
 - [ ] Discord #validator-support channel ready
 - [ ] FAQ responses prepared
 - [ ] Support team briefed
 - [ ] Validator onboarding process ready
 
 ### Assets Ready
+
 - [ ] Screenshots for social sharing
 - [ ] Demo video (optional)
 - [ ] Validator recruitment materials
@@ -243,12 +266,14 @@
 ## Launch Day Checklist
 
 ### Hour Before Launch
+
 - [ ] Final deployment to production
 - [ ] Test all critical paths
 - [ ] Clear Vercel cache if needed
 - [ ] Team ready for support
 
 ### Launch
+
 - [ ] Announce in Discord
 - [ ] Post on Twitter
 - [ ] Update main site links
@@ -256,6 +281,7 @@
 - [ ] Monitor for issues
 
 ### First Hour
+
 - [ ] Watch Vercel logs for errors
 - [ ] Check analytics for traffic
 - [ ] Respond to questions in Discord
@@ -263,6 +289,7 @@
 - [ ] Monitor server load
 
 ### First Day
+
 - [ ] Track conversion metrics
 - [ ] Gather user feedback
 - [ ] Note any bugs or issues
@@ -274,6 +301,7 @@
 ## Success Metrics (Track After Launch)
 
 ### Quantitative
+
 - [ ] Page views on /validators
 - [ ] Time on page
 - [ ] Bounce rate
@@ -283,6 +311,7 @@
 - [ ] Conversion rate (visitors → validators)
 
 ### Qualitative
+
 - [ ] User feedback in Discord
 - [ ] Questions asked in FAQ channel
 - [ ] Testimonials from new validators
@@ -294,6 +323,7 @@
 ## Post-Launch Improvements
 
 ### Quick Wins (First Week)
+
 - [ ] Fix any reported bugs
 - [ ] Adjust copy based on feedback
 - [ ] Update calculator defaults if needed
@@ -301,6 +331,7 @@
 - [ ] Improve mobile experience if needed
 
 ### Medium Term (First Month)
+
 - [ ] Add real validator testimonials
 - [ ] Create video tutorials
 - [ ] Build validator leaderboard
@@ -308,6 +339,7 @@
 - [ ] A/B test CTAs
 
 ### Long Term (3+ Months)
+
 - [ ] Multi-language support
 - [ ] Advanced calculator features
 - [ ] Community showcase page
@@ -328,6 +360,7 @@
 ## Rollback Plan
 
 If major issues occur:
+
 1. [ ] Go to Vercel dashboard
 2. [ ] Find previous deployment
 3. [ ] Click "Promote to Production"

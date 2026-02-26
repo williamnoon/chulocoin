@@ -149,15 +149,12 @@ class ValidatorNode {
       this.provider
     );
 
-    const [stakedAmount, , , isActive] =
-      await stakingContract.getValidator(this.wallet.address);
+    const [stakedAmount, , , isActive] = await stakingContract.getValidator(this.wallet.address);
 
     const stakeAmount = ethers.formatEther(stakedAmount);
 
     if (!isActive) {
-      throw new Error(
-        `❌ Not an active validator! Please stake CHULO at app.chulobots.com/stake`
-      );
+      throw new Error(`❌ Not an active validator! Please stake CHULO at app.chulobots.com/stake`);
     }
 
     this.logger.info(`✅ Staked: ${stakeAmount} CHULO`);
@@ -194,9 +191,7 @@ class ValidatorNode {
 
       // 2. Determine vote
       const vote = this.determineVote(backtestResult, signal);
-      this.logger.info(
-        `🗳️  Vote decision: ${vote} (Sharpe: ${backtestResult.sharpe.toFixed(2)})`
-      );
+      this.logger.info(`🗳️  Vote decision: ${vote} (Sharpe: ${backtestResult.sharpe.toFixed(2)})`);
 
       // 3. Submit vote on-chain
       this.logger.info(`📝 Submitting vote for signal #${signal.id}...`);
@@ -238,31 +233,22 @@ class ValidatorNode {
     }
   }
 
-  private determineVote(
-    backtestResult: any,
-    signal: Signal
-  ): 'APPROVE' | 'REJECT' {
+  private determineVote(backtestResult: any, signal: Signal): 'APPROVE' | 'REJECT' {
     const { validation } = this.config;
 
     // Check all criteria
     if (backtestResult.sharpe < validation.minSharpe) {
-      this.logger.debug(
-        `Reject: Sharpe ${backtestResult.sharpe} < ${validation.minSharpe}`
-      );
+      this.logger.debug(`Reject: Sharpe ${backtestResult.sharpe} < ${validation.minSharpe}`);
       return 'REJECT';
     }
 
     if (backtestResult.winRate < validation.minWinRate) {
-      this.logger.debug(
-        `Reject: Win rate ${backtestResult.winRate} < ${validation.minWinRate}`
-      );
+      this.logger.debug(`Reject: Win rate ${backtestResult.winRate} < ${validation.minWinRate}`);
       return 'REJECT';
     }
 
     if (backtestResult.maxDrawdown > validation.maxDrawdown) {
-      this.logger.debug(
-        `Reject: Max DD ${backtestResult.maxDrawdown} > ${validation.maxDrawdown}`
-      );
+      this.logger.debug(`Reject: Max DD ${backtestResult.maxDrawdown} > ${validation.maxDrawdown}`);
       return 'REJECT';
     }
 
@@ -303,18 +289,24 @@ class ValidatorNode {
     );
 
     // Health check every 5 minutes
-    setInterval(async () => {
-      const healthStatus = await this.health.check();
-      if (!healthStatus.healthy) {
-        this.logger.error('⚠️  Health check failed:', healthStatus);
-        this.metrics.incrementCounter('health_check_failures_total');
-      }
-    }, 5 * 60 * 1000);
+    setInterval(
+      async () => {
+        const healthStatus = await this.health.check();
+        if (!healthStatus.healthy) {
+          this.logger.error('⚠️  Health check failed:', healthStatus);
+          this.metrics.incrementCounter('health_check_failures_total');
+        }
+      },
+      5 * 60 * 1000
+    );
 
     // Metrics cleanup every hour
-    setInterval(() => {
-      this.metrics.cleanup();
-    }, 60 * 60 * 1000);
+    setInterval(
+      () => {
+        this.metrics.cleanup();
+      },
+      60 * 60 * 1000
+    );
   }
 
   private setupMiddleware() {
@@ -489,7 +481,7 @@ process.on('SIGINT', async () => {
 });
 
 // Start validator
-validator.start().catch((error) => {
+validator.start().catch(error => {
   console.error('Fatal error:', error);
   process.exit(1);
 });

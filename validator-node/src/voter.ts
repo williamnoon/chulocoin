@@ -71,8 +71,7 @@ export class ConsensusVoter {
     const approveRatio = totalCount > 0 ? approveCount / totalCount : 0;
     const rejectRatio = totalCount > 0 ? rejectCount / totalCount : 0;
 
-    const reached =
-      approveRatio >= consensusThreshold || rejectRatio >= consensusThreshold;
+    const reached = approveRatio >= consensusThreshold || rejectRatio >= consensusThreshold;
     const approved = approveRatio >= consensusThreshold;
 
     return {
