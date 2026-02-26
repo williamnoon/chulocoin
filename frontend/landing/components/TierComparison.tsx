@@ -1,65 +1,90 @@
+// Subscription tiers from TierSubscription.sol contract
+// All prices burn CHULO tokens (deflationary)
 const tiers = [
   {
-    name: 'Observer',
+    name: 'Free',
     chulo: '0',
     price: 'Free',
-    maxPositions: '0 (View Only)',
-    gasPerDay: 'N/A',
-    signalQuality: '24hr Delayed',
-    features: ['25 signals/day', 'Mining enabled', 'Learn the system'],
-    highlight: false,
-  },
-  {
-    name: 'Bronze',
-    chulo: '1,000',
-    price: '$50',
+    monthly: '$0',
+    quarterly: null,
+    maxBots: '0',
     maxPositions: '1',
-    gasPerDay: '10 CHULO',
-    signalQuality: '>70% confidence',
-    features: ['Real-time signals', 'Auto-execution', 'Basic strategies'],
+    maxSize: '$100',
+    signalDelay: '24hr Delayed',
+    strategies: 'None',
+    features: ['1 position max', '$100 max size', '24-hour delayed signals', 'Community support'],
     highlight: false,
   },
   {
-    name: 'Silver',
-    chulo: '5,000',
-    price: '$250',
+    name: 'Observer',
+    chulo: '1,000',
+    price: '$10/mo',
+    monthly: '$10 (1,000 CHULO)',
+    quarterly: '$28.50 (2,850 CHULO) - Save 5%',
+    maxBots: '1',
     maxPositions: '3',
-    gasPerDay: '5 CHULO',
-    signalQuality: '>75% confidence',
-    features: ['Premium signals', 'Multi-position', 'Advanced strategies'],
+    maxSize: '$500',
+    signalDelay: 'Real-time',
+    strategies: 'Basic',
+    features: ['1 trading bot', '3 active positions', 'Real-time signals', 'Basic strategies', '100 monthly credits'],
     highlight: false,
   },
   {
-    name: 'Gold',
-    chulo: '25,000',
-    price: '$1,250',
-    maxPositions: '5',
-    gasPerDay: '2 CHULO',
-    signalQuality: '>80% confidence',
-    features: ['Top-tier signals', 'Priority execution', 'All strategies'],
+    name: 'Junior Quant',
+    chulo: '3,000',
+    price: '$30/mo',
+    monthly: '$30 (3,000 CHULO)',
+    quarterly: '$81 (8,100 CHULO) - Save 10%',
+    maxBots: '3',
+    maxPositions: '10',
+    maxSize: '$2,500',
+    signalDelay: 'Real-time',
+    strategies: 'Intermediate',
+    features: ['3 trading bots', '10 active positions', 'Intermediate strategies', '500 monthly credits', 'Priority support'],
     highlight: true,
   },
   {
-    name: 'Diamond',
-    chulo: '100,000',
-    price: '$5,000',
-    maxPositions: 'Unlimited',
-    gasPerDay: '1 CHULO',
-    signalQuality: '>85% confidence',
-    features: ['Elite signals', 'Instant execution', 'Custom strategies'],
+    name: 'Senior Quant',
+    chulo: '9,000',
+    price: '$90/mo',
+    monthly: '$90 (9,000 CHULO)',
+    quarterly: '$216 (21,600 CHULO) - Save 20%',
+    maxBots: '10',
+    maxPositions: '50',
+    maxSize: '$10,000',
+    signalDelay: 'Real-time',
+    strategies: 'Advanced',
+    features: ['10 trading bots', '50 active positions', 'Advanced strategies', '2,000 monthly credits', 'Advanced analytics'],
+    highlight: false,
+  },
+  {
+    name: 'Sage',
+    chulo: '25,000',
+    price: '$250/mo',
+    monthly: '$250 (25,000 CHULO)',
+    quarterly: '$450 (45,000 CHULO) - Save 40%',
+    maxBots: '50',
+    maxPositions: '200',
+    maxSize: '$100,000',
+    signalDelay: 'Real-time',
+    strategies: 'All + Custom',
+    features: ['50 trading bots', '200 active positions', 'All strategies + custom', '10,000 monthly credits', 'Premium 24/7 support', 'API access'],
     highlight: false,
   },
 ];
 
 export default function TierComparison() {
   return (
-    <section id="pricing" className="w-full py-20 bg-slate-50">
+    <section id="pricing" className="w-full py-20 bg-slate-900">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">Choose Your Tier</h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Hold CHULO tokens to unlock higher tiers with better signals and lower gas costs
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white">Subscription Plans</h2>
+          <p className="text-xl text-gray-400 max-w-2xl mx-auto mb-4">
+            Subscribe monthly or save up to 40% with quarterly plans
           </p>
+          <div className="inline-flex items-center px-4 py-2 bg-yellow-500/20 border border-yellow-500/40 rounded-lg text-yellow-300 text-sm">
+            🔥 All subscriptions burn CHULO - deflationary tokenomics
+          </div>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-6 max-w-7xl mx-auto">
@@ -68,9 +93,9 @@ export default function TierComparison() {
               key={tier.name}
               className={`relative rounded-xl p-6 ${
                 tier.highlight
-                  ? 'bg-gradient-to-b from-chulo to-chulo-dark text-white shadow-2xl scale-105'
-                  : 'bg-white shadow-lg'
-              }`}
+                  ? 'bg-gradient-to-br from-chulo/20 to-green-600/20 border-2 border-chulo shadow-2xl'
+                  : 'bg-slate-800 border-2 border-slate-700 hover:border-slate-600'
+              } transition-all duration-300 hover:scale-105`}
             >
               {tier.highlight && (
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-yellow-400 text-slate-900 text-sm font-bold rounded-full">
@@ -79,31 +104,35 @@ export default function TierComparison() {
               )}
 
               <div className="text-center mb-6">
-                <h3 className="text-2xl font-bold mb-2">{tier.name}</h3>
-                <div className="text-3xl font-bold mb-1">{tier.price}</div>
-                <div className={`text-sm ${tier.highlight ? 'text-white/80' : 'text-gray-500'}`}>
+                <h3 className="text-2xl font-bold mb-2 text-white">{tier.name}</h3>
+                <div className="text-3xl font-bold mb-1 text-chulo-light">{tier.price}</div>
+                <div className="text-sm text-gray-400 font-mono">
                   {tier.chulo} CHULO
                 </div>
+                {tier.quarterly && (
+                  <div className="mt-3 p-2 bg-slate-900/50 rounded-lg border border-slate-700">
+                    <div className="text-xs text-gray-400">Quarterly Plan</div>
+                    <div className="text-sm font-bold text-green-400">{tier.quarterly}</div>
+                  </div>
+                )}
               </div>
 
-              <div className="space-y-3 mb-6">
+              <div className="space-y-3 mb-6 pb-6 border-b border-slate-700">
                 <div className="flex justify-between text-sm">
-                  <span className={tier.highlight ? 'text-white/80' : 'text-gray-600'}>
-                    Max Positions
-                  </span>
-                  <span className="font-semibold">{tier.maxPositions}</span>
+                  <span className="text-gray-400">Trading Bots</span>
+                  <span className="font-semibold text-chulo-light font-mono">{tier.maxBots}</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className={tier.highlight ? 'text-white/80' : 'text-gray-600'}>
-                    Gas/Day
-                  </span>
-                  <span className="font-semibold">{tier.gasPerDay}</span>
+                  <span className="text-gray-400">Max Positions</span>
+                  <span className="font-semibold text-chulo-light font-mono">{tier.maxPositions}</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className={tier.highlight ? 'text-white/80' : 'text-gray-600'}>
-                    Signal Quality
-                  </span>
-                  <span className="font-semibold">{tier.signalQuality}</span>
+                  <span className="text-gray-400">Position Size</span>
+                  <span className="font-semibold text-chulo-light font-mono">{tier.maxSize}</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span className="text-gray-400">Signal Delay</span>
+                  <span className="font-semibold text-chulo-light font-mono">{tier.signalDelay}</span>
                 </div>
               </div>
 
@@ -112,7 +141,7 @@ export default function TierComparison() {
                   <li key={feature} className="flex items-start text-sm">
                     <svg
                       className={`w-5 h-5 mr-2 flex-shrink-0 ${
-                        tier.highlight ? 'text-white' : 'text-chulo'
+                        tier.highlight ? 'text-chulo-light' : 'text-chulo'
                       }`}
                       fill="currentColor"
                       viewBox="0 0 20 20"
@@ -123,22 +152,36 @@ export default function TierComparison() {
                         clipRule="evenodd"
                       />
                     </svg>
-                    {feature}
+                    <span className="text-gray-300">{feature}</span>
                   </li>
                 ))}
               </ul>
 
               <button
-                className={`w-full py-3 rounded-lg font-semibold transition-colors duration-200 ${
+                className={`w-full py-3 rounded-lg font-semibold transition-all duration-200 ${
                   tier.highlight
-                    ? 'bg-white text-chulo hover:bg-gray-100'
-                    : 'bg-slate-900 text-white hover:bg-slate-800'
+                    ? 'bg-chulo hover:bg-chulo-dark text-black shadow-lg hover:shadow-xl'
+                    : tier.name === 'Free'
+                    ? 'bg-slate-700 hover:bg-slate-600 text-white'
+                    : 'bg-slate-700 hover:bg-slate-600 text-white'
                 }`}
               >
-                Get Started
+                {tier.name === 'Free' ? 'Get Started' : 'Subscribe'}
               </button>
             </div>
           ))}
+        </div>
+
+        {/* Tokenomics Note */}
+        <div className="mt-16 max-w-4xl mx-auto p-6 bg-gradient-to-r from-chulo/10 to-green-600/10 border-2 border-chulo/30 rounded-lg">
+          <h3 className="text-xl font-bold text-white mb-3 flex items-center">
+            <span className="text-2xl mr-2">🔥</span>
+            Deflationary Tokenomics
+          </h3>
+          <p className="text-gray-300 leading-relaxed">
+            All subscription payments <strong className="text-chulo-light">burn CHULO tokens permanently</strong>, reducing the circulating supply from the 100M max supply.
+            This creates deflationary pressure, potentially increasing token value over time. Quarterly subscriptions offer up to 40% savings!
+          </p>
         </div>
       </div>
     </section>
