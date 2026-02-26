@@ -62,9 +62,7 @@ export default function Benefits() {
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
               Why Become a Validator?
             </h2>
-            <p className="text-xl text-gray-400">
-              More than just passive income
-            </p>
+            <p className="text-xl text-gray-400">More than just passive income</p>
           </div>
 
           {/* Benefits Grid */}

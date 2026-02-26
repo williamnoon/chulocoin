@@ -5,10 +5,7 @@ export default function GettingStarted() {
       title: 'Get CHULO',
       time: '1 hour',
       description: 'Buy 50,000 CHULO (~$15,000)',
-      substeps: [
-        'Option A: Buy from ChuloBots',
-        'Option B: Swap on Uniswap (Arbitrum)',
-      ],
+      substeps: ['Option A: Buy from ChuloBots', 'Option B: Swap on Uniswap (Arbitrum)'],
     },
     {
       number: '2',
@@ -67,9 +64,7 @@ export default function GettingStarted() {
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
               Getting Started Guide
             </h2>
-            <p className="text-xl text-gray-400 mb-6">
-              Launch your validator in 5 simple steps
-            </p>
+            <p className="text-xl text-gray-400 mb-6">Launch your validator in 5 simple steps</p>
             <div className="inline-block px-6 py-3 bg-chulo/20 border-2 border-chulo/40 rounded-lg">
               <div className="text-sm text-gray-400">Total Time</div>
               <div className="text-3xl font-bold text-chulo-light font-mono">~1.5 hours</div>

@@ -26,10 +26,13 @@ export default function ValidatorHero() {
     <section className="w-full bg-gradient-to-b from-slate-950 via-slate-900 to-slate-800 text-white relative overflow-hidden">
       {/* Matrix-style background effect */}
       <div className="absolute inset-0 opacity-5">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='10' y='40' font-family='monospace' font-size='40' fill='%2322c55e'%3E0%3C/text%3E%3C/svg%3E")`,
-          backgroundSize: '60px 60px',
-        }}></div>
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='10' y='40' font-family='monospace' font-size='40' fill='%2322c55e'%3E0%3C/text%3E%3C/svg%3E")`,
+            backgroundSize: '60px 60px',
+          }}
+        ></div>
       </div>
 
       <div className="container mx-auto px-4 py-16 md:py-24 relative z-10">
@@ -55,8 +58,8 @@ export default function ValidatorHero() {
               </p>
 
               <p className="text-lg text-gray-300 mb-8">
-                Stake 1,000-100,000 CHULO, verify trading signals, and earn rewards 24/7.
-                No coding required. Set up in 5 minutes.
+                Stake 1,000-100,000 CHULO, verify trading signals, and earn rewards 24/7. No coding
+                required. Set up in 5 minutes.
               </p>
 
               {/* CTA Buttons */}
@@ -94,7 +97,9 @@ export default function ValidatorHero() {
                     <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
                     <div className="w-3 h-3 rounded-full bg-green-500"></div>
                   </div>
-                  <span className="ml-4 text-xs font-mono text-gray-400">validator-node@chulobots</span>
+                  <span className="ml-4 text-xs font-mono text-gray-400">
+                    validator-node@chulobots
+                  </span>
                 </div>
 
                 {/* Terminal Content */}
@@ -110,13 +115,16 @@ export default function ValidatorHero() {
 
                   <div className="pl-4 space-y-2">
                     <div className="text-green-400">
-                      <span className="text-gray-500">→</span> Uptime: <span className="font-bold">99.8%</span>
+                      <span className="text-gray-500">→</span> Uptime:{' '}
+                      <span className="font-bold">99.8%</span>
                     </div>
                     <div className="text-green-400">
-                      <span className="text-gray-500">→</span> Stake: <span className="font-bold">50,000 CHULO</span>
+                      <span className="text-gray-500">→</span> Stake:{' '}
+                      <span className="font-bold">50,000 CHULO</span>
                     </div>
                     <div className="text-green-400">
-                      <span className="text-gray-500">→</span> Reputation: <span className="font-bold">100/100</span>
+                      <span className="text-gray-500">→</span> Reputation:{' '}
+                      <span className="font-bold">100/100</span>
                     </div>
                   </div>
 
@@ -126,15 +134,21 @@ export default function ValidatorHero() {
 
                   <div className="pl-4 space-y-2">
                     <div className="flex justify-between text-yellow-400">
-                      <span><span className="text-gray-500">📊</span> Validations:</span>
+                      <span>
+                        <span className="text-gray-500">📊</span> Validations:
+                      </span>
                       <span className="font-bold">{Math.floor(stats.validations)}</span>
                     </div>
                     <div className="flex justify-between text-yellow-400">
-                      <span><span className="text-gray-500">💰</span> Earnings:</span>
+                      <span>
+                        <span className="text-gray-500">💰</span> Earnings:
+                      </span>
                       <span className="font-bold">{stats.earnings.toFixed(2)} CHULO</span>
                     </div>
                     <div className="flex justify-between text-green-400 text-lg">
-                      <span><span className="text-gray-500">💵</span> USD Value:</span>
+                      <span>
+                        <span className="text-gray-500">💵</span> USD Value:
+                      </span>
                       <span className="font-bold">${stats.usdValue.toFixed(2)}</span>
                     </div>
                   </div>

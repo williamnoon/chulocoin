@@ -65,12 +65,8 @@ export default function ValidatorTiers() {
         <div className="max-w-6xl mx-auto">
           {/* Header */}
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              Validator Tiers
-            </h2>
-            <p className="text-xl text-gray-400">
-              Choose the tier that fits your investment goals
-            </p>
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">Validator Tiers</h2>
+            <p className="text-xl text-gray-400">Choose the tier that fits your investment goals</p>
           </div>
 
           {/* Tier Cards */}
@@ -94,7 +90,9 @@ export default function ValidatorTiers() {
                 {/* Header */}
                 <div className="text-center mb-6">
                   <h3 className="text-2xl font-bold text-white mb-1">{tier.name}</h3>
-                  <div className={`text-sm ${tier.highlight ? 'text-chulo-light' : 'text-gray-400'} mb-4`}>
+                  <div
+                    className={`text-sm ${tier.highlight ? 'text-chulo-light' : 'text-gray-400'} mb-4`}
+                  >
                     {tier.subtitle}
                   </div>
 
@@ -111,7 +109,9 @@ export default function ValidatorTiers() {
                 <div className="space-y-3 mb-6 pb-6 border-b border-slate-700">
                   <div className="flex justify-between items-center">
                     <span className="text-gray-400 text-sm">Max Validations/Day</span>
-                    <span className="text-white font-semibold font-mono">{tier.validationsPerDay}</span>
+                    <span className="text-white font-semibold font-mono">
+                      {tier.validationsPerDay}
+                    </span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-gray-400 text-sm">Burn Pool Share</span>
@@ -119,7 +119,9 @@ export default function ValidatorTiers() {
                   </div>
                   <div className="flex justify-between items-center pt-2 border-t border-slate-700">
                     <span className="text-gray-400 text-sm font-semibold">Monthly Revenue*</span>
-                    <span className="text-chulo-light font-bold text-lg font-mono">{tier.monthlyRevenue}</span>
+                    <span className="text-chulo-light font-bold text-lg font-mono">
+                      {tier.monthlyRevenue}
+                    </span>
                   </div>
                 </div>
 

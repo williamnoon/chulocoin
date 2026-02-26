@@ -18,7 +18,7 @@ const tiers = [
   },
   {
     name: 'Observer',
-    quarterlyPrice: 28.50,
+    quarterlyPrice: 28.5,
     monthlyPrice: 10,
     quarterlyChulo: 2_850,
     monthlyChulo: 1_000,
@@ -29,7 +29,14 @@ const tiers = [
     maxSize: 500,
     signalDelay: 'Real-time',
     strategies: 'Basic',
-    features: ['300 credits/quarter', '1 bot', '3 positions', 'Real-time signals', 'Basic strategies', 'NFT badge'],
+    features: [
+      '300 credits/quarter',
+      '1 bot',
+      '3 positions',
+      'Real-time signals',
+      'Basic strategies',
+      'NFT badge',
+    ],
   },
   {
     name: 'Junior Quant',
@@ -44,7 +51,14 @@ const tiers = [
     maxSize: 2_500,
     signalDelay: 'Real-time',
     strategies: 'Intermediate',
-    features: ['1,500 credits/quarter', '3 bots', '10 positions', 'Intermediate strategies', 'Analytics', 'NFT badge'],
+    features: [
+      '1,500 credits/quarter',
+      '3 bots',
+      '10 positions',
+      'Intermediate strategies',
+      'Analytics',
+      'NFT badge',
+    ],
   },
   {
     name: 'Senior Quant',
@@ -59,7 +73,14 @@ const tiers = [
     maxSize: 10_000,
     signalDelay: 'Real-time',
     strategies: 'Advanced',
-    features: ['6,000 credits/quarter', '10 bots', '50 positions', 'Advanced strategies', 'API access', 'NFT badge'],
+    features: [
+      '6,000 credits/quarter',
+      '10 bots',
+      '50 positions',
+      'Advanced strategies',
+      'API access',
+      'NFT badge',
+    ],
   },
   {
     name: 'Sage',
@@ -74,7 +95,15 @@ const tiers = [
     maxSize: 100_000,
     signalDelay: 'Priority',
     strategies: 'All + Custom',
-    features: ['30,000 credits/quarter', '50 bots', '200 positions', 'All + custom strategies', 'Full API', 'White-glove support', 'NFT badge'],
+    features: [
+      '30,000 credits/quarter',
+      '50 bots',
+      '200 positions',
+      'All + custom strategies',
+      'Full API',
+      'White-glove support',
+      'NFT badge',
+    ],
   },
 ];
 
@@ -116,7 +145,7 @@ export default function Upgrade() {
 
       {/* Tiers Grid */}
       <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
-        {tiers.map((tier) => {
+        {tiers.map(tier => {
           const isPopular = tier.name === 'Junior Quant';
           const price = billingPeriod === 'quarterly' ? tier.quarterlyPrice : tier.monthlyPrice;
           const chulo = billingPeriod === 'quarterly' ? tier.quarterlyChulo : tier.monthlyChulo;
@@ -148,9 +177,7 @@ export default function Upgrade() {
                         <span className="text-sm text-orange-400 block">Save {tier.discount}%</span>
                       )}
                     </div>
-                    <div className="text-sm text-gray-400 mt-1">
-                      {chulo.toLocaleString()} CHULO
-                    </div>
+                    <div className="text-sm text-gray-400 mt-1">{chulo.toLocaleString()} CHULO</div>
                     <div className="text-xs text-gray-500">
                       {billingPeriod === 'quarterly' ? '/ quarter' : '/ month'}
                     </div>
@@ -175,7 +202,9 @@ export default function Upgrade() {
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-400">Max Size</span>
-                  <span className="font-semibold text-orange-400">${tier.maxSize.toLocaleString()}</span>
+                  <span className="font-semibold text-orange-400">
+                    ${tier.maxSize.toLocaleString()}
+                  </span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-400">Signals</span>
@@ -188,7 +217,7 @@ export default function Upgrade() {
               </div>
 
               <ul className="space-y-2 mb-6 text-sm">
-                {tier.features.map((feature) => (
+                {tier.features.map(feature => (
                   <li key={feature} className="flex items-start">
                     <svg
                       className="w-4 h-4 text-orange-400 mr-2 mt-0.5 flex-shrink-0"
@@ -211,8 +240,8 @@ export default function Upgrade() {
                   isPopular
                     ? 'bg-orange-500 hover:bg-orange-600 text-black'
                     : tier.name === 'Free'
-                    ? 'bg-slate-700 hover:bg-slate-600 text-white'
-                    : 'bg-slate-700 hover:bg-slate-600 text-white'
+                      ? 'bg-slate-700 hover:bg-slate-600 text-white'
+                      : 'bg-slate-700 hover:bg-slate-600 text-white'
                 }`}
               >
                 {tier.name === 'Free' ? 'Current Plan' : 'Subscribe'}
@@ -230,7 +259,8 @@ export default function Upgrade() {
             Deflationary Tokenomics
           </h3>
           <p className="text-gray-300 text-sm">
-            All subscription payments permanently burn CHULO tokens, reducing circulating supply. This creates deflationary pressure that can increase token value over time.
+            All subscription payments permanently burn CHULO tokens, reducing circulating supply.
+            This creates deflationary pressure that can increase token value over time.
           </p>
         </div>
 
@@ -240,7 +270,8 @@ export default function Upgrade() {
             Credits & NFT Badges
           </h3>
           <p className="text-gray-300 text-sm">
-            Each subscription grants credits for platform actions (signals, validations, positions, backtests). Credits never expire. Plus get a non-transferable NFT subscription badge!
+            Each subscription grants credits for platform actions (signals, validations, positions,
+            backtests). Credits never expire. Plus get a non-transferable NFT subscription badge!
           </p>
         </div>
       </div>

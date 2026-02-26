@@ -15,13 +15,17 @@ export default function FAQ() {
       question: 'How much can I realistically earn?',
       answer: (
         <div>
-          <p className="mb-3"><strong>Junior Quant Example (50k CHULO):</strong></p>
+          <p className="mb-3">
+            <strong>Junior Quant Example (50k CHULO):</strong>
+          </p>
           <ul className="list-disc pl-5 space-y-2 mb-3">
             <li>Conservative: $3,000-$4,000/month</li>
             <li>Average: $4,275/month</li>
             <li>Best case: $6,000+/month (if CHULO price increases)</li>
           </ul>
-          <p className="mb-2"><strong>Earnings depend on:</strong></p>
+          <p className="mb-2">
+            <strong>Earnings depend on:</strong>
+          </p>
           <ol className="list-decimal pl-5 space-y-1">
             <li>CHULO price (volatile)</li>
             <li>Network activity (# of signals validated)</li>
@@ -34,9 +38,11 @@ export default function FAQ() {
       question: 'Do I need to be technical?',
       answer: (
         <div>
-          <p className="mb-3"><strong>No!</strong> Setup is 5 minutes of copy-paste:</p>
+          <p className="mb-3">
+            <strong>No!</strong> Setup is 5 minutes of copy-paste:
+          </p>
           <pre className="bg-slate-900 p-4 rounded-lg text-sm font-mono mb-3 overflow-x-auto">
-{`wget https://chulobots.com/validator.tar.gz
+            {`wget https://chulobots.com/validator.tar.gz
 tar -xzf validator.tar.gz
 cd validator && cp .env.example .env
 nano .env  # Add your wallet
@@ -50,14 +56,26 @@ docker-compose up -d`}
       question: 'What are the risks?',
       answer: (
         <div>
-          <p className="mb-2"><strong>Main risks:</strong></p>
+          <p className="mb-2">
+            <strong>Main risks:</strong>
+          </p>
           <ol className="list-decimal pl-5 space-y-2 mb-3">
-            <li><strong>CHULO price volatility:</strong> Price could go down (or up)</li>
-            <li><strong>Slashing:</strong> Vote against majority = -1% penalty (rare)</li>
-            <li><strong>Downtime penalties:</strong> Offline &gt;24hrs = -0.5% penalty</li>
-            <li><strong>Operating costs:</strong> VPS + RPC (~$74/month)</li>
+            <li>
+              <strong>CHULO price volatility:</strong> Price could go down (or up)
+            </li>
+            <li>
+              <strong>Slashing:</strong> Vote against majority = -1% penalty (rare)
+            </li>
+            <li>
+              <strong>Downtime penalties:</strong> Offline &gt;24hrs = -0.5% penalty
+            </li>
+            <li>
+              <strong>Operating costs:</strong> VPS + RPC (~$74/month)
+            </li>
           </ol>
-          <p className="mb-2"><strong>Mitigation:</strong></p>
+          <p className="mb-2">
+            <strong>Mitigation:</strong>
+          </p>
           <ul className="list-disc pl-5 space-y-1">
             <li>Monitor your node (set up alerts)</li>
             <li>Use reliable VPS provider</li>
@@ -70,13 +88,17 @@ docker-compose up -d`}
       question: 'Can I unstake anytime?',
       answer: (
         <div>
-          <p className="mb-3"><strong>Yes, but with 7-day cooldown:</strong></p>
+          <p className="mb-3">
+            <strong>Yes, but with 7-day cooldown:</strong>
+          </p>
           <ol className="list-decimal pl-5 space-y-2 mb-3">
             <li>Initiate unstake on app.chulobots.com</li>
             <li>Wait 7 days</li>
             <li>Claim CHULO back to wallet</li>
           </ol>
-          <p className="mb-2"><strong>During cooldown:</strong></p>
+          <p className="mb-2">
+            <strong>During cooldown:</strong>
+          </p>
           <ul className="list-disc pl-5 space-y-1">
             <li>Validator inactive (no validations)</li>
             <li>No rewards earned</li>
@@ -89,9 +111,15 @@ docker-compose up -d`}
       question: 'What if my validator goes offline?',
       answer: (
         <div>
-          <p className="mb-3"><strong>Short outage (&lt;1 hour):</strong> No penalty, resume when back</p>
-          <p className="mb-3"><strong>Long outage (&gt;24 hours):</strong> -0.5% stake penalty + missed rewards</p>
-          <p className="mb-2"><strong>Best practice:</strong> Set up monitoring (Grafana dashboard included)</p>
+          <p className="mb-3">
+            <strong>Short outage (&lt;1 hour):</strong> No penalty, resume when back
+          </p>
+          <p className="mb-3">
+            <strong>Long outage (&gt;24 hours):</strong> -0.5% stake penalty + missed rewards
+          </p>
+          <p className="mb-2">
+            <strong>Best practice:</strong> Set up monitoring (Grafana dashboard included)
+          </p>
         </div>
       ),
     },
@@ -99,14 +127,20 @@ docker-compose up -d`}
       question: 'Can I run multiple validators?',
       answer: (
         <div>
-          <p className="mb-3"><strong>Yes!</strong> Many operators run 2-5 validators.</p>
-          <p className="mb-2"><strong>Requirements:</strong></p>
+          <p className="mb-3">
+            <strong>Yes!</strong> Many operators run 2-5 validators.
+          </p>
+          <p className="mb-2">
+            <strong>Requirements:</strong>
+          </p>
           <ul className="list-disc pl-5 space-y-1 mb-3">
             <li>Separate wallet per validator</li>
             <li>Separate stake per validator (50k each)</li>
             <li>Can run on same VPS or separate</li>
           </ul>
-          <p><strong>Example:</strong> 3 validators × $4,275/month = $12,825/month</p>
+          <p>
+            <strong>Example:</strong> 3 validators × $4,275/month = $12,825/month
+          </p>
         </div>
       ),
     },
@@ -114,13 +148,17 @@ docker-compose up -d`}
       question: 'How do rewards work?',
       answer: (
         <div>
-          <p className="mb-3"><strong>Automatic:</strong></p>
+          <p className="mb-3">
+            <strong>Automatic:</strong>
+          </p>
           <ul className="list-disc pl-5 space-y-1 mb-3">
             <li>Validation rewards credited after each validation</li>
             <li>Burn pool distributed daily</li>
             <li>Claim rewards anytime (or compound)</li>
           </ul>
-          <p><strong>No manual claiming required</strong> - rewards accumulate automatically.</p>
+          <p>
+            <strong>No manual claiming required</strong> - rewards accumulate automatically.
+          </p>
         </div>
       ),
     },
@@ -128,7 +166,9 @@ docker-compose up -d`}
       question: 'What hardware do I need?',
       answer: (
         <div>
-          <p className="mb-2"><strong>Minimum specs:</strong></p>
+          <p className="mb-2">
+            <strong>Minimum specs:</strong>
+          </p>
           <ul className="list-disc pl-5 space-y-1 mb-3">
             <li>2 CPU cores</li>
             <li>4GB RAM</li>
@@ -136,7 +176,10 @@ docker-compose up -d`}
             <li>10Mbps internet</li>
             <li>95%+ uptime</li>
           </ul>
-          <p><strong>Recommended VPS:</strong> DigitalOcean ($24/month), Linode ($24/month), AWS t3.medium ($30/month)</p>
+          <p>
+            <strong>Recommended VPS:</strong> DigitalOcean ($24/month), Linode ($24/month), AWS
+            t3.medium ($30/month)
+          </p>
         </div>
       ),
     },
@@ -181,7 +224,12 @@ docker-compose up -d`}
                     stroke="currentColor"
                     viewBox="0 0 24 24"
                   >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 9l-7 7-7-7"
+                    />
                   </svg>
                 </button>
 

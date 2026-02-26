@@ -40,9 +40,7 @@ export default function Testimonials() {
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
               Validator Success Stories
             </h2>
-            <p className="text-xl text-gray-400">
-              Real validators, real results
-            </p>
+            <p className="text-xl text-gray-400">Real validators, real results</p>
           </div>
 
           {/* Testimonials Grid */}

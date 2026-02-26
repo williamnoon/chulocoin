@@ -17,9 +17,9 @@ export default {
           900: '#7c2d12',
         },
         chulo: {
-          light: '#fb923c',  // Light orange
+          light: '#fb923c', // Light orange
           DEFAULT: '#ff7a00', // Vibrant orange (brand primary)
-          dark: '#ea580c',    // Dark orange
+          dark: '#ea580c', // Dark orange
         },
       },
     },

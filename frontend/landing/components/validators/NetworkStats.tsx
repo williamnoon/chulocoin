@@ -14,8 +14,8 @@ export default function NetworkStats() {
     const interval = setInterval(() => {
       setStats(prev => ({
         validators: prev.validators + (Math.random() > 0.5 ? 1 : 0),
-        totalStaked: prev.totalStaked + (Math.random() * 0.01),
-        uptime: 99.7 + (Math.random() * 0.2),
+        totalStaked: prev.totalStaked + Math.random() * 0.01,
+        uptime: 99.7 + Math.random() * 0.2,
       }));
     }, 10000);
 
@@ -34,9 +34,7 @@ export default function NetworkStats() {
             <div className="text-gray-400 text-sm uppercase tracking-wide mb-1">
               Active Validators
             </div>
-            <div className="text-gray-500 text-xs">
-              Worldwide
-            </div>
+            <div className="text-gray-500 text-xs">Worldwide</div>
           </div>
 
           {/* Total Staked */}
@@ -44,12 +42,8 @@ export default function NetworkStats() {
             <div className="text-5xl font-bold text-chulo-light mb-2 font-mono">
               {stats.totalStaked.toFixed(1)}M
             </div>
-            <div className="text-gray-400 text-sm uppercase tracking-wide mb-1">
-              Total Staked
-            </div>
-            <div className="text-gray-500 text-xs">
-              CHULO Secured
-            </div>
+            <div className="text-gray-400 text-sm uppercase tracking-wide mb-1">Total Staked</div>
+            <div className="text-gray-500 text-xs">CHULO Secured</div>
           </div>
 
           {/* Network Uptime */}
@@ -57,12 +51,8 @@ export default function NetworkStats() {
             <div className="text-5xl font-bold text-chulo-light mb-2 font-mono">
               {stats.uptime.toFixed(1)}%
             </div>
-            <div className="text-gray-400 text-sm uppercase tracking-wide mb-1">
-              Network Uptime
-            </div>
-            <div className="text-gray-500 text-xs">
-              Average
-            </div>
+            <div className="text-gray-400 text-sm uppercase tracking-wide mb-1">Network Uptime</div>
+            <div className="text-gray-500 text-xs">Average</div>
           </div>
         </div>
       </div>

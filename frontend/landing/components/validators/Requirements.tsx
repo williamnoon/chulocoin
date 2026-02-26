@@ -20,12 +20,8 @@ export default function Requirements() {
         <div className="max-w-6xl mx-auto">
           {/* Header */}
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              Requirements
-            </h2>
-            <p className="text-xl text-gray-400">
-              Everything you need to run a validator
-            </p>
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">Requirements</h2>
+            <p className="text-xl text-gray-400">Everything you need to run a validator</p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8 mb-12">
@@ -67,7 +63,9 @@ export default function Requirements() {
 
               <div className="space-y-6">
                 <div>
-                  <h4 className="text-lg font-semibold text-chulo-light mb-3">Easy Setup - No Coding Required</h4>
+                  <h4 className="text-lg font-semibold text-chulo-light mb-3">
+                    Easy Setup - No Coding Required
+                  </h4>
                   <ul className="space-y-2">
                     <li className="flex items-start text-gray-300">
                       <span className="text-chulo mr-2">✓</span>
@@ -91,7 +89,7 @@ export default function Requirements() {
                 <div className="p-4 bg-slate-800 rounded-lg border border-slate-700">
                   <div className="text-xs text-gray-500 mb-2 font-mono">Installation Preview:</div>
                   <pre className="text-xs font-mono text-chulo-light overflow-x-auto">
-{`wget chulobots.com/validator.tar.gz
+                    {`wget chulobots.com/validator.tar.gz
 tar -xzf validator.tar.gz
 cd validator && ./install.sh`}
                   </pre>
@@ -130,7 +128,8 @@ cd validator && ./install.sh`}
 
             <div className="mt-6 p-4 bg-slate-800/50 rounded-lg border border-slate-700">
               <div className="text-sm text-gray-400">
-                <span className="text-gray-300 font-semibold">Operating Costs:</span> ~$74/month (VPS $24 + RPC APIs $50)
+                <span className="text-gray-300 font-semibold">Operating Costs:</span> ~$74/month
+                (VPS $24 + RPC APIs $50)
               </div>
             </div>
           </div>
@@ -138,7 +137,9 @@ cd validator && ./install.sh`}
           {/* Cost Breakdown */}
           <div className="mt-8 grid md:grid-cols-2 gap-6">
             <div className="bg-gradient-to-br from-slate-900 to-slate-800 border border-slate-700 rounded-lg p-6">
-              <h4 className="text-xl font-bold text-white mb-4">Initial Investment (Example: 10k Stake)</h4>
+              <h4 className="text-xl font-bold text-white mb-4">
+                Initial Investment (Example: 10k Stake)
+              </h4>
               <div className="space-y-3">
                 <div className="flex justify-between text-gray-300">
                   <span>10,000 CHULO Stake</span>
