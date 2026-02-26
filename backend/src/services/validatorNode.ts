@@ -30,21 +30,43 @@ interface ValidatorStats {
  * Core service for decentralized signal validation
  */
 export class ValidatorNodeService {
+  // Consensus and validation thresholds
   private readonly CONSENSUS_THRESHOLD = 0.66; // >66% approval required
   private readonly PRICE_TOLERANCE = 0.005; // 0.5% tolerance
   private readonly MIN_SHARPE = 1.5;
   private readonly MIN_WIN_RATE = 0.55;
   private readonly MAX_DRAWDOWN = 0.25;
   private readonly MIN_QUALITY_SCORE = 70;
+
+  // Reward structure
   private readonly VALIDATION_REWARD = 0.25; // CHULO per validation
+
+  // Validator tier structure
+  private readonly TIER_STAKES = {
+    1: 10000, // Tier 1: 10,000 CHULO
+    2: 50000, // Tier 2: 50,000 CHULO (recommended)
+    3: 200000, // Tier 3: 200,000 CHULO
+  };
+
+  private readonly TIER_LIMITS = {
+    1: 100, // Tier 1: 100 validations/day
+    2: 500, // Tier 2: 500 validations/day
+    3: Infinity, // Tier 3: Unlimited validations
+  };
+
+  private readonly BURN_POOL_SHARE = {
+    1: 0, // Tier 1: 0% burn pool share
+    2: 0.02, // Tier 2: 2% burn pool share
+    3: 0.05, // Tier 3: 5% burn pool share
+  };
 
   /**
    * Register a new validator
    */
   async registerValidator(walletAddress: string, stakeAmount: number): Promise<void> {
-    // Verify minimum stake (1,000 CHULO for Tier 1)
-    if (stakeAmount < 1000) {
-      throw new AppError('Minimum stake is 1,000 CHULO', 400);
+    // Verify minimum stake (10,000 CHULO for Tier 1)
+    if (stakeAmount < this.TIER_STAKES[1]) {
+      throw new AppError('Minimum stake is 10,000 CHULO for Tier 1', 400);
     }
 
     // Check if validator already exists

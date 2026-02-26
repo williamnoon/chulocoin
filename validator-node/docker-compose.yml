@@ -1,0 +1,126 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database for validator
+  postgres:
+    image: postgres:15-alpine
+    container_name: validator-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-validator}
+      POSTGRES_USER: ${POSTGRES_USER:-validator}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-validator}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - validator
+
+  # Validator Node
+  validator:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: chulobots-validator
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      # Validator Identity
+      VALIDATOR_WALLET: ${VALIDATOR_WALLET}
+      VALIDATOR_PRIVATE_KEY: ${VALIDATOR_PRIVATE_KEY}
+      VALIDATOR_NAME: ${VALIDATOR_NAME:-ChuloBots Validator}
+      STAKE_TIER: ${STAKE_TIER:-2}
+
+      # ChuloBots API
+      CHULOBOTS_API_URL: ${CHULOBOTS_API_URL:-https://api.chulobots.com}
+      CHULOBOTS_WS_URL: ${CHULOBOTS_WS_URL:-wss://api.chulobots.com}
+
+      # Blockchain
+      ARBITRUM_RPC_URL: ${ARBITRUM_RPC_URL}
+      CHAINLINK_RPC_URL: ${CHAINLINK_RPC_URL}
+      CHAIN_ID: ${CHAIN_ID:-42161}
+
+      # Contracts
+      CHULO_CONTRACT: ${CHULO_CONTRACT}
+      STAKING_CONTRACT: ${STAKING_CONTRACT}
+      ORACLE_CONTRACT: ${ORACLE_CONTRACT}
+
+      # Database
+      DATABASE_URL: postgresql://${POSTGRES_USER:-validator}:${POSTGRES_PASSWORD:-changeme}@postgres:5432/${POSTGRES_DB:-validator}
+
+      # Performance
+      MAX_CONCURRENT_BACKTESTS: ${MAX_CONCURRENT_BACKTESTS:-5}
+      BACKTEST_TIMEOUT: ${BACKTEST_TIMEOUT:-60}
+
+      # Dashboard
+      DASHBOARD_PORT: ${DASHBOARD_PORT:-3001}
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+
+      # Validation Parameters
+      MIN_SHARPE: ${MIN_SHARPE:-1.5}
+      MIN_WIN_RATE: ${MIN_WIN_RATE:-0.55}
+      MAX_DRAWDOWN: ${MAX_DRAWDOWN:-0.25}
+      MIN_QUALITY_SCORE: ${MIN_QUALITY_SCORE:-70}
+      PRICE_TOLERANCE: ${PRICE_TOLERANCE:-0.005}
+      CONSENSUS_THRESHOLD: ${CONSENSUS_THRESHOLD:-0.66}
+    ports:
+      - "${DASHBOARD_PORT:-3001}:3001"
+      - "9090:9090"
+    volumes:
+      - validator_data:/app/data
+      - validator_logs:/app/logs
+    networks:
+      - validator
+
+  # Optional: Prometheus for metrics (uncomment to enable)
+  # prometheus:
+  #   image: prom/prometheus:latest
+  #   container_name: validator-prometheus
+  #   restart: unless-stopped
+  #   command:
+  #     - '--config.file=/etc/prometheus/prometheus.yml'
+  #     - '--storage.tsdb.path=/prometheus'
+  #   volumes:
+  #     - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+  #     - prometheus_data:/prometheus
+  #   ports:
+  #     - "9091:9090"
+  #   networks:
+  #     - validator
+
+  # Optional: Grafana for visualization (uncomment to enable)
+  # grafana:
+  #   image: grafana/grafana:latest
+  #   container_name: validator-grafana
+  #   restart: unless-stopped
+  #   depends_on:
+  #     - prometheus
+  #   environment:
+  #     - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-admin}
+  #     - GF_USERS_ALLOW_SIGN_UP=false
+  #   volumes:
+  #     - grafana_data:/var/lib/grafana
+  #     - ./grafana/dashboards:/etc/grafana/provisioning/dashboards:ro
+  #     - ./grafana/datasources:/etc/grafana/provisioning/datasources:ro
+  #   ports:
+  #     - "3002:3000"
+  #   networks:
+  #     - validator
+
+volumes:
+  postgres_data:
+  validator_data:
+  validator_logs:
+  # prometheus_data:
+  # grafana_data:
+
+networks:
+  validator:
+    driver: bridge
