@@ -1,23 +1,30 @@
 const steps = [
   {
     number: '1',
-    title: 'Mine Signals',
+    title: 'Subscribe to a Tier',
     description:
-      'Download the CLI tool and run trading strategies to generate signals. Earn CHULO rewards when your signals are validated.',
-    icon: '⛏️',
+      'Burn CHULO tokens to subscribe quarterly (save up to 40%) or monthly. Get credits, real-time signals, and automated trading bots based on your tier.',
+    icon: '🎯',
   },
   {
     number: '2',
-    title: 'Validators Verify',
+    title: 'Submit Trading Signals',
     description:
-      'Staked validators check signal quality using Chainlink oracles. Signals need >66% consensus to pass.',
-    icon: '✓',
+      'Generate signals using your strategies and submit them to the network. Pay gas fees in CHULO (lower cost for higher tiers). Earn validation rewards.',
+    icon: '📊',
   },
   {
     number: '3',
-    title: 'Auto-Execute',
+    title: 'Validators Vote',
     description:
-      'Validated signals are automatically executed on your exchange account based on your tier and preferences. Non-custodial.',
+      'Staked validators (1k-100k CHULO) vote on signal quality. Signals need 3 validator votes to reach consensus and become validated.',
+    icon: '✓',
+  },
+  {
+    number: '4',
+    title: 'Auto-Execute Trades',
+    description:
+      'Validated signals are automatically executed by your trading bots on connected exchanges. Fully non-custodial - your keys, your funds.',
     icon: '⚡',
   },
 ];
@@ -29,11 +36,11 @@ export default function HowItWorks() {
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-4">How It Works</h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Three simple steps to decentralized trading signals
+            Four steps to automated, validator-verified trading
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-12 max-w-6xl mx-auto">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
           {steps.map(step => (
             <div key={step.number} className="text-center">
               <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-chulo/10 flex items-center justify-center text-4xl">
@@ -50,10 +57,10 @@ export default function HowItWorks() {
 
         <div className="mt-16 text-center">
           <a
-            href="#download"
+            href="#pricing"
             className="inline-block px-8 py-4 bg-slate-900 hover:bg-slate-800 text-white font-semibold rounded-lg transition-colors duration-200"
           >
-            Start Mining Now
+            Choose Your Plan
           </a>
         </div>
       </div>

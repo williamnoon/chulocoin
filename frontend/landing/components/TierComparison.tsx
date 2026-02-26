@@ -1,5 +1,6 @@
 // Subscription tiers from TierSubscription.sol contract
 // All prices burn CHULO tokens (deflationary)
+// Default: Quarterly (recommended for savings)
 const tiers = [
   {
     name: 'Free',
@@ -7,11 +8,15 @@ const tiers = [
     price: 'Free',
     monthly: '$0',
     quarterly: null,
+    quarterlyChulo: null,
+    quarterlySavings: null,
+    credits: '0',
     maxBots: '0',
     maxPositions: '1',
     maxSize: '$100',
     signalDelay: '24hr Delayed',
     strategies: 'None',
+    strategyLevel: 0,
     features: ['1 position max', '$100 max size', '24-hour delayed signals', 'Community support'],
     highlight: false,
   },
@@ -20,13 +25,17 @@ const tiers = [
     chulo: '1,000',
     price: '$10/mo',
     monthly: '$10 (1,000 CHULO)',
-    quarterly: '$28.50 (2,850 CHULO) - Save 5%',
+    quarterly: '$28.50',
+    quarterlyChulo: '2,850 CHULO',
+    quarterlySavings: 'Save 5%',
+    credits: '300/quarter',
     maxBots: '1',
     maxPositions: '3',
     maxSize: '$500',
     signalDelay: 'Real-time',
     strategies: 'Basic',
-    features: ['1 trading bot', '3 active positions', 'Real-time signals', 'Basic strategies', '100 monthly credits'],
+    strategyLevel: 1,
+    features: ['300 credits/quarter', '1 trading bot', '3 active positions', 'Real-time signals', 'Basic strategies', 'NFT subscription badge'],
     highlight: false,
   },
   {
@@ -34,13 +43,17 @@ const tiers = [
     chulo: '3,000',
     price: '$30/mo',
     monthly: '$30 (3,000 CHULO)',
-    quarterly: '$81 (8,100 CHULO) - Save 10%',
+    quarterly: '$81',
+    quarterlyChulo: '8,100 CHULO',
+    quarterlySavings: 'Save 10%',
+    credits: '1,500/quarter',
     maxBots: '3',
     maxPositions: '10',
     maxSize: '$2,500',
     signalDelay: 'Real-time',
     strategies: 'Intermediate',
-    features: ['3 trading bots', '10 active positions', 'Intermediate strategies', '500 monthly credits', 'Priority support'],
+    strategyLevel: 2,
+    features: ['1,500 credits/quarter', '3 trading bots', '10 active positions', 'Intermediate strategies', 'Advanced analytics', 'NFT subscription badge'],
     highlight: true,
   },
   {
@@ -48,13 +61,17 @@ const tiers = [
     chulo: '9,000',
     price: '$90/mo',
     monthly: '$90 (9,000 CHULO)',
-    quarterly: '$216 (21,600 CHULO) - Save 20%',
+    quarterly: '$216',
+    quarterlyChulo: '21,600 CHULO',
+    quarterlySavings: 'Save 20%',
+    credits: '6,000/quarter',
     maxBots: '10',
     maxPositions: '50',
     maxSize: '$10,000',
     signalDelay: 'Real-time',
     strategies: 'Advanced',
-    features: ['10 trading bots', '50 active positions', 'Advanced strategies', '2,000 monthly credits', 'Advanced analytics'],
+    strategyLevel: 3,
+    features: ['6,000 credits/quarter', '10 trading bots', '50 active positions', 'Advanced strategies', 'API access', 'NFT subscription badge'],
     highlight: false,
   },
   {
@@ -62,13 +79,17 @@ const tiers = [
     chulo: '25,000',
     price: '$250/mo',
     monthly: '$250 (25,000 CHULO)',
-    quarterly: '$450 (45,000 CHULO) - Save 40%',
+    quarterly: '$450',
+    quarterlyChulo: '45,000 CHULO',
+    quarterlySavings: 'Save 40%',
+    credits: '30,000/quarter',
     maxBots: '50',
     maxPositions: '200',
     maxSize: '$100,000',
-    signalDelay: 'Real-time',
+    signalDelay: 'Priority',
     strategies: 'All + Custom',
-    features: ['50 trading bots', '200 active positions', 'All strategies + custom', '10,000 monthly credits', 'Premium 24/7 support', 'API access'],
+    strategyLevel: 4,
+    features: ['30,000 credits/quarter', '50 trading bots', '200 active positions', 'All strategies + custom', 'Full API access', 'White-glove support', 'NFT subscription badge'],
     highlight: false,
   },
 ];
@@ -80,10 +101,10 @@ export default function TierComparison() {
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white">Subscription Plans</h2>
           <p className="text-xl text-gray-400 max-w-2xl mx-auto mb-4">
-            Subscribe monthly or save up to 40% with quarterly plans
+            Quarterly plans recommended - save up to 40% and get credits upfront
           </p>
           <div className="inline-flex items-center px-4 py-2 bg-yellow-500/20 border border-yellow-500/40 rounded-lg text-yellow-300 text-sm">
-            🔥 All subscriptions burn CHULO - deflationary tokenomics
+            🔥 All subscriptions burn CHULO permanently - deflationary tokenomics
           </div>
         </div>
 
@@ -105,19 +126,34 @@ export default function TierComparison() {
 
               <div className="text-center mb-6">
                 <h3 className="text-2xl font-bold mb-2 text-white">{tier.name}</h3>
-                <div className="text-3xl font-bold mb-1 text-chulo-light">{tier.price}</div>
-                <div className="text-sm text-gray-400 font-mono">
-                  {tier.chulo} CHULO
-                </div>
-                {tier.quarterly && (
-                  <div className="mt-3 p-2 bg-slate-900/50 rounded-lg border border-slate-700">
-                    <div className="text-xs text-gray-400">Quarterly Plan</div>
-                    <div className="text-sm font-bold text-green-400">{tier.quarterly}</div>
-                  </div>
+                {tier.quarterly ? (
+                  <>
+                    <div className="text-3xl font-bold mb-1 text-chulo-light">{tier.quarterly}</div>
+                    <div className="text-xs text-green-400 font-semibold mb-2">{tier.quarterlySavings}</div>
+                    <div className="text-sm text-gray-400 font-mono">
+                      {tier.quarterlyChulo} / quarter
+                    </div>
+                    <div className="mt-2 text-xs text-gray-500">
+                      Monthly: {tier.monthly}
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="text-3xl font-bold mb-1 text-chulo-light">{tier.price}</div>
+                    <div className="text-sm text-gray-400 font-mono">
+                      {tier.chulo} CHULO
+                    </div>
+                  </>
                 )}
               </div>
 
               <div className="space-y-3 mb-6 pb-6 border-b border-slate-700">
+                {tier.credits !== '0' && (
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-400">Credits</span>
+                    <span className="font-semibold text-chulo-light font-mono">{tier.credits}</span>
+                  </div>
+                )}
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-400">Trading Bots</span>
                   <span className="font-semibold text-chulo-light font-mono">{tier.maxBots}</span>
@@ -131,8 +167,12 @@ export default function TierComparison() {
                   <span className="font-semibold text-chulo-light font-mono">{tier.maxSize}</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-400">Signal Delay</span>
+                  <span className="text-gray-400">Signals</span>
                   <span className="font-semibold text-chulo-light font-mono">{tier.signalDelay}</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span className="text-gray-400">Strategies</span>
+                  <span className="font-semibold text-chulo-light font-mono text-xs">{tier.strategies}</span>
                 </div>
               </div>
 
@@ -172,16 +212,29 @@ export default function TierComparison() {
           ))}
         </div>
 
-        {/* Tokenomics Note */}
-        <div className="mt-16 max-w-4xl mx-auto p-6 bg-gradient-to-r from-chulo/10 to-green-600/10 border-2 border-chulo/30 rounded-lg">
-          <h3 className="text-xl font-bold text-white mb-3 flex items-center">
-            <span className="text-2xl mr-2">🔥</span>
-            Deflationary Tokenomics
-          </h3>
-          <p className="text-gray-300 leading-relaxed">
-            All subscription payments <strong className="text-chulo-light">burn CHULO tokens permanently</strong>, reducing the circulating supply from the 100M max supply.
-            This creates deflationary pressure, potentially increasing token value over time. Quarterly subscriptions offer up to 40% savings!
-          </p>
+        {/* Tokenomics and Credits Note */}
+        <div className="mt-16 max-w-4xl mx-auto space-y-6">
+          <div className="p-6 bg-gradient-to-r from-chulo/10 to-green-600/10 border-2 border-chulo/30 rounded-lg">
+            <h3 className="text-xl font-bold text-white mb-3 flex items-center">
+              <span className="text-2xl mr-2">🔥</span>
+              Deflationary Tokenomics
+            </h3>
+            <p className="text-gray-300 leading-relaxed">
+              All subscription payments <strong className="text-chulo-light">burn CHULO tokens permanently</strong>, reducing the circulating supply from the 100M max supply.
+              This creates deflationary pressure, potentially increasing token value over time. Quarterly subscriptions offer up to 40% savings!
+            </p>
+          </div>
+
+          <div className="p-6 bg-gradient-to-r from-blue-900/20 to-purple-900/20 border-2 border-blue-500/30 rounded-lg">
+            <h3 className="text-xl font-bold text-white mb-3 flex items-center">
+              <span className="text-2xl mr-2">💎</span>
+              Credits & NFT Badges
+            </h3>
+            <p className="text-gray-300 leading-relaxed">
+              Each subscription grants <strong className="text-blue-300">credits for platform actions</strong> (submit signals, validate, create positions, backtest).
+              Credits never expire and accumulate over time. Plus, you'll receive a <strong className="text-purple-300">non-transferable NFT subscription badge</strong> as proof of your tier.
+            </p>
+          </div>
         </div>
       </div>
     </section>

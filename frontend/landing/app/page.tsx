@@ -50,37 +50,34 @@ export default function Home() {
           <div className="max-w-4xl mx-auto text-center">
             <div className="inline-block px-4 py-2 rounded-full bg-chulo/20 border border-chulo/30 text-chulo-light text-sm font-mono mb-6">
               <span className="w-2 h-2 bg-chulo-light rounded-full mr-2 animate-pulse inline-block"></span>
-              NEW OPPORTUNITY
+              EARN AS A VALIDATOR
             </div>
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-              Earn Passive Income as a Validator
+              Stake CHULO, Validate Signals, Earn Rewards
             </h2>
             <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-              Run a validator node, secure the network, and earn up to $4,275/month in CHULO rewards. No coding required.
+              Stake 1,000-100,000 CHULO to become a validator. Earn 0.25 CHULO per validation plus weekly burn pool distribution. Help secure the network.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
               <a
                 href="/validators"
                 className="px-8 py-4 bg-chulo hover:bg-chulo-dark text-black font-bold rounded-lg transition-all duration-200 shadow-lg hover:shadow-chulo/50 transform hover:-translate-y-0.5"
               >
-                Learn More About Validators
+                Become a Validator
               </a>
-              <div className="text-gray-400">
-                <span className="text-chulo-light font-bold text-2xl">87</span> validators already earning
-              </div>
             </div>
             <div className="grid grid-cols-3 gap-6 max-w-2xl mx-auto pt-8 border-t border-slate-700">
               <div>
-                <div className="text-3xl font-bold text-chulo-light mb-1 font-mono">$4,275</div>
-                <div className="text-sm text-gray-400">Monthly Income (Tier 2)</div>
+                <div className="text-3xl font-bold text-chulo-light mb-1 font-mono">0.25</div>
+                <div className="text-sm text-gray-400">CHULO per Validation</div>
               </div>
               <div>
-                <div className="text-3xl font-bold text-chulo-light mb-1 font-mono">5 min</div>
-                <div className="text-sm text-gray-400">Setup Time</div>
+                <div className="text-3xl font-bold text-chulo-light mb-1 font-mono">1k-100k</div>
+                <div className="text-sm text-gray-400">CHULO Stake Range</div>
               </div>
               <div>
-                <div className="text-3xl font-bold text-chulo-light mb-1 font-mono">99.8%</div>
-                <div className="text-sm text-gray-400">Network Uptime</div>
+                <div className="text-3xl font-bold text-chulo-light mb-1 font-mono">Weekly</div>
+                <div className="text-sm text-gray-400">Burn Pool Distribution</div>
               </div>
             </div>
           </div>

@@ -51,11 +51,11 @@ export default function ValidatorHero() {
               </h1>
 
               <p className="text-2xl md:text-3xl text-green-400 font-bold mb-4">
-                Earn Up to $4,275/month
+                Earn 0.25 CHULO per Validation + Weekly Burn Pool
               </p>
 
               <p className="text-lg text-gray-300 mb-8">
-                Run a validator node, verify trading signals, and earn CHULO rewards 24/7.
+                Stake 1,000-100,000 CHULO, verify trading signals, and earn rewards 24/7.
                 No coding required. Set up in 5 minutes.
               </p>
 
@@ -113,10 +113,10 @@ export default function ValidatorHero() {
                       <span className="text-gray-500">→</span> Uptime: <span className="font-bold">99.8%</span>
                     </div>
                     <div className="text-green-400">
-                      <span className="text-gray-500">→</span> Tier: <span className="font-bold">2 (Professional)</span>
+                      <span className="text-gray-500">→</span> Stake: <span className="font-bold">50,000 CHULO</span>
                     </div>
                     <div className="text-green-400">
-                      <span className="text-gray-500">→</span> Stake: <span className="font-bold">50,000 CHULO</span>
+                      <span className="text-gray-500">→</span> Reputation: <span className="font-bold">100/100</span>
                     </div>
                   </div>
 

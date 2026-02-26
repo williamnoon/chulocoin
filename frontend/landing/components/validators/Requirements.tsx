@@ -138,45 +138,58 @@ cd validator && ./install.sh`}
           {/* Cost Breakdown */}
           <div className="mt-8 grid md:grid-cols-2 gap-6">
             <div className="bg-gradient-to-br from-slate-900 to-slate-800 border border-slate-700 rounded-lg p-6">
-              <h4 className="text-xl font-bold text-white mb-4">Initial Investment (Junior Quant)</h4>
+              <h4 className="text-xl font-bold text-white mb-4">Initial Investment (Example: 10k Stake)</h4>
               <div className="space-y-3">
                 <div className="flex justify-between text-gray-300">
-                  <span>50,000 CHULO Stake</span>
-                  <span className="font-mono text-white">$15,000</span>
+                  <span>10,000 CHULO Stake</span>
+                  <span className="font-mono text-white">$100</span>
+                </div>
+                <div className="flex justify-between text-gray-300">
+                  <span className="text-sm text-gray-400">(Recoverable when unstaking)</span>
                 </div>
                 <div className="flex justify-between text-gray-300">
                   <span>VPS (first month)</span>
                   <span className="font-mono text-white">$24</span>
                 </div>
                 <div className="flex justify-between text-gray-300">
-                  <span>RPC APIs (first month)</span>
-                  <span className="font-mono text-white">$50</span>
+                  <span>RPC APIs (optional)</span>
+                  <span className="font-mono text-white">~$50</span>
                 </div>
                 <div className="flex justify-between text-gray-300 border-t border-slate-700 pt-3">
-                  <span className="font-semibold">Total</span>
-                  <span className="font-mono text-chulo-light font-bold text-xl">$15,074</span>
+                  <span className="font-semibold">Setup Cost</span>
+                  <span className="font-mono text-chulo-light font-bold text-xl">~$74</span>
+                </div>
+                <div className="text-xs text-gray-500 mt-2">
+                  + 10k CHULO stake (recoverable with 7-day wait)
                 </div>
               </div>
             </div>
 
             <div className="bg-gradient-to-br from-green-900/20 to-chulo/10 border border-chulo/30 rounded-lg p-6">
-              <h4 className="text-xl font-bold text-white mb-4">Monthly Profit (Junior Quant)</h4>
+              <h4 className="text-xl font-bold text-white mb-4">Potential Monthly Earnings</h4>
               <div className="space-y-3">
                 <div className="flex justify-between text-gray-300">
-                  <span>Gross Revenue</span>
-                  <span className="font-mono text-white">$4,275</span>
+                  <span>Validation Rewards</span>
+                  <span className="font-mono text-white">0.25 CHULO each</span>
+                </div>
+                <div className="flex justify-between text-gray-300">
+                  <span>Burn Pool (Weekly)</span>
+                  <span className="font-mono text-white">Proportional</span>
+                </div>
+                <div className="flex justify-between text-gray-300 border-t border-chulo/30 pt-3">
+                  <span className="font-semibold text-sm">Est. @ 100 validations/week</span>
+                  <span className="font-mono text-chulo-light font-bold">100+ CHULO/mo</span>
                 </div>
                 <div className="flex justify-between text-gray-300">
                   <span>Operating Costs</span>
-                  <span className="font-mono text-red-400">-$74</span>
-                </div>
-                <div className="flex justify-between text-gray-300 border-t border-chulo/30 pt-3">
-                  <span className="font-semibold">Net Profit</span>
-                  <span className="font-mono text-chulo-light font-bold text-xl">$4,201</span>
+                  <span className="font-mono text-red-400">-$74/mo</span>
                 </div>
               </div>
               <div className="mt-4 text-center text-sm text-gray-400">
-                Break-even in ~3.6 months
+                Earnings vary by validation activity + burn pool share
+              </div>
+              <div className="mt-2 text-center text-xs text-gray-500">
+                Higher stake = larger burn pool share
               </div>
             </div>
           </div>

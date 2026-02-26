@@ -11,10 +11,10 @@ export default function Hero() {
 
           {/* Headline */}
           <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-            Mine Signals.
+            Submit Signals.
             <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-chulo-light to-chulo">
-              Earn Rewards.
+              Get Validated.
             </span>
             <br />
             Trade Smarter.
@@ -22,17 +22,17 @@ export default function Hero() {
 
           {/* Subheadline */}
           <p className="text-xl md:text-2xl text-gray-300 mb-12 max-w-3xl mx-auto">
-            The first decentralized trading signal network validated by Chainlink oracles. Generate
-            signals, stake to validate, or auto-execute verified trades.
+            The first decentralized trading signal network with validator consensus. Submit trading
+            signals, earn from validation, or auto-execute verified trades with your bots.
           </p>
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
             <a
-              href="#download"
-              className="px-8 py-4 bg-chulo hover:bg-chulo-dark text-white font-semibold rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+              href="#pricing"
+              className="px-8 py-4 bg-chulo hover:bg-chulo-dark text-black font-semibold rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
             >
-              Download CLI Miner
+              View Subscription Plans
             </a>
             <a
               href="#how-it-works"
