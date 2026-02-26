@@ -1,4 +1,6 @@
 import type { Metadata } from 'next';
+import Navigation from '@/components/Navigation';
+import Footer from '@/components/Footer';
 import ValidatorHero from '@/components/validators/ValidatorHero';
 import NetworkStats from '@/components/validators/NetworkStats';
 import ValidatorHowItWorks from '@/components/validators/ValidatorHowItWorks';
@@ -11,9 +13,9 @@ import FAQ from '@/components/validators/FAQ';
 import GettingStarted from '@/components/validators/GettingStarted';
 
 export const metadata: Metadata = {
-  title: 'Become a ChuloBots Validator | Earn Up to $4,275/month',
+  title: 'Become a ChuloBots Validator | Earn CHULO Rewards',
   description:
-    'Run a ChuloBots validator node and earn passive income by verifying trading signals. Easy setup, no coding required. Start earning in 1 hour.',
+    'Run a ChuloBots validator node and earn passive income by verifying trading signals. Stake 1k-100k CHULO, earn 0.25 CHULO per validation plus weekly burn pool rewards. Easy setup, no coding required.',
   keywords: [
     'ChuloBots validator',
     'passive income crypto',
@@ -28,42 +30,7 @@ export const metadata: Metadata = {
 export default function ValidatorsPage() {
   return (
     <main className="flex min-h-screen flex-col bg-slate-950">
-      {/* Navigation */}
-      <nav className="w-full py-4 px-4 bg-slate-950/80 backdrop-blur-sm border-b border-chulo/20 sticky top-0 z-50">
-        <div className="container mx-auto flex items-center justify-between">
-          <a href="/" className="flex items-center">
-            <span className="text-2xl font-bold text-chulo-light font-mono">ChuloBots</span>
-          </a>
-          <div className="flex items-center gap-6">
-            <a
-              href="#calculator"
-              className="text-gray-300 hover:text-chulo-light transition-colors"
-            >
-              Calculator
-            </a>
-            <a
-              href="#getting-started"
-              className="text-gray-300 hover:text-chulo-light transition-colors"
-            >
-              Guide
-            </a>
-            <a
-              href="https://docs.chulobots.com/validators"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-300 hover:text-chulo-light transition-colors"
-            >
-              Docs
-            </a>
-            <a
-              href="#download"
-              className="px-4 py-2 bg-chulo hover:bg-chulo-dark text-black font-semibold rounded-lg transition-colors"
-            >
-              Download
-            </a>
-          </div>
-        </div>
-      </nav>
+      <Navigation />
 
       {/* Hero Section */}
       <ValidatorHero />
@@ -96,7 +63,10 @@ export default function ValidatorsPage() {
       <FAQ />
 
       {/* Download Section */}
-      <section id="download" className="w-full py-20 bg-gradient-to-b from-slate-900 to-slate-950">
+      <section
+        id="download"
+        className="w-full py-20 bg-gradient-to-b from-slate-900 to-slate-950"
+      >
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
@@ -151,7 +121,9 @@ export default function ValidatorsPage() {
           <h2 className="text-3xl font-bold text-white mb-4">
             Ready to Secure the Network and Earn Rewards?
           </h2>
-          <p className="text-gray-400 mb-8">Join 87 validators earning passive income 24/7</p>
+          <p className="text-gray-400 mb-8">
+            Join validators earning passive income 24/7
+          </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href="#download"
@@ -171,145 +143,7 @@ export default function ValidatorsPage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="w-full py-12 bg-slate-950 border-t border-slate-800 text-white">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-4 gap-8 mb-8">
-            {/* Brand */}
-            <div>
-              <h3 className="text-2xl font-bold text-chulo-light font-mono mb-4">ChuloBots</h3>
-              <p className="text-gray-400 text-sm">
-                Decentralized trading signal network powered by Chainlink oracles.
-              </p>
-            </div>
-
-            {/* Quick Links */}
-            <div>
-              <h4 className="font-bold text-white mb-4">Quick Links</h4>
-              <ul className="space-y-2 text-gray-400 text-sm">
-                <li>
-                  <a href="/" className="hover:text-chulo-light transition-colors">
-                    Home
-                  </a>
-                </li>
-                <li>
-                  <a href="/validators" className="hover:text-chulo-light transition-colors">
-                    Become a Validator
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://docs.chulobots.com"
-                    className="hover:text-chulo-light transition-colors"
-                  >
-                    Documentation
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://app.chulobots.com/network"
-                    className="hover:text-chulo-light transition-colors"
-                  >
-                    Network Stats
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-            {/* Resources */}
-            <div>
-              <h4 className="font-bold text-white mb-4">Resources</h4>
-              <ul className="space-y-2 text-gray-400 text-sm">
-                <li>
-                  <a
-                    href="https://docs.chulobots.com/validators"
-                    className="hover:text-chulo-light transition-colors"
-                  >
-                    Validator Guide
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://github.com/chulobots"
-                    className="hover:text-chulo-light transition-colors"
-                  >
-                    GitHub
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://medium.com/chulobots"
-                    className="hover:text-chulo-light transition-colors"
-                  >
-                    Blog
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-chulo-light transition-colors">
-                    Whitepaper
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-            {/* Social */}
-            <div>
-              <h4 className="font-bold text-white mb-4">Community</h4>
-              <ul className="space-y-2 text-gray-400 text-sm">
-                <li>
-                  <a
-                    href="https://discord.gg/chulobots"
-                    className="hover:text-chulo-light transition-colors"
-                  >
-                    Discord
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://twitter.com/chulobots"
-                    className="hover:text-chulo-light transition-colors"
-                  >
-                    Twitter
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://t.me/chulobots"
-                    className="hover:text-chulo-light transition-colors"
-                  >
-                    Telegram
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://youtube.com/chulobots"
-                    className="hover:text-chulo-light transition-colors"
-                  >
-                    YouTube
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="pt-8 border-t border-slate-800 text-center text-gray-500 text-sm">
-            <p>© 2026 ChuloBots. Built on Arbitrum. Powered by Chainlink.</p>
-            <p className="mt-2">
-              <a href="#" className="hover:text-chulo-light transition-colors">
-                Terms of Service
-              </a>
-              {' • '}
-              <a href="#" className="hover:text-chulo-light transition-colors">
-                Privacy Policy
-              </a>
-              {' • '}
-              <a href="#" className="hover:text-chulo-light transition-colors">
-                Risk Disclosures
-              </a>
-            </p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </main>
   );
 }
