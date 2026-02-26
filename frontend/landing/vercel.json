@@ -1,6 +1,7 @@
 {
-  "buildCommand": "npm run build",
+  "buildCommand": "cd ../.. && npm install && cd frontend/landing && npm run build",
   "devCommand": "npm run dev",
-  "installCommand": "npm install",
-  "framework": "nextjs"
+  "installCommand": "npm install --prefix=../.. && npm install",
+  "framework": "nextjs",
+  "ignoreCommand": "git diff --quiet HEAD^ HEAD ./"
 }
