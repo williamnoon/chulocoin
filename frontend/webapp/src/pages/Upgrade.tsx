@@ -145,7 +145,7 @@ export default function Upgrade() {
                     <div className="text-3xl font-bold text-orange-400">
                       ${price}
                       {billingPeriod === 'quarterly' && (
-                        <span className="text-sm text-green-400 block">Save {tier.discount}%</span>
+                        <span className="text-sm text-orange-400 block">Save {tier.discount}%</span>
                       )}
                     </div>
                     <div className="text-sm text-gray-400 mt-1">
@@ -234,7 +234,7 @@ export default function Upgrade() {
           </p>
         </div>
 
-        <div className="p-6 bg-gradient-to-br from-blue-500/10 to-purple-500/10 border-2 border-blue-500/30 rounded-lg">
+        <div className="p-6 bg-gradient-to-br from-orange-500/10 to-orange-500/5 border-2 border-orange-500/30 rounded-lg">
           <h3 className="text-lg font-bold mb-2 flex items-center">
             <span className="mr-2">💎</span>
             Credits & NFT Badges

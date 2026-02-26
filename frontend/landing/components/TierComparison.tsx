@@ -114,12 +114,12 @@ export default function TierComparison() {
               key={tier.name}
               className={`relative rounded-xl p-6 ${
                 tier.highlight
-                  ? 'bg-gradient-to-br from-chulo/20 to-green-600/20 border-2 border-chulo shadow-2xl'
+                  ? 'bg-gradient-to-br from-chulo/20 to-chulo/10 border-2 border-chulo shadow-2xl'
                   : 'bg-slate-800 border-2 border-slate-700 hover:border-slate-600'
               } transition-all duration-300 hover:scale-105`}
             >
               {tier.highlight && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-yellow-400 text-slate-900 text-sm font-bold rounded-full">
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-chulo text-slate-900 text-sm font-bold rounded-full">
                   Most Popular
                 </div>
               )}
@@ -129,7 +129,7 @@ export default function TierComparison() {
                 {tier.quarterly ? (
                   <>
                     <div className="text-3xl font-bold mb-1 text-chulo-light">{tier.quarterly}</div>
-                    <div className="text-xs text-green-400 font-semibold mb-2">{tier.quarterlySavings}</div>
+                    <div className="text-xs text-chulo-light font-semibold mb-2">{tier.quarterlySavings}</div>
                     <div className="text-sm text-gray-400 font-mono">
                       {tier.quarterlyChulo} / quarter
                     </div>
@@ -214,7 +214,7 @@ export default function TierComparison() {
 
         {/* Tokenomics and Credits Note */}
         <div className="mt-16 max-w-4xl mx-auto space-y-6">
-          <div className="p-6 bg-gradient-to-r from-chulo/10 to-green-600/10 border-2 border-chulo/30 rounded-lg">
+          <div className="p-6 bg-gradient-to-r from-chulo/10 to-chulo/5 border-2 border-chulo/30 rounded-lg">
             <h3 className="text-xl font-bold text-white mb-3 flex items-center">
               <span className="text-2xl mr-2">🔥</span>
               Deflationary Tokenomics
@@ -225,14 +225,14 @@ export default function TierComparison() {
             </p>
           </div>
 
-          <div className="p-6 bg-gradient-to-r from-blue-900/20 to-purple-900/20 border-2 border-blue-500/30 rounded-lg">
+          <div className="p-6 bg-gradient-to-r from-chulo/10 to-chulo/5 border-2 border-chulo/30 rounded-lg">
             <h3 className="text-xl font-bold text-white mb-3 flex items-center">
               <span className="text-2xl mr-2">💎</span>
               Credits & NFT Badges
             </h3>
             <p className="text-gray-300 leading-relaxed">
-              Each subscription grants <strong className="text-blue-300">credits for platform actions</strong> (submit signals, validate, create positions, backtest).
-              Credits never expire and accumulate over time. Plus, you&apos;ll receive a <strong className="text-purple-300">non-transferable NFT subscription badge</strong> as proof of your tier.
+              Each subscription grants <strong className="text-chulo-light">credits for platform actions</strong> (submit signals, validate, create positions, backtest).
+              Credits never expire and accumulate over time. Plus, you&apos;ll receive a <strong className="text-chulo-light">non-transferable NFT subscription badge</strong> as proof of your tier.
             </p>
           </div>
         </div>
