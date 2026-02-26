@@ -47,14 +47,14 @@ export default function Benefits() {
   ];
 
   const colorClasses = {
-    blue: 'from-blue-900/20 to-blue-600/10 border-blue-700/30',
-    green: 'from-green-900/20 to-green-600/10 border-green-700/30',
-    yellow: 'from-yellow-900/20 to-yellow-600/10 border-yellow-700/30',
-    purple: 'from-purple-900/20 to-purple-600/10 border-purple-700/30',
+    blue: 'from-orange-900/20 to-orange-600/10 border-orange-700/30',
+    green: 'from-orange-900/20 to-orange-600/10 border-orange-700/30',
+    yellow: 'from-orange-900/20 to-orange-600/10 border-orange-700/30',
+    purple: 'from-orange-900/20 to-orange-600/10 border-orange-700/30',
   };
 
   return (
-    <section className="w-full py-20 bg-slate-900">
+    <section className="w-full py-20 bg-black">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           {/* Header */}

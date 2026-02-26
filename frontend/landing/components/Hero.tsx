@@ -1,6 +1,6 @@
 export default function Hero() {
   return (
-    <section className="w-full bg-gradient-to-b from-slate-900 to-slate-800 text-white">
+    <section className="w-full bg-gradient-to-b from-black to-slate-950 text-white">
       <div className="container mx-auto px-4 py-20 md:py-32">
         <div className="max-w-5xl mx-auto text-center">
           {/* Badge */}

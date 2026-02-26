@@ -32,7 +32,7 @@ export default function Testimonials() {
   ];
 
   return (
-    <section className="w-full py-20 bg-slate-900">
+    <section className="w-full py-20 bg-black">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           {/* Header */}

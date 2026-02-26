@@ -95,8 +95,8 @@ cd validator && ./install.sh`}
                   </pre>
                 </div>
 
-                <div className="p-4 bg-blue-900/20 border border-blue-700/30 rounded-lg">
-                  <div className="text-sm text-blue-400">
+                <div className="p-4 bg-orange-900/20 border border-orange-700/30 rounded-lg">
+                  <div className="text-sm text-orange-400">
                     💡 If you can rent a VPS and use SSH, you can run a validator
                   </div>
                 </div>

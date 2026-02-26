@@ -56,7 +56,7 @@ export default function GettingStarted() {
   ];
 
   return (
-    <section id="getting-started" className="w-full py-20 bg-slate-900">
+    <section id="getting-started" className="w-full py-20 bg-black">
       <div className="container mx-auto px-4">
         <div className="max-w-5xl mx-auto">
           {/* Header */}

@@ -23,7 +23,7 @@ export default function NetworkStats() {
   }, []);
 
   return (
-    <section className="w-full py-12 bg-slate-900 border-y border-chulo/20">
+    <section className="w-full py-12 bg-black border-y border-chulo/20">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
           {/* Active Validators */}
