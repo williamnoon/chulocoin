@@ -10,21 +10,21 @@ const config: Config = {
     extend: {
       colors: {
         primary: {
-          50: '#f0f9ff',
-          100: '#e0f2fe',
-          200: '#bae6fd',
-          300: '#7dd3fc',
-          400: '#38bdf8',
-          500: '#0ea5e9',
-          600: '#0284c7',
-          700: '#0369a1',
-          800: '#075985',
-          900: '#0c4a6e',
+          50: '#fff7ed',
+          100: '#ffedd5',
+          200: '#fed7aa',
+          300: '#fdba74',
+          400: '#fb923c',
+          500: '#f97316',
+          600: '#ea580c',
+          700: '#c2410c',
+          800: '#9a3412',
+          900: '#7c2d12',
         },
         chulo: {
-          light: '#4ade80',
-          DEFAULT: '#22c55e',
-          dark: '#16a34a',
+          light: '#fb923c',  // Light orange
+          DEFAULT: '#ff7a00', // Vibrant orange (brand primary)
+          dark: '#ea580c',    // Dark orange
         },
       },
       fontFamily: {
