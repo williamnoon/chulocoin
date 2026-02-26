@@ -232,7 +232,7 @@ export default function TierComparison() {
             </h3>
             <p className="text-gray-300 leading-relaxed">
               Each subscription grants <strong className="text-blue-300">credits for platform actions</strong> (submit signals, validate, create positions, backtest).
-              Credits never expire and accumulate over time. Plus, you'll receive a <strong className="text-purple-300">non-transferable NFT subscription badge</strong> as proof of your tier.
+              Credits never expire and accumulate over time. Plus, you&apos;ll receive a <strong className="text-purple-300">non-transferable NFT subscription badge</strong> as proof of your tier.
             </p>
           </div>
         </div>
